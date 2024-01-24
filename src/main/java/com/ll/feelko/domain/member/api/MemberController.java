@@ -2,10 +2,14 @@ package com.ll.feelko.domain.member.api;
 
 import com.ll.feelko.domain.member.application.MemberServiceImpl;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
+import com.ll.feelko.domain.member.entity.Member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +36,14 @@ public class MemberController {
     public String register(@Valid MemberRegisterDto registerDto){
         memberService.register(registerDto);
         return "redirect:/member/login";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/profile")
+    public String showProfile(@AuthenticationPrincipal User user, Model model){
+        Member member = memberService.findByEmail(user.getUsername()).get();
+        model.addAttribute("member", member);
+        return "domain/member/profile";
     }
 
 }
