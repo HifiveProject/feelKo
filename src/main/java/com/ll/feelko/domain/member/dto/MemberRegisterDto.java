@@ -3,6 +3,7 @@ package com.ll.feelko.domain.member.dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
 
@@ -18,6 +19,7 @@ public class MemberRegisterDto {
 
     private String profile;
     private String phone;
+    @DateTimeFormat
     private Date birthday;
     private String roles;
 
