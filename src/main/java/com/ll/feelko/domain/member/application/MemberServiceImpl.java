@@ -1,0 +1,47 @@
+package com.ll.feelko.domain.member.application;
+
+
+import com.ll.feelko.domain.member.dao.MemberRepository;
+import com.ll.feelko.domain.member.dto.MemberRegisterDto;
+import com.ll.feelko.domain.member.entity.Member;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class MemberServiceImpl implements MemberService{
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    @Transactional
+    public Member register(MemberRegisterDto registerDto) {
+        if (findByEmail(registerDto.getEmail()).isPresent()) {
+            //return RsData? Exception?
+            throw new RuntimeException("이미 존재하는 이메일입니다.");
+        }
+        Member member = Member.builder()
+                .email(registerDto.getEmail())
+                .name(registerDto.getName())
+                .password(passwordEncoder.encode(registerDto.getPassword()))
+                .profile(registerDto.getProfile())
+                .phone(registerDto.getPhone())
+                .birthday(registerDto.getBirthday())
+                .roles("user") // 그냥 string으로 할지 Grantedauthority로 할지
+                .build();
+        memberRepository.save(member);
+
+        return member;
+    }
+
+    @Override
+    public Optional<Member> findByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
+
+}
