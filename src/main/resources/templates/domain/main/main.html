@@ -1,1 +1,5 @@
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 메인화면
+<form sec:authorize="isAuthenticated()" action="/member/logout" method="post">
+    <input type="submit" value="로그아웃"/>
+</form>
