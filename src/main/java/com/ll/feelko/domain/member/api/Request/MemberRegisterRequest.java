@@ -1,4 +1,4 @@
-package com.ll.feelko.domain.member.api;
+package com.ll.feelko.domain.member.api.Request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
