@@ -14,4 +14,5 @@ public interface MemberService {
     boolean emailIsExist(String email);
 
     long getMemberCount();
+    Member findByIdElseThrow(Long memberId);
 }
