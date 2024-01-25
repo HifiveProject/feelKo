@@ -44,4 +44,5 @@ public class MemberController {
         memberService.register(registerDto);
         return "redirect:/member/login";
     }
+
 }

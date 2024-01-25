@@ -40,9 +40,9 @@ public class Member {
     private String roles;
 
     @CreatedDate
-    private LocalDateTime createDate;
+    private LocalDateTime created_at;
     @LastModifiedDate
-    private LocalDateTime modifyDate;
+    private LocalDateTime modified_at;
 
     private LocalDateTime deleted_at;
 
