@@ -21,8 +21,8 @@ public class MemberServiceImpl implements MemberService{
     @Override
     @Transactional
     public Member register(MemberRegisterDto registerDto) {
-        if (findByEmail(registerDto.getEmail()).isPresent()) {
-            //return RsData? Exception?
+        if (emailIsExist(registerDto.getEmail())) {
+            //중복 검사
             throw new RuntimeException("이미 존재하는 이메일입니다.");
         }
         Member member = Member.builder()
@@ -42,6 +42,16 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Optional<Member> findByEmail(String email) {
         return memberRepository.findByEmail(email);
+    }
+
+    @Override
+    public boolean emailIsExist(String email){
+        return memberRepository.existsByEmail(email);
+    }
+
+    @Override
+    public long getMemberCount(){
+        return memberRepository.count();
     }
 
 }

@@ -33,7 +33,17 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid MemberRegisterDto registerDto){
+    public String register(@Valid MemberRegisterRequest registerRequest){
+        //request를 dto로 변환
+        MemberRegisterDto registerDto = new MemberRegisterDto(
+                registerRequest.getEmail(),
+                registerRequest.getPassword(),
+                registerRequest.getName(),
+                registerRequest.getProfile(),
+                registerRequest.getPhone(),
+                registerRequest.getBirthday()
+                );
+
         memberService.register(registerDto);
         return "redirect:/member/login";
     }
