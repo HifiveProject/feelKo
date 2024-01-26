@@ -27,7 +27,7 @@ public class MypageController {
                                        @RequestParam(name = "size", defaultValue = "10") int size,
                                        Model model) {
         Page<uploadePageDto> uploads = mypageService.getUploadedPageList(user.getId(), page, size);
-        model.addAttribute(uploads);
+        model.addAttribute("uploads",uploads);
         return "domain/member/mypage/uploadList";
     }
 

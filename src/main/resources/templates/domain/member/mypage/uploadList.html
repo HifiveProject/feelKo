@@ -5,34 +5,41 @@
 </head>
 <body>
 <!-- 업로드 목록 -->
-<div>
-    <ul>
-        <li th:each="upload : ${uploads.content}">
-            <span th:text="${upload.title}">Title</span>
-            <!-- 여기에 추가적인 정보를 표시할 수 있습니다. 예: 이미지, 설명 등 -->
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="uploadedPageDto : ${uploads}">
+        <td th:text="${uploadedPageDto.title}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- 페이징처리 시작 -->
+<div th:if="${!uploads.isEmpty()}">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${!uploads.hasPrevious} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{|?page=${uploads.number - 1}|}">
+                <span>이전</span>
+            </a>
+        </li>
+        <li th:each="page: ${#numbers.sequence(0, uploads.totalPages - 1)}"
+            th:classappend="${page == uploads.number} ? 'active'"
+            class="page-item">
+            <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+        </li>
+        <li class="page-item" th:classappend="${!uploads.hasNext} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${uploads.number+1}|}">
+                <span>다음</span>
+            </a>
         </li>
     </ul>
 </div>
-
-<nav>
-    <ul>
-        <!-- 이전 페이지 -->
-        <li th:unless="${uploads.first}">
-            <a th:href="@{/member/mypage/upload-list(page=${uploads.number - 1}, size=${uploads.size})}">Previous</a>
-        </li>
-
-        <!-- 페이지 번호 -->
-        <li th:each="pageNum : ${#numbers.sequence(Math.max(1, uploads.number - 2), Math.min(uploads.totalPages, uploads.number + 2))}"
-            th:class="${pageNum == uploads.number + 1} ? 'active'">
-            <a th:href="@{/member/mypage/upload-list(page=${pageNum - 1}, size=${uploads.size})}" th:text="${pageNum}"></a>
-        </li>
-
-        <!-- 다음 페이지 -->
-        <li th:unless="${uploads.last}">
-            <a th:href="@{/member/mypage/upload-list(page=${uploads.number + 1}, size=${uploads.size})}">Next</a>
-        </li>
-    </ul>
-</nav>
+<!-- 페이징처리 끝 -->
 
 </body>
 </html>
