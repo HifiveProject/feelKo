@@ -1,0 +1,30 @@
+<form th:action method="POST" onsubmit="submitProfileUpdateForm(this);">
+    <input type="hidden" name="_method" value="PUT">
+    <div>
+        <label>이메일(e-mail)</label>
+        <div th:text="${profileDto.email}"></div>
+    </div>
+
+    <div>
+        <label>이름</label>
+        <input type="text" th:field="*{profileDto.name}" th:text="${profileDto.name}">
+
+    </div>
+
+    <div>
+        <label>생일</label>
+        <input type="date" th:field="*{profileDto.birthday}" th:text="${profileDto.birthday}">
+    </div>
+    <div>
+        <label>전화번호</label>
+        <input type="text" th:field="*{profileDto.phone}" th:text="${profileDto.phone}">
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+        <label>프로필</label>
+        <img th:src="${profileDto.profile}" style="width: 100px; height: 100px;">
+        <input type="text" th:field="*{profileDto.profile}">
+    </div>
+
+    <button type="submit">회원 정보 수정</button>
+</form>
