@@ -26,5 +26,4 @@ public class MemberRegisterDto {
     @DateTimeFormat
     private LocalDate birthday;
 
-
 }

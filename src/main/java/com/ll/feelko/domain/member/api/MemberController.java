@@ -1,6 +1,5 @@
 package com.ll.feelko.domain.member.api;
 
-import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 import com.ll.feelko.domain.member.application.MemberServiceImpl;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
 import jakarta.validation.Valid;
@@ -30,7 +29,7 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid MemberRegisterRequest registerRequest){
+    public String register(@Valid com.ll.feelko.domain.member.api.MemberRegisterRequest registerRequest){
         //request를 dto로 변환
         MemberRegisterDto registerDto = new MemberRegisterDto(
                 registerRequest.getEmail(),

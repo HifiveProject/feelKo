@@ -1,4 +1,4 @@
-package com.ll.feelko.domain.member.api.Request;
+package com.ll.feelko.domain.member.api;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -19,6 +19,6 @@ public class MemberRegisterRequest {
 
     private String profile;
     private String phone;
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 }
