@@ -13,9 +13,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberRegisterDto {
-    @NotBlank
-    private String email;
+public class MemberProfileUpdateDto {
     @NotBlank
     private String password;
 
@@ -25,6 +23,5 @@ public class MemberRegisterDto {
     private String phone;
     @DateTimeFormat
     private LocalDate birthday;
-
 
 }

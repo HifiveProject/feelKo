@@ -3,6 +3,5 @@
 <form sec:authorize="isAuthenticated()" action="/member/logout" method="post">
     <input type="submit" value="로그아웃"/>
 </form>
-<form sec:authorize="isAnonymous()" action="/member/login" method="get">
-    <input type="submit" value="로그인"/>
-</form>
+<a sec:authorize="isAnonymous()" href="/member/login" class="btn">로그인</a>
+
