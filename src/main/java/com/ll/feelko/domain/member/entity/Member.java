@@ -80,6 +80,9 @@ public class Member {
 //    private List<PaymentDetail> paymentDetails;
 
     // 회원정보 수정 메소드
+    public void updateProfile(String profile){
+        this.profile = profile;
+    }
     public void profileUpdate(String name, String profile, String phone, LocalDate birthday){
         this.name = name;
         this.profile = profile;
