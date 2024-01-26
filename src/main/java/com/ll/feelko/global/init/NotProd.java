@@ -42,7 +42,7 @@ public class NotProd {
             //admin생성  role때문에 그냥 엔티티로 만듬
             Member admin = Member.builder()
                     .email("admin")
-                    .password(passwordEncoder.encode("admin"))
+                    .password(passwordEncoder.encode("ADMIN"))
                     .roles("admin")
                     .build();
             memberRepository.save(admin);
@@ -58,7 +58,7 @@ public class NotProd {
 
             //테스트 멤버 생성 일단 당장 속도때문에 스트림은 사용하지 않았음
             MemberRegisterDto memberRegisterDto = new MemberRegisterDto(
-                    "test", "test", "test", null, "010-1111-1111", null);
+                    "test", "test", "test", null, "010-1111-1111", null, null);
 
             for (int i = 1; i < 5; i++) {
                 memberRegisterDto.setEmail("test" + i);
