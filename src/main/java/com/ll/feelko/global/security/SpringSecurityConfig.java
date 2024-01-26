@@ -47,10 +47,10 @@ public class SpringSecurityConfig {
                                         .defaultSuccessUrl("/?msg=" + URLEncoder.encode("환영합니다.", StandardCharsets.UTF_8))
                                         .failureUrl("/member/login?failMsg=" + URLEncoder.encode("아이디 또는 비밀번호가 일치하지 않습니다.", StandardCharsets.UTF_8))
                 )
-                .logout(
-                        logout -> logout.logoutRequestMatcher(
-                                new AntPathRequestMatcher("/member/logout"))
-                );
+                .logout((logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true))
         ;
 
         return http.build();

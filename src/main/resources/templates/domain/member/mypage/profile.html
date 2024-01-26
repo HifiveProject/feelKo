@@ -1,0 +1,20 @@
+<head>
+    <title>내 정보</title>
+</head>
+<body>
+<div>
+    <h3>이메일(e-mail)</h3>
+    <div th:text="${member.email}"></div>
+    <h3>이름</h3>
+    <div th:text="${member.name}"></div>
+    <h3>생일</h3>
+    <div th:text="${member.birthday}"></div>
+    <h3>전화번호</h3>
+    <div th:text="${member.phone}"></div>
+    <h3>프로필(이미지)</h3>
+    <img th:src="${member.profile}" style="width: 100px; height: 100px;">
+</div>
+<div>
+    <a href="/member/mypage/profile/update">회원정보 수정</a>
+</div>
+</body>
