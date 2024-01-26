@@ -89,36 +89,6 @@ select option {
     display: grid;
     place-items: center;
 }
-.template--pageTitleBox {
-    height: 150px;
-    width: 100%;
-}
-
-/* 페이지 제목 사진 조정 */
-.template--pageTitleBox {
-    height: 100px;
-    position: relative;
-}
-.template--overlayedTitle {
-    position: absolute;
-    top: 50%;
-    /* left: 15%; */
-    margin-left: 200px;
-    transform: translate(-50%, -50%);
-    font-size: 30px;
-    font-weight: bold;
-    padding: 10px;
-}
-.template--overlayedSearch {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    right: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-}
-
 /* 콘텐츠 컨테이너 */
 .template--contentContainer {
     height: 700px; /* 1) 이 높이와 */
