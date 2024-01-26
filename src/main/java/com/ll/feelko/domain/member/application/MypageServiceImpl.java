@@ -2,6 +2,7 @@ package com.ll.feelko.domain.member.application;
 
 import com.ll.feelko.domain.experience.dao.ExperienceRepository;
 import com.ll.feelko.domain.member.dao.MemberRepository;
+import com.ll.feelko.domain.member.dto.MemberProfileDto;
 import com.ll.feelko.domain.member.dto.MemberProfileUpdateDto;
 import com.ll.feelko.domain.member.dto.uploadedPageDto;
 import com.ll.feelko.domain.member.entity.Member;
@@ -29,24 +30,17 @@ public class MypageServiceImpl implements MypageService {
     }
 
     @Override
-    @Transactional
-    public void updateProfile(Long id, MemberProfileUpdateDto updateDto) {
-        Member member = memberRepository.findById(id).get();
-        member.profileUpdate(updateDto.getName(), updateDto.getProfile(), updateDto.getPhone(), updateDto.getBirthday());
-    }
-
-    @Override
     public Page<uploadedPageDto> getUploadedPageList(long memberId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return experienceRepository.findIdTitleByMemberIdOrderByIdDesc(memberId, pageable);
     }
 
     @Override
-    public MemberProfileUpdateDto getProfile(long id){
+    public MemberProfileDto getProfile(long id){
         Optional<Member> optMember = memberRepository.findById(id);
 
         Member member = optMember.get();
-        return new MemberProfileUpdateDto(
+        return new MemberProfileDto(
                 member.getEmail(),
                 member.getName(),
                 member.getProfile(),
@@ -54,6 +48,13 @@ public class MypageServiceImpl implements MypageService {
                 member.getBirthday()
         );
 
+    }
+
+    @Override
+    @Transactional
+    public void updateProfile(Long id, MemberProfileUpdateDto profileUpdateDto) {
+        Member member = memberRepository.findById(id).get();
+        member.updateProfile(profileUpdateDto.getProfile());
     }
 
 }
