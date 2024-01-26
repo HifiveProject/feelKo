@@ -12,6 +12,7 @@
     </tr>
     </thead>
     <tbody>
+    <!--TODO detail 작성되면 링크 추가, 이미지 추가 /예약 detail 작성되면 예약자 목록 보기 추가-->
     <tr th:each="uploadedPageDto : ${uploads}">
         <td th:text="${uploadedPageDto.title}"></td>
     </tr>
@@ -20,7 +21,7 @@
 
 <!-- 페이징처리 시작 -->
 <div th:if="${!uploads.isEmpty()}">
-    <ul class="pagination justify-content-center">
+    <ul class="pagination" >
         <li class="page-item" th:classappend="${!uploads.hasPrevious} ? 'disabled'">
             <a class="page-link"
                th:href="@{|?page=${uploads.number - 1}|}">
@@ -28,6 +29,7 @@
             </a>
         </li>
         <li th:each="page: ${#numbers.sequence(0, uploads.totalPages - 1)}"
+            th:if="${page >= uploads.number - 5 and page <= uploads.number+5}"
             th:classappend="${page == uploads.number} ? 'active'"
             class="page-item">
             <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>

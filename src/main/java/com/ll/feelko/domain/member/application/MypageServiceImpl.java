@@ -1,7 +1,7 @@
 package com.ll.feelko.domain.member.application;
 
 import com.ll.feelko.domain.experience.dao.ExperienceRepository;
-import com.ll.feelko.domain.member.dto.uploadePageDto;
+import com.ll.feelko.domain.member.dto.uploadedPageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +17,7 @@ public class MypageServiceImpl implements MypageService {
     private final ExperienceRepository experienceRepository;
 
     @Override
-    public Page<uploadePageDto> getUploadedPageList(long memberId, int page, int size){
+    public Page<uploadedPageDto> getUploadedPageList(long memberId, int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return experienceRepository.findIdTitleByMemberIdOrderByIdDesc(memberId, pageable);
     }

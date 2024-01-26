@@ -1,7 +1,7 @@
 package com.ll.feelko.domain.experience.dao;
 
 import com.ll.feelko.domain.experience.entity.Experience;
-import com.ll.feelko.domain.member.dto.uploadePageDto;
+import com.ll.feelko.domain.member.dto.uploadedPageDto;
 import com.ll.feelko.domain.member.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +47,14 @@ class ExperienceRepositoryTest {
         entityManager.flush(); //db에 저장되는 것과 같은 역할 (여기까지 given)
 
         // 페이징을 위한 Pageable 객체 생성
-        Pageable pageable = PageRequest.of(1, 10); // 첫 페이지, 페이지 당 10개의 아이템
+        Pageable pageable = PageRequest.of(0, 10); // 첫 페이지, 페이지 당 10개의 아이템
 
         // 테스트 실행
-        Page<uploadePageDto> result = experienceRepository.findIdTitleByMemberIdOrderByIdDesc(member.getId(), pageable);
+        Page<uploadedPageDto> result = experienceRepository.findIdTitleByMemberIdOrderByIdDesc(member.getId(), pageable);
 
         // 검증
         assertEquals(10, result.getContent().size()); // 반환된 페이지의 아이템 수 확인
         assertEquals(30, result.getTotalElements()); // 총 엔티티 수 확인
+        assertEquals("Title 29", result.getContent().get(0).getTitle() );
     }
 }

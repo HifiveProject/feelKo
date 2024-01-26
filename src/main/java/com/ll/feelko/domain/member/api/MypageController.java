@@ -1,7 +1,7 @@
 package com.ll.feelko.domain.member.api;
 
 import com.ll.feelko.domain.member.application.MypageService;
-import com.ll.feelko.domain.member.dto.uploadePageDto;
+import com.ll.feelko.domain.member.dto.uploadedPageDto;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,7 +26,7 @@ public class MypageController {
                                        @RequestParam(name = "page", defaultValue = "0") int page,
                                        @RequestParam(name = "size", defaultValue = "10") int size,
                                        Model model) {
-        Page<uploadePageDto> uploads = mypageService.getUploadedPageList(user.getId(), page, size);
+        Page<uploadedPageDto> uploads = mypageService.getUploadedPageList(user.getId(), page, size);
         model.addAttribute("uploads",uploads);
         return "domain/member/mypage/uploadList";
     }
