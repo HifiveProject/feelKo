@@ -18,7 +18,6 @@ public class MemberProfileUpdateDto {
 
     private String profile;
     private String phone;
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-
 }

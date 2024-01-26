@@ -24,6 +24,7 @@ public class NotProd {
     private final MemberRepository memberRepository;
     private final ExperienceRepository experienceRepository;
     private final PasswordEncoder passwordEncoder;
+
     @Bean
     public ApplicationRunner initNotProd() {
         return args -> {
@@ -43,28 +44,33 @@ public class NotProd {
             Member admin = Member.builder()
                     .email("admin")
                     .password(passwordEncoder.encode("admin"))
-                    .roles("admin")
+                    .roles("ADMIN")
                     .build();
             memberRepository.save(admin);
 
             for (int i = 1; i <= 45; i++) {
                 experienceRepository.save(
                         Experience.builder()
-                        .member(admin)
-                        .title("test"+ i)
-                        .build()
+                                .member(admin)
+                                .title("test" + i)
+                                .build()
                 );
             }
 
             //테스트 멤버 생성 일단 당장 속도때문에 스트림은 사용하지 않았음
             MemberRegisterDto memberRegisterDto = new MemberRegisterDto(
-                    "test", "test", "test", null, "010-1111-1111", null);
+                    "test", "test", "test", null, "010-1111-1111", null, null);
 
             for (int i = 1; i < 5; i++) {
                 memberRegisterDto.setEmail("test" + i);
                 memberService.register(memberRegisterDto);
             }
         }
+
+        //여기부터 추가하시면 됩니다.
+
+
     }
 
 }
+

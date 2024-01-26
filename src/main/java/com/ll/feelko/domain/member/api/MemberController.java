@@ -37,7 +37,8 @@ public class MemberController {
                 registerRequest.getName(),
                 registerRequest.getProfile(),
                 registerRequest.getPhone(),
-                registerRequest.getBirthday()
+                registerRequest.getBirthday(),
+                null
                 );
 
         memberService.register(registerDto);
