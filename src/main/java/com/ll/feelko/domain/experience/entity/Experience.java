@@ -30,6 +30,7 @@ public class Experience {
 
     private Long headcount;
 
+    private String descriptionText;
 
     private String location;
 }

@@ -60,6 +60,7 @@ public class NotProd {
                         .title("title" + i)
                         .imageFile(null)
                         .location("장소" + i)
+                        .descriptionText("내용"+i)
                         .build());
             }));
         };
