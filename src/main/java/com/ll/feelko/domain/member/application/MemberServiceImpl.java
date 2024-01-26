@@ -33,6 +33,7 @@ public class MemberServiceImpl implements MemberService{
                 .profile(registerDto.getProfile())
                 .phone(registerDto.getPhone())
                 .birthday(registerDto.getBirthday())
+                .providerId(registerDto.getProviderId())
                 .roles("USER") // 그냥 string으로 할지 Grantedauthority로 할지
                 .build();
         memberRepository.save(member);

@@ -1,5 +1,4 @@
-<form th:action method="POST" onsubmit="submitProfileUpdateForm(this);">
-    <input type="hidden" name="_method" value="PUT">
+<div>
     <div>
         <label>이메일(e-mail)</label>
         <div th:text="${profileDto.email}"></div>
@@ -7,18 +6,22 @@
 
     <div>
         <label>이름</label>
-        <input type="text" th:field="*{profileDto.name}" th:text="${profileDto.name}">
+        <div th:text="${profileDto.name}"></div>
 
     </div>
 
     <div>
         <label>생일</label>
-        <input type="date" th:field="*{profileDto.birthday}">
+        <div th:text="${profileDto.birthday}"></div>
     </div>
     <div>
         <label>전화번호</label>
-        <input type="text" th:field="*{profileDto.phone}" th:text="${profileDto.phone}">
+        <div th:text="${profileDto.phone}"></div>
     </div>
+</div>
+
+<form th:action method="POST" onsubmit="submitProfileUpdateForm(this);">
+    <input type="hidden" name="_method" value="PUT">
 
     <div style="display: flex; flex-direction: column; align-items: flex-start;">
         <label>프로필</label>
