@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -24,6 +24,6 @@ public class MemberRegisterDto {
     private String profile;
     private String phone;
     @DateTimeFormat
-    private Date birthday;
+    private LocalDate birthday;
 
 }
