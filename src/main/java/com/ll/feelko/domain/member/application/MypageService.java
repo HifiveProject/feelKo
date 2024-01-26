@@ -11,4 +11,6 @@ public interface MypageService {
     void updateProfile(Long id, MemberProfileUpdateDto updateDto);
 
     Page<uploadedPageDto> getUploadedPageList(long memberId, int page, int size);
+
+    MemberProfileUpdateDto getProfile(long id);
 }

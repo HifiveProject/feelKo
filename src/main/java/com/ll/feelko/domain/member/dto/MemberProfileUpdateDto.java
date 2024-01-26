@@ -1,6 +1,5 @@
 package com.ll.feelko.domain.member.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberProfileUpdateDto {
-    @NotBlank
-    private String password;
-
+    private String email;
     private String name;
 
     private String profile;
