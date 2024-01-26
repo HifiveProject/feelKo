@@ -25,5 +25,6 @@ public class MemberRegisterDto {
     private String phone;
     @DateTimeFormat
     private LocalDate birthday;
+    private String providerId;
 
 }

@@ -3,6 +3,7 @@ package com.ll.feelko.domain.member.application;
 
 import com.ll.feelko.domain.member.dao.MemberRepository;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
+import com.ll.feelko.domain.member.dto.SocialLoginDto;
 import com.ll.feelko.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +33,8 @@ public class MemberServiceImpl implements MemberService{
                 .profile(registerDto.getProfile())
                 .phone(registerDto.getPhone())
                 .birthday(registerDto.getBirthday())
-                .roles("user") // 그냥 string으로 할지 Grantedauthority로 할지
+                .providerId(registerDto.getProviderId())
+                .roles("USER") // 그냥 string으로 할지 Grantedauthority로 할지
                 .build();
         memberRepository.save(member);
 
@@ -57,6 +59,30 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public Optional<Member> findById(Long id){
         return memberRepository.findById(id);
+    }
+
+    @Transactional
+    public Member whenSocialLogin(SocialLoginDto socialLoginDto) {
+        Optional<Member> optMember = findByProviderId(socialLoginDto.getProviderId());
+
+        if (optMember.isPresent()) return optMember.get();
+
+        //SocialLoginDto to MemberRegisterDto
+        MemberRegisterDto registerDto = new MemberRegisterDto(
+                socialLoginDto.getEmail(),
+                socialLoginDto.getProviderId(), //비밀번호 수정예정
+                socialLoginDto.getNickname(),
+                socialLoginDto.getProfileImageUrl(),
+                null,
+                null,
+                socialLoginDto.getProviderId()
+        );
+
+        return register(registerDto);
+    }
+
+    private Optional<Member> findByProviderId(String providerId) {
+        return memberRepository.findByProviderId(providerId);
     }
 
 }
