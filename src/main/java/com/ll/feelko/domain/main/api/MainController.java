@@ -11,7 +11,7 @@ public class MainController {
     @GetMapping("/")
     public String showMain(){
         log.info("called");
-        return "/domain/main/mainpage";
+        return "/domain/main/experienceList";
     }
 
 
