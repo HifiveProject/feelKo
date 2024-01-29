@@ -39,10 +39,14 @@ select {
     background-color: #F3F3F3;
 }
 select option {
-    background: #8B89FF;
-    color: white;
+    background: #FFFFFF;
+    color: black;
     padding: 3px 0;
     border: none;
+}
+
+select:hover {
+    background-color: #E0E0E0;
 }
 
 /* 이스터에그 */
@@ -82,13 +86,51 @@ select option {
 
 /* template3 ----------------------------------------------- */
 
-/* 페이지 제목 */
 .template--pageTitleContainer {
-    padding: 10px 0 10px;
-    height: 120px;
-    display: grid;
-    place-items: center;
+    background-color: #f9f9f9; /* 배경색 변경 */
+    border-radius: 30px; /* 둥근 모서리 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    padding: 20px; /* 내부 여백 */
+    margin: 20px auto; /* 상하 여백과 중앙 정렬 */
+    width: 80%; /* 너비 설정 */
+    max-width: 600px; /* 최대 너비 제한 */
 }
+
+.template--overlayedTitle {
+    display: flex; /* 폼 요소들을 일렬로 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    gap: 10px; /* 요소 사이의 간격 */
+}
+
+.template--overlayedTitle label {
+    font-weight: bold; /* 라벨 글꼴 가중치 */
+    margin-right: 5px; /* 라벨과 요소 사이 여백 */
+}
+
+select, input[type="date"] {
+    padding: 10px; /* 패딩 추가 */
+    border-radius: 5px; /* 둥근 모서리 */
+    border: 1px solid #ccc; /* 테두리 스타일 */
+    background-color: white; /* 배경색 변경 */
+}
+
+button[type="submit"] {
+    background-color: #FF1493; /* 버튼 배경색 */
+    color: white; /* 버튼 텍스트 색상 */
+    padding: 10px 20px; /* 버튼 패딩 */
+    border: none; /* 테두리 제거 */
+    border-radius: 5px; /* 둥근 모서리 */
+    cursor: pointer; /* 커서 변경 */
+    transition: background-color 0.3s; /* 호버 효과 */
+
+}
+
+button[type="submit"]:hover {
+    background-color: #FF0E83; /* 호버 시 색상 변경 */
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 약간 강화 (안쪽) */
+
+}
+
 /* 콘텐츠 컨테이너 */
 .template--contentContainer {
     height: 700px; /* 1) 이 높이와 */
@@ -106,3 +148,5 @@ select option {
     display: grid;
     place-items: center;
 }
+
+

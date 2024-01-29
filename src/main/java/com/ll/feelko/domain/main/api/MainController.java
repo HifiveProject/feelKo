@@ -11,6 +11,12 @@ public class MainController {
     @GetMapping("/")
     public String showMain(){
         log.info("called");
+        return "/domain/main/mainpage";
+    }
+
+    @GetMapping("/experienceList")
+    public String showExperienceList(){
+        log.info("called");
         return "/domain/main/experienceList";
     }
 
