@@ -96,6 +96,7 @@ input:focus {
 
 
 
+
 /* nav ----------------------------------------------- */
 /* nav 컨테이너 */
 .common--navContainer {
@@ -134,7 +135,9 @@ input:focus {
 
 #common--boardList li a:hover {
     color: white;
-    background-color: #8B89FF;
+    /*background-color: #8B89FF;*/
+    background-color: #E0E0E0;
+
     cursor: pointer;
 }
 
@@ -153,4 +156,42 @@ input:focus {
     border: 3px solid black;
     border-radius: 50%;
     transition: border-color 0.3s ease; /* 호버 시에 색상 변경 효과를 부드럽게 적용 */
+}
+
+/* 버튼에 대한 스타일 */
+.btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+/* 햄버거 아이콘과 사용자 아이콘에 대한 스타일 */
+.hamburger-icon {
+    height: 16px; /* 아이콘 크기는 이미지에 따라 조절 */
+    width: auto;
+    margin-right: 5px; /* 아이콘 사이 간격 */
+}
+
+.user-icon {
+    height: 40px; /* 원하는 높이로 조절 */
+    width: auto; /* 가로 세로 비율을 유지 */
+    margin-right: 5px; /* 아이콘 사이 간격 유지 */
+}
+
+/* 드롭다운 메뉴에 대한 추가적인 스타일 (필요에 따라) */
+.common--tripBoard {
+    /* 여기에 필요한 스타일을 추가합니다 */
+}
+
+/* 아이콘을 감싸는 컨테이너에 대한 스타일 */
+.icon-container {
+    display: flex; /* 아이콘을 수평으로 정렬하기 위해 flex를 사용 */
+    align-items: center; /* 아이콘을 중앙에 배치 */
+    justify-content: center; /* 아이콘들이 컨테이너 내에서 가운데 정렬되도록 설정 */
+    padding: 5px; /* 컨테이너 내부 여백 */
+    border-radius: 30px; /* 라운드 테두리 반경 */
+    background-color: #ffffff; /* 배경색, 필요에 따라 변경 가능 */
+    border: 1px solid #dcdcdc; /* 테두리 색상, 필요에 따라 변경 가능 */
+    width: 108px;
+    height: 60px;
 }

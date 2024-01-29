@@ -1,0 +1,167 @@
+/* 인기글 스타일 */
+
+
+.main-notime {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 41px;
+    row-gap: 42px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+}
+.main-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 세로 정렬과 가운데 정렬을 위한 스타일 */
+    background-color: antiquewhite;
+}
+
+.main-hot {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 90px; /* 항목들 간의 간격 조절 */
+    justify-content: center; /* 수평 가운데 정렬을 위한 스타일 */
+    align-items: center; /* 수직 가운데 정렬을 위한 스타일 */
+    margin-bottom: 50px;
+}
+
+
+.hotpost {
+    margin-bottom: 15px;
+    margin-left: 25px;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 15px;
+    background-color: #8B89FF;
+    color: white;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    position: relative;
+    margin-top: 10px; /* 위쪽 여백 조절 */
+}
+.notime {
+    margin-bottom: 15px;
+    margin-left: 25px;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 15px;
+    background-color: greenyellow;
+    color: white;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    position: relative;
+    margin-top: 10px; /* 위쪽 여백 조절 */
+}
+
+.hotpost::before {
+    font-size: 1rem; /* 전경 텍스트 크기 조절 */
+    position: absolute; /* 절대 위치 지정 */
+    top: -20px; /* 위쪽으로 이동하여 겹치지 않게 함 */
+    left: 50%; /* 가운데 정렬을 위해 왼쪽으로 이동 */
+    transform: translateX(-50%); /* 가운데 정렬을 위해 X축으로 이동 */
+    font-weight: bold; /* 글자 굵게 표시 */
+}
+
+/* 다른 인기글 박스들에도 동일한 스타일 적용 */
+.hotpost-1{
+    width: 370px;
+    height: 400px;
+    background-color: #F3F3F3;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+.notime-1,
+.notime-2,
+.notime-3{
+    width: 300px;
+    height: 270px;
+    background-color: #F3F3F3;
+    border: 1px solid #D9D9D9;
+    border-radius: 10px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.template--contentBox-1 {
+    height: 1100px;
+    width: 95%;
+    margin: 10px 30px 10px 30px;
+    display: grid;
+    place-items: center;
+}
+
+.hotpost-img1{
+    height: 220px;
+    width: 300px;
+}
+
+.main-2{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.btn1{
+    width: 150px;
+    height: 40px;
+
+}
+
+.hotpost-name1{
+    display: flex;
+    font-size: 20px;
+    height: 1px;
+    margin-top: 88px;
+
+}
+.postname{
+    margin-right: 5px;
+}
+
+.price{
+    font-size: 20px;
+    height: 20px;
+    margin-bottom: 8px;
+    margin-top: 12px;
+}
+
+/* 이전, 다음 버튼 css*/
+.btn1 {
+    background-color: #008CBA; /* 배경색 설정 */
+    color: white; /* 버튼 내 텍스트 색상을 흰색으로 설정 */
+    padding: 12px 24px; /* 상하 12px, 좌우 24px의 패딩을 추가 */
+    border: none; /* 테두리 제거 */
+    border-radius: 4px; /* 버튼 모서리 둥글게 */
+    font-size: 16px; /* 글자 크기 설정 */
+    font-weight: bold; /* 글자 굵기 */
+    margin: 5px; /* 주변 여백 설정 */
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; /* 부드러운 색상 & 그림자 변환 효과 */
+    box-shadow: 2px 2px 4px #999; /* 그림자 효과 */
+
+    text-align: center; /* 텍스트를 버튼 내 가운데로 정렬 */
+    line-height: 5px; /* 버튼의 높이에 맞춰 세로 정렬 (버튼의 높이에 따라 조절) */
+    /* 이 line-height는 버튼의 높이와 동일하거나, 버튼 내 텍스트가 수직 중앙에 오도록 조정해야 함 */
+}
+
+.btn1:hover {
+    background-color: #00688B; /* 호버 시 배경색 변경 */
+    color: #ff0; /* 호버 시 텍스트 색상 변경 */
+    box-shadow: 0 0 8px #fff; /* 호버 시 그림자 효과 변경 */
+}
+
+.btn1:active {
+    background-color: #005577; /* 클릭 시 배경색 변경 */
+    box-shadow: 0 2px 4px #666 inset; /* 클릭 시 그림자 효과 변경 */
+}

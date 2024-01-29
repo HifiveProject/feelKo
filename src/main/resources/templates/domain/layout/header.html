@@ -50,27 +50,50 @@
                 <li class="nav-item">
                     <a class="nav-link" href="https://www.naver.com" style="color:grey;">예비게시판실험</a>
                 </li>
+                <!-- 로그인/프로필 버튼과 드롭다운 메뉴를 포함하는 리스트 아이템 -->
                 <li class="nav-item dropdown">
-                    <a  href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="login-icon" src="/images/로그인 이미지.png" alt="로그인 이미지">
-                    </a>
-                    <ul class="dropdown-menu common--tripBoard" aria-labelledby="moreDropdown">
-                        <!-- 드롭다운 메뉴 항목들 -->
-                        <li>
-                            <form action="/html/account/login.html" method="get">
-                                <a class="dropdown-item" href="/html/account/login.html">로그인</a>
-                            </form>
-                        </li>
+                    <div class="icon-container">
+                        <!-- 버튼 형태로 변경, 햄버거 메뉴 아이콘과 프로필 아이콘을 포함 -->
+                        <button class="btn" id="moreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/images/menu-icon.svg" alt="메뉴 아이콘" class="hamburger-icon"> <!-- 햄버거 아이콘 -->
+                            <img src="/images/로그인 이미지.png" alt="사용자 아이콘" class="user-icon"> <!-- 프로필 아이콘 -->
+                        </button>
 
-                        <li><a class="dropdown-item">마이페이지</a></li>
-                        <li><a class="dropdown-item">개인정보</a></li>
-                        <li><a class="dropdown-item">결제&예약 정보</a></li>
-                        <li><a class="dropdown-item">체험 등록</a></li>
-                        <li><a class="dropdown-item">본인 업로드 체험 정보</a></li>
-                        <li><a class="dropdown-item">찜, 위시 리스트</a></li>
-                        <li><a class="dropdown-item">메시지</a></li>
-                    </ul>
+                        <!-- 드롭다운 메뉴 -->
+                        <ul class="dropdown-menu common--tripBoard" aria-labelledby="moreDropdown">
+                            <!-- 기존 메뉴 아이템들 -->
+                            <li><a class="dropdown-item" href="/html/account/login.html">로그인</a></li>
+                            <li><a class="dropdown-item" href="#">마이페이지</a></li>
+                            <li><a class="dropdown-item" href="#">개인정보</a></li>
+                            <li><a class="dropdown-item" href="#">결제&예약 정보</a></li>
+                            <li><a class="dropdown-item" href="#">체험 등록</a></li>
+                            <li><a class="dropdown-item" href="#">본인 업로드 체험 정보</a></li>
+                            <li><a class="dropdown-item" href="#">찜, 위시 리스트</a></li>
+                            <li><a class="dropdown-item" href="#">메시지</a></li>
+                        </ul>
+                    </div>
                 </li>
+                <!--                <li class="nav-item dropdown">-->
+                <!--                    <a  href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+                <!--                        <img class="login-icon" src="/images/로그인 이미지.png" alt="로그인 이미지">-->
+                <!--                    </a>-->
+                <!--                    <ul class="dropdown-menu common&#45;&#45;tripBoard" aria-labelledby="moreDropdown">-->
+                <!--                        &lt;!&ndash; 드롭다운 메뉴 항목들 &ndash;&gt;-->
+                <!--                        <li>-->
+                <!--                            <form action="/html/account/login.html" method="get">-->
+                <!--                                <a class="dropdown-item" href="/html/account/login.html">로그인</a>-->
+                <!--                            </form>-->
+                <!--                        </li>-->
+
+                <!--                        <li><a class="dropdown-item">마이페이지</a></li>-->
+                <!--                        <li><a class="dropdown-item">개인정보</a></li>-->
+                <!--                        <li><a class="dropdown-item">결제&예약 정보</a></li>-->
+                <!--                        <li><a class="dropdown-item">체험 등록</a></li>-->
+                <!--                        <li><a class="dropdown-item">본인 업로드 체험 정보</a></li>-->
+                <!--                        <li><a class="dropdown-item">찜, 위시 리스트</a></li>-->
+                <!--                        <li><a class="dropdown-item">메시지</a></li>-->
+                <!--                    </ul>-->
+                <!--                </li>-->
             </ul>
 
         </nav>
@@ -83,7 +106,6 @@
 
 
 <!-- ----------------------------------------------- -->
-
 
 
 <!-- ----------------------------------------------- -->

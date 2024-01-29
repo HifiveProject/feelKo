@@ -14,5 +14,11 @@ public class MainController {
         return "/domain/main/mainpage";
     }
 
+    @GetMapping("/experienceList")
+    public String showExperienceList(){
+        log.info("called");
+        return "/domain/main/experienceList";
+    }
+
 
 }

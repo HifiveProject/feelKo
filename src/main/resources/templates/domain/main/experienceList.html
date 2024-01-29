@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- css -->
+    <link rel="stylesheet" href="/css/template/template.css"> <!-- 문서 기본 화면 배치/기본 폰트 등 기본 설정 -->
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/exprienceList.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
+
+    <title>Feelko-template3</title>
+
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- fontAwesome -->
+    <script src="https://kit.fontawesome.com/ae1a88d4e2.js" crossorigin="anonymous"></script>
+</head>
+<body class="template--body">
+
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- Template-header 시작 -->
+<!--<th:block layout:fragment="header"> </th:block>-->
+<th:block th:replace="domain/layout/header"></th:block>
+<!-- Template-header 끝 -->
+
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- Template-main 시작 -->
+<main class="template--main">
+    <aside class="template--leftAside"></aside>
+    <section class="template--Section">
+
+
+        <!-- 페이지 제목 시작 -->
+        <div class="template--pageTitleContainer">
+            <div class="template--pageTitleBox">
+                <div class="template--overlayedTitle" style="color: black;">
+                    <a>
+                        <form action="/search" method="get">
+                            <label for="destination">여행지:</label>
+                            <select id="destination" name="destination" required>
+                                <option value="" disabled selected hidden>여행할 장소를 선택하세요</option>
+                                <option value="서울">서울</option>
+                                <option value="인천">인천</option>
+                                <option value="대전">대전</option>
+                                <option value="대구">대구</option>
+                                <option value="경기">경기</option>
+                                <option value="부산">부산</option>
+                                <option value="울산">울산</option>
+                                <option value="광주">광주</option>
+                                <option value="강원">강원</option>
+                                <option value="충북">충북</option>
+                                <option value="충남">충남</option>
+                                <option value="경북">경북</option>
+                                <option value="경남">경남</option>
+                                <option value="전북">전북</option>
+                                <option value="전남">전남</option>
+                                <option value="제주">제주</option>
+                                <option value="세종">세종</option>
+                            </select>
+                            <label for="start_date">날짜:</label>
+                            <input type="date" id="start_date" name="start_date" required>
+                            <button type="submit">검색</button>
+                        </form>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- 페이지 제목 끝 -->
+
+
+        <!-- 콘텐츠 시작 -->
+        <!--        <div class="template&#45;&#45;contentContainer">-->
+        <div class="main-1">
+            <div class="hotpost">
+                서울
+            </div>
+            <div class="main-hot">
+                <div class="hotpost-1">
+                    <div class="hotpost-img1">
+                        사진
+                    </div>
+                    <div class="hotpost-name1">
+                        <div class="postname">
+                        제목 : 인기글1
+                        </div>
+                        <div class="postday">기간 : 2-15 ~ 2-16</div>
+                    </div>
+
+                    <div class="price">가격 : 50000원</div>
+                </div>
+                <div class="hotpost-1">
+                    <div class="hotpost-img1">
+                        사진
+                    </div>
+                    <div class="hotpost-name1">
+                        <div class="postname">
+                            제목 : 인기글2
+                        </div>
+                        <div class="postday">기간 : 2-15 ~ 2-16</div>
+                    </div>
+
+                    <div class="price">가격 : 50000원</div>
+                </div>
+                <div class="hotpost-1">
+                    <div class="hotpost-img1">
+                        사진
+                    </div>
+                    <div class="hotpost-name1">
+                        <div class="postname">
+                            제목 : 인기글3
+                        </div>
+                        <div class="postday">기간 : 2-15 ~ 2-16</div>
+                    </div>
+
+                    <div class="price">가격 : 50000원</div>
+                </div>
+                <div class="hotpost-1">
+                    <div class="hotpost-img1">
+                        사진
+                    </div>
+                    <div class="hotpost-name1">
+                        <div class="postname">
+                            제목 : 인기글4
+                        </div>
+                        <div class="postday">기간 : 2-15 ~ 2-16</div>
+                    </div>
+
+                    <div class="price">가격 : 50000원</div>
+                </div>
+                <div class="hotpost-1">
+                    <div class="hotpost-img1">
+                        사진
+                    </div>
+                    <div class="hotpost-name1">
+                        <div class="postname">
+                            제목 : 인기글5
+                        </div>
+                        <div class="postday">기간 : 2-15 ~ 2-16</div>
+                    </div>
+
+                    <div class="price">가격 : 50000원</div>
+                </div>
+                <div class="hotpost-1">
+                    <div class="hotpost-img1">
+                        사진
+                    </div>
+                    <div class="hotpost-name1">
+                        <div class="postname">
+                            제목 : 인기글6
+                        </div>
+                        <div class="postday">기간 : 2-15 ~ 2-16</div>
+                    </div>
+
+                    <div class="price">가격 : 50000원</div>
+                </div>
+                <div class="hotpost-1">
+                    <div class="hotpost-img1">
+                        사진
+                    </div>
+                    <div class="hotpost-name1">
+                        <div class="postname">
+                            제목 : 인기글7
+                        </div>
+                        <div class="postday">기간 : 2-15 ~ 2-16</div>
+                    </div>
+
+                    <div class="price">가격 : 50000원</div>
+                </div>
+                <div class="hotpost-1">
+                    <div class="hotpost-img1">
+                        사진
+                    </div>
+                    <div class="hotpost-name1">
+                        <div class="postname">
+                            제목 : 인기글8
+                        </div>
+                        <div class="postday">기간 : 2-15 ~ 2-16</div>
+                    </div>
+
+                    <div class="price">가격 : 50000원</div>
+                </div>
+                <div class="hotpost-1">
+                    <div class="hotpost-img1">
+                        사진
+                    </div>
+                    <div class="hotpost-name1">
+                        <div class="postname">
+                            제목 : 인기글9
+                        </div>
+                        <div class="postday">기간 : 2-15 ~ 2-16</div>
+                    </div>
+
+                    <div class="price">가격 : 50000원</div>
+                </div>
+            </div>
+        </div>
+        <div class="main-2">
+            <button class="btn1">이전</button>
+            <button class="btn1">다음</button>
+        </div>
+
+        <!--        </div>-->
+        <!-- 콘텐츠 끝 -->
+
+
+    </section>
+    <aside class="template--rightAside"></aside>
+</main>
+<!-- Template-main 끝 -->
+
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- Template-footer 시작 -->
+<th:block th:replace="domain/layout/footer"></th:block>
+<!-- Template-footer 끝 -->
+
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+<!-- js -->
+<!--<script src="../js/template/template.js"></script>-->
+<script src="/js/common/header.js"></script>
+<script src="/js/common/main.js"></script>
+<script src="/js/common/footer.js"></script>
+</body>
+</html>
