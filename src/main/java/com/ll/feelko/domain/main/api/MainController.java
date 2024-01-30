@@ -20,5 +20,4 @@ public class MainController {
         return "/domain/main/experienceList";
     }
 
-
 }
