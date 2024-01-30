@@ -14,4 +14,6 @@ public interface ExperienceRepository extends JpaRepository<Experience,Long> {
     Page<uploadedPageDto> findIdTitleByMemberIdOrderByIdDesc(@Param("memberId") long memberId, Pageable pageable);
 
 
+
+
 }
