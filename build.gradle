@@ -32,7 +32,7 @@ dependencies {
 
     //thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
     //validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
