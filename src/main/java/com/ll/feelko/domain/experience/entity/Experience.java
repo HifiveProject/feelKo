@@ -1,6 +1,5 @@
 package com.ll.feelko.domain.experience.entity;
 
-
 import com.ll.feelko.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,9 +25,10 @@ public class Experience {
     private String title;
 
 
-    private Long headcount;
+    private String imageUrl;
 
-    //private List<MultipartFile> image = new ArrayList<>();
+
+    private Long headcount;
 
 
     private String location;

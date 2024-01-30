@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 
 @Controller
 @RequestMapping("/member")
@@ -29,7 +30,7 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid com.ll.feelko.domain.member.api.MemberRegisterRequest registerRequest){
+    public String register(@Valid MemberRegisterRequest registerRequest){
         //request를 dto로 변환
         MemberRegisterDto registerDto = new MemberRegisterDto(
                 registerRequest.getEmail(),
