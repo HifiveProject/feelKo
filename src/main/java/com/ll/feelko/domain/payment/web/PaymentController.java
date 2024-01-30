@@ -22,7 +22,6 @@ public class PaymentController {
     @GetMapping("/payment")
     public String test(@RequestParam("experienceId") Long experienceId , Model model) {
 
-
         Experience experiences = experienceService.findByIdElseThrow(experienceId);
 
         model.addAttribute("experiences" ,  experiences);
@@ -47,8 +46,7 @@ public class PaymentController {
         log.info("order 아이디 = {}" , orderId);
         log.info("key 아이디 = {}" , paymentKey);
         log.info("가격 = {}" , amount);
-
-
+        
         return "성공";
     }
 }
