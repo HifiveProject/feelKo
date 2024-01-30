@@ -5,31 +5,6 @@
 /* font-family: 'Noto Sans KR', sans-serif; */
 /* font-family: 'Noto Serif KR', serif; */
 
-/* loginNav ----------------------------------------------- */
-
-/* loginNav 컨테이너 */
-.common--loginNav__container {
-    height: 40px;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    padding: 0 50px 0 50px;
-    background-color: white;
-}
-
-/* loginNav 버튼 조정 */
-.common--loginNav__container form {
-    margin-right: 10px;
-}
-.common--loginNav__container form button {
-    border: none;
-}
-
-/* loginNav 버튼 상호작용 */
-.common--loginNav__container form button:hover {
-    background-color: #8B89FF;
-}
-
 /* header ----------------------------------------------- */
 
 /* header 컨테이너 */
@@ -51,52 +26,6 @@ input:focus {
     outline: none;
 }
 
-/* 프로필 박스 조정/상호작용 */
-.common--header__profileContainer {
-    display: flex;
-    justify-content: space-between;
-}
-.common--header__profileBox {
-    height: 50%;
-    width: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-.common--header__profileBox > a {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    gap: 15px;
-}
-
-
-/* 프로필 이미지 크기 조정 */
-.common--header__profileImageBox {
-    height: 80px;
-    overflow: hidden;
-    border-radius: 100%;
-}
-.common--header__profileImageBox > img {
-    object-fit: cover;
-    object-position: center center;
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
-}
-
-/* 프로필 상호작용 */
-.common--header__profileBox > a:hover {
-    color: #8B89FF;
-    border: 3px solid #F3F3F3;
-    border-radius: 30px;
-    padding: 10px 30px 10px;
-}
-
-
-
-
 /* nav ----------------------------------------------- */
 /* nav 컨테이너 */
 .common--navContainer {
@@ -106,12 +35,6 @@ input:focus {
     height: 80px;
     border-top: 1px solid #D9D9D9;
     border-bottom: 1px solid #D9D9D9;
-}
-
-/* 게시판 나라 국기 이미지 조정 */
-.common--tripBoard img {
-    height: 15px;
-    padding-right: 10px;
 }
 
 /* nav 애니메이션 효과 */
@@ -139,23 +62,6 @@ input:focus {
     background-color: #E0E0E0;
 
     cursor: pointer;
-}
-
-/* nav 효과 */
-.navAnimation {
-    font-size: 2.0rem;
-}
-
-/* 이미지 크기 조절 */
-.login-icon {
-    width: 70px; /* 원하는 크기로 조절 */
-    height: auto; /* 가로 세로 비율을 유지하도록 설정 */
-}
-/* 호버시 효과 추가 */
-.login-icon:hover {
-    border: 3px solid black;
-    border-radius: 50%;
-    transition: border-color 0.3s ease; /* 호버 시에 색상 변경 효과를 부드럽게 적용 */
 }
 
 /* 버튼에 대한 스타일 */

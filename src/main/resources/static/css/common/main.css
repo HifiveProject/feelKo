@@ -71,14 +71,9 @@
 }
 
 /* 다른 인기글 박스들에도 동일한 스타일 적용 */
-.hotpost-1,
-.hotpost-2,
-.hotpost-3,
-.hotpost-4,
-.hotpost-5,
-.hotpost-6 {
-    width: 300px;
-    height: 270px;
+.hotpost-1{
+    width: 370px;
+    height: 400px;
     background-color: #F3F3F3;
     border: 1px solid #D9D9D9;
     border-radius: 10px;
