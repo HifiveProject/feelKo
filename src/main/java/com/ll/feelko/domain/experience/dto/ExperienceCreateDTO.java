@@ -11,4 +11,5 @@ public class ExperienceCreateDTO {
     private String title;
     private MultipartFile imageFile;
     private String location;
+    public String descriptionText;
 }
