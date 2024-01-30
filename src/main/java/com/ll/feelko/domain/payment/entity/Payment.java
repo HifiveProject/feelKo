@@ -7,6 +7,8 @@ import lombok.*;
 import java.math.BigDecimal;
 
 
+
+
 @Getter
 @Entity
 @ToString
@@ -14,11 +16,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Payment {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -26,7 +26,19 @@ public class Payment {
 
     private String status;
 
+    private String orderId;
+
+    private String paymentKey;
+
     private BigDecimal price;
 
+    @Builder
+    public Payment(Member member, String status, String orderId, String paymentKey, BigDecimal price) {
+        this.member = member;
+        this.status = status;
+        this.orderId = orderId;
+        this.paymentKey = paymentKey;
+        this.price = price;
+    }
 
 }
