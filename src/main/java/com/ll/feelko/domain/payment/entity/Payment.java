@@ -1,24 +1,22 @@
 package com.ll.feelko.domain.payment.entity;
 
 import com.ll.feelko.domain.member.entity.Member;
+import com.ll.feelko.global.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 
 
+
+
 @Getter
 @Entity
-@ToString
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Payment {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Payment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
@@ -26,7 +24,10 @@ public class Payment {
 
     private String status;
 
-    private BigDecimal price;
+    private String orderId;
 
+    private String paymentKey;
+
+    private BigDecimal price;
 
 }

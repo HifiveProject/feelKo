@@ -12,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,15 +36,17 @@ public class Member {
     private String password;
     private String profile;
     private String phone;
-    private Date birthday;
+    private LocalDate birthday;
     private String roles;
 
     @CreatedDate
-    private LocalDateTime createDate;
+    private LocalDateTime created_at;
     @LastModifiedDate
-    private LocalDateTime modifyDate;
+    private LocalDateTime modified_at;
 
     private LocalDateTime deleted_at;
+
+    private String providerId;
 
     public Collection<? extends GrantedAuthority> getAuthorities(){
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -78,5 +80,16 @@ public class Member {
 //    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @JoinColumn(name = "member_id")
 //    private List<PaymentDetail> paymentDetails;
+
+    // 회원정보 수정 메소드
+    public void updateProfile(String profile){
+        this.profile = profile;
+    }
+    public void profileUpdate(String name, String profile, String phone, LocalDate birthday){
+        this.name = name;
+        this.profile = profile;
+        this.phone = phone;
+        this.birthday = birthday;
+    }
 
 }

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ha">
+<head>
+    <meta charset="utf-8" />
+    <title>가상계좌 결제하기</title>
+    <!-- 토스페이먼츠 결제창 SDK 추가 -->
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+
+        section {
+            max-width: 600px;
+            margin: 2em auto;
+            padding: 2em;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 0.7em;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        h2 {
+            margin-top: 1.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.5em;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <!-- 가상계좌 결제하기 폼 -->
+    <form id="payment-form">
+
+        <label for="check-in">예약 날짜:</label>
+        <input type="date" id="check-in" name="check-in" readonly>
+
+        <label for="guest">인원수:</label>
+        <input type="guest" id="guest" name="guest" readonly>
+
+        <h2>객실 정보</h2>
+        <p>공동 주택의 객실</p>
+        <p>유서 깊은 발렌시아와 해변과 가깝습니다.</p>
+        <p>평점 4.86/5; 후기 177개</p>
+
+        <h2>요금 세부정보</h2>
+        <p>₩55,173 x 5박</p>
+        <p>₩275,865</p>
+
+        <h2>추가 비용</h2>
+        <p>청소비: ₩29,038</p>
+        <p>에어비앤비 서비스 수수료: ₩43,049</p>
+
+        <h2>총 합계 (KRW)</h2>
+        <p id="totalAmount">₩347,952</p>
+
+        <!-- Add more input fields for user information if needed -->
+        <label for="customerName">이름:</label>
+        <input type="text" id="customerName" name="customerName" required>
+
+        <label for="customerEmail">이메일:</label>
+        <input type="email" id="customerEmail" name="customerEmail" required>
+
+        <button type="button" id="payment-button">가상계좌로 결제하기</button>
+    </form>
+</section>
+
+<script>
+    var clientKey = 'test_ck_AQ92ymxN34MNDpl69MnAVajRKXvd';
+    var button = document.getElementById('payment-button');
+    var chargeAmount = 50000; // 예시 충전 금액
+
+    button.addEventListener('click', function () {
+        var customerName = document.getElementById('customerName').value;
+        var customerEmail = document.getElementById('customerEmail').value;
+
+        // Data to be sent to the server
+        var requestData = {
+            amount: chargeAmount,
+            orderId: generateOrderId(),
+            orderName: '포인트 충전',
+            customerName: customerName,
+            customerEmail: customerEmail,
+            successUrl: 'http://localhost:8080/success',
+            failUrl: 'http://localhost:8081/api/v1/payments/toss/fail',
+            validHours: 12,
+            cashReceipt: {
+                type: '소득 공제',
+            },
+            useEscrow: false,
+        };
+
+        // Open Toss Payments window
+        var tossPayments = TossPayments(clientKey);
+        tossPayments.requestPayment('가상계좌', requestData);
+    });
+
+    function generateOrderId() {
+        return 'order_' + Math.random().toString(36).substr(2, 9);
+    }
+</script>
+</body>
+</html>

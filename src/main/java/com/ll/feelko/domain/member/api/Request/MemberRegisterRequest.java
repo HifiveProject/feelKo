@@ -1,9 +1,7 @@
-package com.ll.feelko.domain.member.dto;
+package com.ll.feelko.domain.member.api.Request;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,9 +9,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class MemberRegisterDto {
+public class MemberRegisterRequest {
     @NotBlank
     private String email;
     @NotBlank
@@ -25,5 +21,4 @@ public class MemberRegisterDto {
     private String phone;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-    private String providerId;
 }
