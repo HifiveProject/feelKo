@@ -34,8 +34,6 @@ spring:
             authorization-grant-type: authorization_code
             redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
           google:
-#            client-id: 1067674396811-13dfevr71uhmukt6pkq94eqkfu5vgv80.apps.googleusercontent.com
-#            client-secret: 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
             client-id: ON_SECRET
             client-secret: ON_SECRET
             scope:

@@ -81,8 +81,14 @@ public class MemberServiceImpl implements MemberService{
         return register(registerDto);
     }
 
-    private Optional<Member> findByProviderId(String providerId) {
+    public Optional<Member> findByProviderId(String providerId) {
         return memberRepository.findByProviderId(providerId);
+    }
+
+    @Override
+    public Member findByIdElseThrow(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
     }
 
 }

@@ -19,4 +19,6 @@ public interface MemberService {
     Optional<Member> findById(Long id);
 
     Member whenSocialLogin(SocialLoginDto socialLoginDto);
+
+    Member findByIdElseThrow(Long memberId);
 }
