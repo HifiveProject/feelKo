@@ -24,47 +24,7 @@
     gap: 50px;
 }
 
-/* 우측 하단 버튼 조정 */
-#common--toTopBtn {
-    display: flex;
-    justify-content: right;
-    padding: 50px;
-    margin-left: 90%;
-    gap: 10px;
-}
-#common--toTopBtn a button {
-    border-radius: 50px;
-    width: 40px;
-    height: 40px;
-    border: none;
-}
-#common--toTopBtn a button:hover {
-    color: white;
-    background-color: #8B89FF;
-}
-#common--toTopBtn form button {
-    border-radius: 50px;
-    width: 40px;
-    height: 40px;
-    border: none;
-}
-#common--toTopBtn form button:hover {
-    color: white;
-    background-color: #8B89FF;
-}
 
-/* 좌측 하단 nav 조정 */
-#common--sideNav {
-    padding: 100px;
-    margin: 100px;
-}
 
-/* 채팅 모달창 ----------------------------------------------- */
 
-/* 채팅 모달창 구조 조정 */
-.chattingBox {
-    height: 700px;
-    max-height: 700px;
-    background-color: pink;
-}
 
