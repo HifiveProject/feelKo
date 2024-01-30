@@ -11,9 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 
+
 @Getter
 @ToString
 @Entity
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class ExperienceImage {
