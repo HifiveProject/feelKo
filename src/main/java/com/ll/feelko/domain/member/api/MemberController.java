@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 
 @Controller
 @RequestMapping("/member")
@@ -37,10 +38,12 @@ public class MemberController {
                 registerRequest.getName(),
                 registerRequest.getProfile(),
                 registerRequest.getPhone(),
-                registerRequest.getBirthday()
+                registerRequest.getBirthday(),
+                null
                 );
 
         memberService.register(registerDto);
         return "redirect:/member/login";
     }
+
 }

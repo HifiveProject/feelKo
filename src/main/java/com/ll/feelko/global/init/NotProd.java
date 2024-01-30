@@ -1,5 +1,7 @@
 package com.ll.feelko.global.init;
 
+import com.ll.feelko.domain.experience.dao.ExperienceRepository;
+import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.experience.application.ExperienceService;
 import com.ll.feelko.domain.experience.dto.ExperienceCreateDTO;
 import com.ll.feelko.domain.member.application.MemberService;
@@ -12,6 +14,8 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -22,8 +26,9 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class NotProd {
     private final MemberService memberService;
-    private final ExperienceService experienceService;
     private final MemberRepository memberRepository;
+    private final ExperienceService experienceService;
+    private final PasswordEncoder passwordEncoder;
 
     @Bean
     public ApplicationRunner initNotProd() {
@@ -37,7 +42,7 @@ public class NotProd {
             //admin생성  role때문에 그냥 엔티티로 만듬
             Member admin = Member.builder()
                     .email("admin")
-                    .password("admin")
+                    .password(passwordEncoder.encode("admin"))
                     .roles("admin")
                     .build();
             memberRepository.save(admin);
@@ -46,7 +51,7 @@ public class NotProd {
             List<Member> members = IntStream.rangeClosed(1, 5)
                     .mapToObj(i -> {
                         MemberRegisterDto memberRegisterDto = new MemberRegisterDto(
-                                "test", "test", "test", null, "010-1111-1111", null);
+                                "test", "test", "test", null, "010-1111-1111", null, null);
                         memberRegisterDto.setEmail("test" + i);
 
                         return memberService.register(memberRegisterDto);
