@@ -2,6 +2,8 @@ package com.ll.feelko.global.init;
 
 import com.ll.feelko.domain.experience.dao.ExperienceRepository;
 import com.ll.feelko.domain.experience.entity.Experience;
+import com.ll.feelko.domain.experience.application.ExperienceService;
+import com.ll.feelko.domain.experience.dto.ExperienceCreateDTO;
 import com.ll.feelko.domain.member.application.MemberService;
 import com.ll.feelko.domain.member.dao.MemberRepository;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
@@ -15,6 +17,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 @Configuration
 @Profile("!prod")
 @Slf4j
@@ -22,49 +27,47 @@ import org.springframework.transaction.annotation.Transactional;
 public class NotProd {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
-    private final ExperienceRepository experienceRepository;
+    private final ExperienceService experienceService;
     private final PasswordEncoder passwordEncoder;
+
     @Bean
     public ApplicationRunner initNotProd() {
         return args -> {
+
+            if (memberService.getMemberCount() != 0) {
+                return;
+            }
+
             //테스트용 멤버 생성
-            memberInit();
-
-            //여기부터 추가하시면 됩니다.
-
-
-        };
-    }
-
-    @Transactional
-    public void memberInit() {
-        if (memberService.getMemberCount() == 0) {
             //admin생성  role때문에 그냥 엔티티로 만듬
             Member admin = Member.builder()
                     .email("admin")
-                    .password(passwordEncoder.encode("ADMIN"))
+                    .password(passwordEncoder.encode("admin"))
                     .roles("admin")
                     .build();
             memberRepository.save(admin);
 
-            for (int i = 1; i <= 45; i++) {
-                experienceRepository.save(
-                        Experience.builder()
-                        .member(admin)
-                        .title("test"+ i)
-                        .build()
-                );
-            }
 
-            //테스트 멤버 생성 일단 당장 속도때문에 스트림은 사용하지 않았음
-            MemberRegisterDto memberRegisterDto = new MemberRegisterDto(
-                    "test", "test", "test", null, "010-1111-1111", null, null);
+            List<Member> members = IntStream.rangeClosed(1, 5)
+                    .mapToObj(i -> {
+                        MemberRegisterDto memberRegisterDto = new MemberRegisterDto(
+                                "test", "test", "test", null, "010-1111-1111", null, null);
+                        memberRegisterDto.setEmail("test" + i);
 
-            for (int i = 1; i < 5; i++) {
-                memberRegisterDto.setEmail("test" + i);
-                memberService.register(memberRegisterDto);
-            }
-        }
+                        return memberService.register(memberRegisterDto);
+                    })
+                    .toList();
+
+            // 체험 테스트 데이터 생성
+            members.forEach(member -> IntStream.rangeClosed(1, 10).forEach(i -> {
+                experienceService.createExperience(ExperienceCreateDTO.builder()
+                        .memberId(member.getId())
+                        .title("title" + i)
+                        .imageFile(null)
+                        .location("장소" + i)
+                        .descriptionText("내용"+i)
+                        .build());
+            }));
+        };
     }
-
 }

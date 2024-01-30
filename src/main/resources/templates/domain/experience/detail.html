@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+
+<div class="card">
+    <div class="container">
+        <h4 th:text="${experience.title}"></h4>
+        <img th:src="${experience.imageUrl}" alt="Image">
+        <p th:text="${experience.location}"></p>
+        <p th:text="${experience.descriptionText}"></p>
+        <p th:text="${experience.member}"></p>
+    </div>
+</div>
+
+</body>
+</html>

@@ -2,6 +2,7 @@ package com.ll.feelko.domain.member.api;
 
 import com.ll.feelko.domain.member.application.MemberServiceImpl;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
+import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,7 +30,7 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid com.ll.feelko.domain.member.api.MemberRegisterRequest registerRequest){
+    public String register(@Valid MemberRegisterRequest registerRequest){
         //request를 dto로 변환
         MemberRegisterDto registerDto = new MemberRegisterDto(
                 registerRequest.getEmail(),
