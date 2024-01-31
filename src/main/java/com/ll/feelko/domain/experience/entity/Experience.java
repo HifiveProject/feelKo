@@ -30,6 +30,8 @@ public class Experience {
 
     private Long wishCounter;
 
+    private String imageUrl;
+
     private String descriptionText;
 
     private String location;

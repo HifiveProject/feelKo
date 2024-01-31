@@ -1,7 +1,5 @@
 package com.ll.feelko.domain.experience.entity;
 
-import com.ll.feelko.domain.member.entity.Member;
-import com.ll.feelko.domain.wishlist.entity.WishList;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
