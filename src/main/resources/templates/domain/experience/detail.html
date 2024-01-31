@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+            integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
 </head>
 <body>
-
 <div class="card">
     <div class="container">
         <h4 th:text="${experience.title}"></h4>
@@ -12,8 +16,17 @@
         <p th:text="${experience.location}"></p>
         <p th:text="${experience.descriptionText}"></p>
         <p th:text="${experience.member}"></p>
+
+        <button th:onclick="'deleteProduct(' + ${experience.getId()} + ')'" > 결제 하기 </button>
+
     </div>
 </div>
+<script th:inline="javascript" type="text/javascript">
 
+    const deleteProduct = (id) => {
+        window.location.href = "/payment/" + id;
+    }
+
+</script>
 </body>
 </html>
