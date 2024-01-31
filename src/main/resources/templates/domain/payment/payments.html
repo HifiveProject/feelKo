@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ha">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="utf-8" />
     <title>가상계좌 결제하기</title>
@@ -59,41 +59,32 @@
         p {
             margin-bottom: 1em;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
 <section>
-    <!-- 가상계좌 결제하기 폼 -->
     <form id="payment-form">
-
         <label for="check-in">예약 날짜:</label>
-        <input type="date" id="check-in" name="check-in" readonly>
+        <input type="text" id="check-in" th:value="${experiences.getTitle()}"  readonly>
 
         <label for="guest">인원수:</label>
-        <input type="guest" id="guest" name="guest" readonly>
+        <input type="text" id="guest" th:value="${experiences.getHeadcount()}"  readonly>
 
-        <h2>객실 정보</h2>
-        <p>공동 주택의 객실</p>
-        <p>유서 깊은 발렌시아와 해변과 가깝습니다.</p>
-        <p>평점 4.86/5; 후기 177개</p>
+        <label for="description">상세 설명:</label>
+        <input type="text" id="description" th:value="${experiences.getDescriptionText()}" readonly>
 
-        <h2>요금 세부정보</h2>
-        <p>₩55,173 x 5박</p>
-        <p>₩275,865</p>
+        <label for="location">인원수:</label>
+        <input type="text" id="location" th:value="${experiences.getLocation()}"  readonly>
 
-        <h2>추가 비용</h2>
-        <p>청소비: ₩29,038</p>
-        <p>에어비앤비 서비스 수수료: ₩43,049</p>
+        <label for="customerName" class="hidden">이름:</label>
+        <input type="text" id="customerName" name="customerName" required class="hidden">
 
-        <h2>총 합계 (KRW)</h2>
-        <p id="totalAmount">₩347,952</p>
-
-        <!-- Add more input fields for user information if needed -->
-        <label for="customerName">이름:</label>
-        <input type="text" id="customerName" name="customerName" required>
-
-        <label for="customerEmail">이메일:</label>
-        <input type="email" id="customerEmail" name="customerEmail" required>
+        <label for="customerEmail" class="hidden">이메일:</label>
+        <input type="email" id="customerEmail" name="customerEmail" required class="hidden">
 
         <button type="button" id="payment-button">가상계좌로 결제하기</button>
     </form>
