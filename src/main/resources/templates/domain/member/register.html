@@ -1,33 +1,143 @@
-<form method="POST" onsubmit="submitLoginForm(this);">
-    <div>
-        <label>사용자 email</label>
-        <input type="text" name="email">
-    </div>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div>
-        <label>비밀번호</label>
-        <input type="password" name="password">
-    </div>
+    <!-- css -->
+    <link rel="stylesheet" href="/css/template/template.css"> <!-- 문서 기본 화면 배치/기본 폰트 등 기본 설정 -->
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
 
-    <div>
-        <label>이름</label>
-        <input type="text" name="name">
-    </div>
+    <title>Feelko-template3</title>
 
-    <div>
-        <label>프로필</label>
-        <input type="text" name="profile">
-    </div>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- fontAwesome -->
+    <script src="https://kit.fontawesome.com/ae1a88d4e2.js" crossorigin="anonymous"></script>
+    <style>
+        /* 로그인 컨테이너 스타일 */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 120px); /* 헤더와 푸터의 높이를 제외한 높이 */
+            margin-top: 60px; /* 헤더 높이의 절반 */
+            margin-bottom: 60px; /* 푸터 높이의 절반 */
+        }
 
-    <div>
-        <label>전화번호</label>
-        <input type="text" name="phone">
-    </div>
+        .login-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
 
-    <div>
-        <label>생년월일</label>
-        <input type="date" name="birthday">
-    </div>
+    </style>
+</head>
+<body class="template--body">
 
-    <button type="submit">회원가입</button>
-</form>
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- Template-header 시작 -->
+<th:block th:replace="domain/layout/header"> </th:block>
+<!-- Template-header 끝 -->
+
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- Template-main 시작 -->
+<main class="template--main">
+    <aside class="template--leftAside"></aside>
+    <section class="template--Section">
+
+
+        <!--         페이지 제목 시작
+               <div class="template&#45;&#45;pageTitleContainer">
+                   <div class="template&#45;&#45;pageTitleBox">
+                    <div class="template&#45;&#45;overlayedTitle" style="color: black;">
+                         <a href="https://www.naver.com">
+                               여기다가 재목부분이나 보고 쓰시면 됩니다. 안쓰셔두 되구 편하실대로 !
+                          </a>
+                       </div>
+                  </div>
+               </div>
+               페이지 제목 끝 -->
+
+
+        <!-- 콘텐츠 시작 -->
+        <div class="login-container">
+            <div class="login-box">
+                <form method="POST" onsubmit="submitLoginForm(this);" class="form-container">
+                    <div class="mb-3">
+                        <label for="emailInput" class="form-label">사용자 email</label>
+                        <input type="text" class="form-control" id="emailInput" name="email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="passwordInput" class="form-label">비밀번호</label>
+                        <input type="password" class="form-control" id="passwordInput" name="password">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nameInput" class="form-label">이름</label>
+                        <input type="text" class="form-control" id="nameInput" name="name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="profileInput" class="form-label">프로필</label>
+                        <input type="text" class="form-control" id="profileInput" name="profile">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phoneInput" class="form-label">전화번호</label>
+                        <input type="text" class="form-control" id="phoneInput" name="phone">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="birthdayInput" class="form-label">생년월일</label>
+                        <input type="date" class="form-control" id="birthdayInput" name="birthday">
+                    </div>
+
+                    <button type="submit" class="btn" style="background-color: #6c757d; color: white;">회원가입</button>
+                </form>
+            </div>
+        </div>
+        <!-- 콘텐츠 끝 -->
+
+
+    </section>
+    <aside class="template--rightAside"></aside>
+</main>
+<!-- Template-main 끝 -->
+
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- Template-footer 시작 -->
+<th:block th:replace="domain/layout/footer"> </th:block>
+<!-- Template-footer 끝 -->
+
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+<!-- js -->
+<script src="/js/common/header.js"></script>
+<script src="/js/common/main.js"></script>
+<script src="/js/common/footer.js"></script>
+</body>
+</html>
