@@ -22,6 +22,15 @@ public class MypageController {
 
     private final MypageService mypageService;
 
+    @GetMapping("")
+    public String showMypage(@AuthenticationPrincipal SecurityUser user, Model model){
+        MemberProfileDto profileDto = mypageService.getProfile(user.getId());
+        model.addAttribute("profileDto", profileDto);
+        return "domain/member/mypage";
+    }
+
+
+
     // 개인정보 열람
     @GetMapping("/profile")
     public String showProfile(@AuthenticationPrincipal SecurityUser user, Model model){
