@@ -1,47 +1,46 @@
-네, 좀 더 세부적인 스타일을 적용하여 풍부한 효과를 주는 CSS를 작성해보겠습니다.
 
-css
 body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     padding: 20px;
 }
 
-.details-container {
+.card {
     width: 80%;
     margin: auto;
     background-color: white;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 10px;
+    clear: both;
 }
 
-.details-container h4 {
-    margin-top: 0;
+.card .container h4 {
+    margin-top: 20px;
     color: #333;
     font-size: 24px;
     border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+    padding-bottom: 50px;
 }
 
-.details-container img {
-    width: 100%;
+.card .container img {
+    width: 35%;
     height: auto;
     border-radius: 10px;
 }
 
-.details-container p {
-    margin: 10px 0;
+.card .container p {
+    margin: 50px 0;
     color: #666;
     line-height: 1.6;
 }
 
-.details-container .location {
+.card .container .location {
     color: #999;
-    font-size: 14px;
+    font-size: 30px;
 }
 
-.details-container .member {
+.card .container .descriptionText {
     font-weight: bold;
     color: #333;
 }
