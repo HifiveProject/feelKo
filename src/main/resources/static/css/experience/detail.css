@@ -1,0 +1,13 @@
+.template--contentContainer2 {
+    height: 700px; /* 1) 이 높이와 */
+    display: grid;
+    place-items: center;
+}
+
+.template--contentBox2 {
+    height: 600px; /* 2) 이 높이를 적당히 조정하여 콘텐츠 박스를 사용 */
+    width: 90%;
+    margin: 10px 30px 10px 30px;
+    display: grid;
+    place-items: center;
+}

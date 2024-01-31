@@ -19,6 +19,7 @@ public class ExperienceService {
 
         Member member = memberService.findByIdElseThrow(dto.getMemberId());
 
+        //리팩토링
         Experience experience = Experience.builder()
                 .member(member)
                 .title(dto.getTitle())
