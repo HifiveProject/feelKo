@@ -1,5 +1,6 @@
 package com.ll.feelko.domain.member.api;
 
+import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 import com.ll.feelko.domain.member.application.MemberServiceImpl;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
 import jakarta.validation.Valid;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 
 @Controller
 @RequestMapping("/member")

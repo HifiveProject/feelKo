@@ -3,7 +3,10 @@ package com.ll.feelko.domain.payment.entity;
 import com.ll.feelko.domain.member.entity.Member;
 import com.ll.feelko.global.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;

@@ -1,7 +1,5 @@
 package com.ll.feelko.global.init;
 
-import com.ll.feelko.domain.experience.dao.ExperienceRepository;
-import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.experience.application.ExperienceService;
 import com.ll.feelko.domain.experience.dto.ExperienceCreateDTO;
 import com.ll.feelko.domain.member.application.MemberService;
@@ -15,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.IntStream;
