@@ -6,8 +6,12 @@ import com.ll.feelko.domain.member.dao.MemberRepository;
 import com.ll.feelko.domain.member.entity.Member;
 import com.ll.feelko.domain.wishlist.dao.WishListRepository;
 import com.ll.feelko.domain.wishlist.dto.WishListDto;
+import com.ll.feelko.domain.wishlist.dto.WishListSaveDto;
 import com.ll.feelko.domain.wishlist.entity.WishList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,11 +27,11 @@ public class WishListServiceImpl implements WishListService{
 
     @Override
     @Transactional
-    public boolean saveWish(WishListDto wishListDto) {
-        Member member = memberRepository.findById(wishListDto.getMemberId()).get();
-        Experience experience = experienceRepository.findById(wishListDto.getExperienceId()).get();
+    public boolean saveWish(WishListSaveDto wishListSaveDto) {
+        Member member = memberRepository.findById(wishListSaveDto.getMemberId()).get();
+        Experience experience = experienceRepository.findById(wishListSaveDto.getExperienceId()).get();
 
-        Optional<WishList> optWish = wishListRepository.findByMemberIdAndExperienceId(wishListDto.getMemberId(), wishListDto.getExperienceId());
+        Optional<WishList> optWish = wishListRepository.findByMemberIdAndExperienceId(wishListSaveDto.getMemberId(), wishListSaveDto.getExperienceId());
 
         if(optWish.isEmpty()) {
             WishList wishList = WishList.builder().
@@ -40,6 +44,12 @@ public class WishListServiceImpl implements WishListService{
             wishListRepository.delete(optWish.get());
             return false;
         }
+    }
+
+    @Override
+    public Page<WishListDto> getWishList(long memberId, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return wishListRepository.findIdTitleByMemberIdOrderByIdDesc(memberId, pageable);
     }
 
 }
