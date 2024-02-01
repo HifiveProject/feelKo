@@ -100,3 +100,25 @@
     color: #ff0; /* 호버 시 텍스트 색상 변경 */
     box-shadow: 0 0 8px #fff; /* 호버 시 그림자 효과 변경 */
 }
+
+.template--pageTitleContainer2 {
+    background-color: #f9f9f9; /* 배경색 변경 */
+    border-radius: 30px; /* 둥근 모서리 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    padding: 20px; /* 내부 여백 */
+    margin: 20px auto; /* 상하 여백과 중앙 정렬 */
+    max-width: 800px; /* 최대 너비 제한 */
+}
+
+.template--overlayedTitle2 {
+    display: flex; /* 폼 요소들을 일렬로 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    gap: 10px; /* 요소 사이의 간격 */
+    justify-content: center;
+}
+
+.template--overlayedTitle2 label {
+    font-weight: bold; /* 라벨 글꼴 가중치 */
+    margin-right: 11px;
+    margin-left: 30px;
+}
