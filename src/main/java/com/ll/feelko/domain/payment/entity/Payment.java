@@ -33,4 +33,5 @@ public class Payment extends BaseEntity {
 
     private BigDecimal price;
 
+
 }
