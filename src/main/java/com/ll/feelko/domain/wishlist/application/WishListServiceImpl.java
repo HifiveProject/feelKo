@@ -39,9 +39,11 @@ public class WishListServiceImpl implements WishListService{
                     experience(experience).
                     build();
             wishListRepository.save(wishList);
+            experience.increaseCount();
             return true;
         } else {
             wishListRepository.delete(optWish.get());
+            experience.decreaseCount();
             return false;
         }
     }

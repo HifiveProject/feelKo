@@ -39,4 +39,17 @@ public class Experience {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "experience")
     private List<WishList> wishLists;
 
+    @Builder.Default
+    private Long wishCounter = 0L;
+
+    public void increaseCount() {
+        this.wishCounter++;
+    }
+
+    public void decreaseCount() {
+        if (this.wishCounter > 0) {
+            this.wishCounter--;
+        }
+    }
+
 }
