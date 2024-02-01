@@ -1,8 +1,11 @@
 package com.ll.feelko.domain.experience.entity;
 
 import com.ll.feelko.domain.member.entity.Member;
+import com.ll.feelko.domain.wishlist.entity.WishList;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Entity
@@ -32,4 +35,8 @@ public class Experience {
     private String descriptionText;
 
     private String location;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "experience")
+    private List<WishList> wishLists;
+
 }

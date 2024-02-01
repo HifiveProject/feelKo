@@ -1,5 +1,6 @@
 package com.ll.feelko.domain.wishlist.entity;
 
+import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,8 +26,8 @@ public class WishList {
     @JoinColumn(name = "member_id")
     private Member member;
 
-//    @ManyToOne
-//    @JoinColumn(name = "experience_id")
-//    private Experience experience_id;
+    @ManyToOne
+    @JoinColumn(name = "experience_id")
+    private Experience experience;
 
 }
