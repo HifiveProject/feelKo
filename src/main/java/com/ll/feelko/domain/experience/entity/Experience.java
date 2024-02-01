@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Entity
@@ -25,6 +26,10 @@ public class Experience {
     private String title;
 
     private BigDecimal price;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
 
     private Long headcount;
 
