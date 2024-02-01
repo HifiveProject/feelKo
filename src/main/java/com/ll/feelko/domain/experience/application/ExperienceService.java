@@ -60,4 +60,8 @@ public class ExperienceService {
     public Page<Experience> searchExperiences(String destination, Pageable pageable) {
         return experienceRepository.searchExperiences(destination, pageable);
     }
+
+    public Page<Experience> searchAllExperiences(Pageable pageable) {
+        return experienceRepository.searchExperiencesAll(pageable);
+    }
 }

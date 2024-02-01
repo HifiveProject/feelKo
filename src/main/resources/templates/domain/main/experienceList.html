@@ -48,6 +48,7 @@
                             <label for="destination">여행지  :</label>
                             <select id="destination" name="destination" required>
                                 <option value="" disabled selected hidden>여행할 장소를 선택하세요</option>
+                                <option value="전국">전국</option>
                                 <option value="서울">서울</option>
                                 <option value="인천">인천</option>
                                 <option value="대전">대전</option>
@@ -98,107 +99,10 @@
                         <div class="price">가격 : <span th:text="${experience.price}"></span>원</div>
                     </div>
                 </div>
-               <!-- <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글2
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-                <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글3
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-                <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글4
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-                <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글5
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-                <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글6
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-                <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글7
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-                <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글8
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-                <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글9
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-            </div>-->
         </div>
         <div class="main-2">
-            <button class="btn1" th:if="${currentPage > 0}"><a th:href="@{/experienceList(destination=${destination}, page=${currentPage - 1})}">이전</a></button>
-            <button class="btn1" th:if="${currentPage < totalPages - 1}"><a th:href="@{/experienceList(destination=${destination}, page=${currentPage + 1})}">다음</a></button>
+            <button class="btn1" th:if="${currentPage > 0}"><a th:href="@{/search(destination=${selectedLocation}, page=${currentPage - 1})}">이전</a></button>
+            <button class="btn1" th:if="${currentPage < totalPages - 1}"><a th:href="@{/search(destination=${selectedLocation}, page=${currentPage + 1})}">다음</a></button>
         </div>
 
         <!--        </div>-->

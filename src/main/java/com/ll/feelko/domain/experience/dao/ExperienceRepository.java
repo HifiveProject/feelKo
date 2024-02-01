@@ -23,4 +23,7 @@ public interface ExperienceRepository extends JpaRepository<Experience,Long> {
 
     @Query("SELECT e FROM Experience e WHERE e.location = :destination")
     Page<Experience> searchExperiences(String destination, Pageable pageable);
+
+    @Query("SELECT e FROM Experience e")
+    Page<Experience> searchExperiencesAll(Pageable pageable);
 }
