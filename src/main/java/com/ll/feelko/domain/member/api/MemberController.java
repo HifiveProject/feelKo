@@ -1,5 +1,6 @@
 package com.ll.feelko.domain.member.api;
 
+import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 import com.ll.feelko.domain.member.application.MemberServiceImpl;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
 import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;

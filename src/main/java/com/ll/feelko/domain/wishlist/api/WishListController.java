@@ -1,6 +1,5 @@
 package com.ll.feelko.domain.wishlist.api;
 
-import com.ll.feelko.domain.member.application.MypageService;
 import com.ll.feelko.domain.wishlist.application.WishListService;
 import com.ll.feelko.domain.wishlist.dto.WishListDto;
 import com.ll.feelko.domain.wishlist.dto.WishListSaveDto;
@@ -20,14 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("isAuthenticated()")
 public class WishListController {
     private final WishListService wishListService;
-    private final MypageService mypageService;
-
-//    @GetMapping("/wishlist")
-//    public String showWish(){
-//        return "domain/member/mypage/wishlist";
-//    }
 
 
+    // 찜 목록 열람
     @GetMapping("/wishlist")
     public String showWishList(@AuthenticationPrincipal SecurityUser user,
                                        @RequestParam(name = "page", defaultValue = "0") int page,
@@ -38,6 +32,7 @@ public class WishListController {
         return "domain/member/mypage/wishlist";
     }
 
+    // 찜 기능
     @PostMapping("/wishlist")
     @ResponseBody
     public ResponseEntity<?> saveWish(@RequestBody WishListSaveDto wishListSaveDto) {

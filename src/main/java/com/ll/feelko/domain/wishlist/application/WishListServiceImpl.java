@@ -25,6 +25,7 @@ public class WishListServiceImpl implements WishListService{
     private final MemberRepository memberRepository;
     private final ExperienceRepository experienceRepository;
 
+    // 찜 목록 등록 및 해제
     @Override
     @Transactional
     public boolean saveWish(WishListSaveDto wishListSaveDto) {
