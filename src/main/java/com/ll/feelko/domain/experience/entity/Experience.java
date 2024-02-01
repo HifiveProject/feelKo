@@ -34,4 +34,6 @@ public class Experience {
 
     private String location;
 
+    private String imageUrl;
+
 }

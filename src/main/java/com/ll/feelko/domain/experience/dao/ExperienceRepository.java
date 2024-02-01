@@ -14,4 +14,13 @@ public interface ExperienceRepository extends JpaRepository<Experience,Long> {
     Page<uploadedPageDto> findIdTitleByMemberIdOrderByIdDesc(@Param("memberId") long memberId, Pageable pageable);
 
 
+//    @Query("SELECT e FROM Experience e WHERE e.location = :destination AND e.startDate = :startDate")
+//    List<Experience> searchExperiences(@Param("destination") String destination, @Param("startDate") String startDate);
+
+
+//        @Query("SELECT e FROM Experience e WHERE e.location = :destination")
+//        List<Experience> searchExperiences(@Param("destination") String destination);
+
+    @Query("SELECT e FROM Experience e WHERE e.location = :destination")
+    Page<Experience> searchExperiences(String destination, Pageable pageable);
 }

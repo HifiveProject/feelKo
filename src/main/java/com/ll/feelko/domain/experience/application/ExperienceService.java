@@ -6,6 +6,8 @@ import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.member.application.MemberService;
 import com.ll.feelko.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,16 +22,16 @@ public class ExperienceService {
         Member member = memberService.findByIdElseThrow(dto.getMemberId());
 
         //리팩토링
-        Experience experience = Experience.builder().build();
-//                .member(member)
-//                .title(dto.getTitle())
-//                .location(dto.getLocation())
-//                // TODO 추후 삭제 요망
-//                .headcount(10L)
-//                // TODO 실제 이미지처리가 필요함
-//                .imageUrl("https://www.localnaeil.com/FileData/Article/201705/4e808dfd-795e-4671-b596-7e64e22d868a.jpg")
-//                .descriptionText(dto.getDescriptionText())
-//                .build();
+        Experience experience = Experience.builder()
+                .member(member)
+                .title(dto.getTitle())
+                .location(dto.getLocation())
+                // TODO 추후 삭제 요망
+                .headcount(10L)
+                // TODO 실제 이미지처리가 필요함
+                .imageUrl("https://www.localnaeil.com/FileData/Article/201705/4e808dfd-795e-4671-b596-7e64e22d868a.jpg")
+                .descriptionText(dto.getDescriptionText())
+                .build();
         return experienceRepository.save(experience);
     }
 
@@ -42,5 +44,20 @@ public class ExperienceService {
     public Experience findByIdElseThrow(Long experienceId) {
         return experienceRepository.findById(experienceId)
                 .orElseThrow(() -> new RuntimeException("체험을 찾을 수 없습니다."));
+    }
+
+//    public List<Experience> searchExperiences(String destination, String startDate) {
+//        // 검색 로직을 여기에 구현
+//        // 예를 들어, destination과 startDate를 이용하여 적절한 쿼리를 작성하고 검색 결과를 반환
+//        return experienceRepository.searchExperiences(destination, startDate);
+//    }
+//    public List<Experience> searchExperiences(String destination) {
+//        // 검색 로직을 여기에 구현
+//        // 예를 들어, destination을 이용하여 적절한 쿼리를 작성하고 검색 결과를 반환
+//        return experienceRepository.searchExperiences(destination);
+//    }
+
+    public Page<Experience> searchExperiences(String destination, Pageable pageable) {
+        return experienceRepository.searchExperiences(destination, pageable);
     }
 }
