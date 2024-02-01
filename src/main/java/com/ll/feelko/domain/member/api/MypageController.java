@@ -12,10 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/member/mypage")
@@ -62,11 +59,19 @@ public class MypageController {
     @GetMapping("/upload-list")
     public String showUploadedPageList(@AuthenticationPrincipal SecurityUser user,
                                        @RequestParam(name = "page", defaultValue = "0") int page,
-                                       @RequestParam(name = "size", defaultValue = "10") int size,
+                                       @RequestParam(name = "size", defaultValue = "9") int size,
                                        Model model) {
         Page<uploadedPageDto> uploads = mypageService.getUploadedPageList(user.getId(), page, size);
         model.addAttribute("uploads",uploads);
         return "domain/member/mypage/uploadList";
+    }
+
+    @GetMapping("/upload-list/reservation/{id}")
+    @ResponseBody
+    public String showUploadedPageReservation(@AuthenticationPrincipal SecurityUser user,
+                                       @RequestParam Long id) {
+
+        return "ResponseEntity";
     }
 
 }

@@ -10,5 +10,6 @@ import lombok.Setter;
 public class uploadedPageDto {
     long id;
     String title;
+
     //이미지
 }

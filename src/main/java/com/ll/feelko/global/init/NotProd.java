@@ -40,7 +40,7 @@ public class NotProd {
             Member admin = Member.builder()
                     .email("admin")
                     .password(passwordEncoder.encode("admin"))
-                    .roles("admin")
+                    .roles("ADMIN")
                     .build();
             memberRepository.save(admin);
 
