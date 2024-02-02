@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<!-- 업로드 목록 -->
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--TODO detail 작성되면 링크 추가, 이미지 추가 /예약 detail 작성되면 예약자 목록 보기 추가-->
+    <tr th:each="WishListDto : ${wishListDtos}">
+        <td th:text="${WishListDto.title}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- 페이징처리 시작 -->
+<div th:if="${!wishListDtos.isEmpty()}">
+    <ul class="pagination" >
+        <li class="page-item" th:classappend="${!wishListDtos.hasPrevious} ? 'disabled'">
+            <a class="page-link"
+               th:href="@{|?page=${wishListDtos.number - 1}|}">
+                <span>이전</span>
+            </a>
+        </li>
+        <li th:each="page: ${#numbers.sequence(0, wishListDtos.totalPages - 1)}"
+            th:if="${page >= wishListDtos.number - 5 and page <= wishListDtos.number+5}"
+            th:classappend="${page == wishListDtos.number} ? 'active'"
+            class="page-item">
+            <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+        </li>
+        <li class="page-item" th:classappend="${!wishListDtos.hasNext} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${wishListDtos.number+1}|}">
+                <span>다음</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- 페이징처리 끝 -->
+
+</body>
+</html>
