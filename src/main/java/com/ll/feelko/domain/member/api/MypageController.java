@@ -25,21 +25,12 @@ public class MypageController {
 
     private final MypageService mypageService;
 
+    // 개인정보 열람
     @GetMapping("")
     public String showMypage(@AuthenticationPrincipal SecurityUser user, Model model){
         MemberProfileDto profileDto = mypageService.getProfile(user.getId());
         model.addAttribute("profileDto", profileDto);
         return "domain/member/mypage";
-    }
-
-
-
-    // 개인정보 열람
-    @GetMapping("/profile")
-    public String showProfile(@AuthenticationPrincipal SecurityUser user, Model model){
-        MemberProfileDto profileDto = mypageService.getProfile(user.getId());
-        model.addAttribute("profileDto", profileDto);
-        return "domain/member/mypage/profile";
     }
 
     // 개인정보 수정
@@ -56,7 +47,7 @@ public class MypageController {
                 profileUpdateRequest.getProfile()
         );
         mypageService.updateProfile(user.getId(), profileUpdateDto);
-        return "redirect:/member/mypage/profile";
+        return "redirect:/member/mypage";
     }
 
     @GetMapping("/upload-list")

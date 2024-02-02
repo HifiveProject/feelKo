@@ -72,6 +72,13 @@
             font-size: 1rem; /* 링크 글씨 크기 */
             margin-bottom: 10px; /* 링크 사이 간격 */
         }
+
+        .info-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
     </style>
 
 </head>
@@ -94,7 +101,7 @@
     <!-- 왼쪽 네비게이션 메뉴 -->
     <aside class="template--leftAside">
         <nav class="nav flex-column">
-            <a class="nav-link" href="/member/mypage/profile">개인정보 수정</a>
+            <a class="nav-link" href="/member/mypage/profile/update">개인정보 수정</a>
             <a class="nav-link" href="/member/mypage/payment">결제&예약 정보</a>
             <a class="nav-link" href="/member/mypage/write">체험 작성</a>
             <a class="nav-link" href="/member/mypage/upload-list">작성한 체험 목록</a>
@@ -108,15 +115,15 @@
         <div class="user-info-container">
             <div>
                 <h3>이메일(e-mail)</h3>
-                <div th:text="${profileDto.email}"></div>
+                <div class="info-box" th:text="${profileDto.email}"></div>
                 <h3>이름</h3>
-                <div th:text="${profileDto.name}"></div>
+                <div class="info-box" th:text="${profileDto.name}"></div>
                 <h3>생일</h3>
-                <div th:text="${profileDto.birthday}"></div>
+                <div class="info-box" th:text="${profileDto.birthday}"></div>
                 <h3>전화번호</h3>
-                <div th:text="${profileDto.phone}"></div>
+                <div class="info-box" th:text="${profileDto.phone}"></div>
                 <h3>프로필(이미지)</h3>
-                <img th:src="${profileDto.profile}" style="width: 100px; height: 100px;">
+                <img class="info-box" th:src="${profileDto.profile}" style="width: 100px; height: 100px;">
             </div>
             <div>
                 <a href="/member/mypage/profile/update" class="btn btn-secondary" role="button" style="color: white;">회원정보 수정</a>
