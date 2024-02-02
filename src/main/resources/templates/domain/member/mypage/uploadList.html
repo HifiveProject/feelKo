@@ -110,8 +110,20 @@
                     // 예약자 목록을 모달에 표시
                     const reservationList = document.getElementById('reservationList');
                     reservationList.innerHTML = ''; // 이전 내용을 지움
-                    data.forEach(reservation => {
-                        reservationList.innerHTML += `<p>${reservation.name} - ${reservation.date}</p>`;
+
+                    // 날짜별로 예약 정보를 표시
+                    Object.keys(data).forEach(date => {
+                        const dateHeader = document.createElement('h5');
+                        dateHeader.textContent = date; // 날짜 표시
+                        reservationList.appendChild(dateHeader);
+
+                        const list = document.createElement('ul');
+                        data[date].forEach(reservation => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = `${reservation.name} - ${reservation.phoneNumber}`;
+                            list.appendChild(listItem);
+                        });
+                        reservationList.appendChild(list);
                     });
 
                     // Bootstrap 모달을 표시

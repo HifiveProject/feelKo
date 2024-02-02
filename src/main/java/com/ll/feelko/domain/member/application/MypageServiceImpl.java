@@ -8,6 +8,7 @@ import com.ll.feelko.domain.member.dto.MemberProfileUpdateDto;
 import com.ll.feelko.domain.member.dto.UploadReservationDto;
 import com.ll.feelko.domain.member.dto.UploadedPageDto;
 import com.ll.feelko.domain.member.entity.Member;
+import com.ll.feelko.domain.payment.dao.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -27,6 +28,7 @@ public class MypageServiceImpl implements MypageService {
 
     private final ExperienceRepository experienceRepository;
     private final MemberRepository memberRepository;
+    private final PaymentRepository paymentRepository;
 
     @Override
     public Optional<Member> findById(Long id) {
@@ -40,7 +42,7 @@ public class MypageServiceImpl implements MypageService {
     }
 
     @Override
-    public MemberProfileDto getProfile(long id){
+    public MemberProfileDto getProfile(long id) {
         Optional<Member> optMember = memberRepository.findById(id);
 
         Member member = optMember.get();
@@ -62,14 +64,22 @@ public class MypageServiceImpl implements MypageService {
     }
 
     @Override
-    public boolean isMyUploadedPage(long id, Long experienceId){
+    public boolean isMyUploadedPage(long id, Long experienceId) {
         Optional<Experience> optExp = experienceRepository.findById(experienceId);
-        if(optExp.isEmpty()) throw new RuntimeException("체험을 찾을 수 없습니다.");
-        return id==optExp.get().getMember().getId();
+        if (optExp.isEmpty()) throw new RuntimeException("체험을 찾을 수 없습니다.");
+        return id == optExp.get().getMember().getId();
     }
 
     @Override
-    public Map<LocalDate, UploadReservationDto> getUploadedPageReservation(Long experienceId){
-        PaymentRepository
+    public TreeMap<LocalDate, List<UploadReservationDto>> getUploadedPageReservation(Long experienceId) {
+        List<UploadReservationDto> reservations = paymentRepository.findByExperienceIdWithMemberInfo(experienceId);
+
+        return reservations.stream()
+                .collect(Collectors.groupingBy(
+                        UploadReservationDto::getReservationDate,
+                        () -> new TreeMap<>(Comparator.reverseOrder()), // key 내림차순 정렬
+                        Collectors.toList()
+                ));
+
     }
 }

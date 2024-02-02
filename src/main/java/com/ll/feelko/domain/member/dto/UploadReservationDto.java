@@ -3,7 +3,6 @@ package com.ll.feelko.domain.member.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -14,6 +13,6 @@ public class UploadReservationDto {
     private String name;
     private String phoneNumber;
     private String email;
-    @DateTimeFormat
+    private String profile;
     private LocalDate reservationDate;
 }

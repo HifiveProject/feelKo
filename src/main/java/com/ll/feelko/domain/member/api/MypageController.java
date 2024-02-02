@@ -17,7 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
+import java.util.TreeMap;
 
 @Controller
 @RequestMapping("/member/mypage")
@@ -75,7 +76,7 @@ public class MypageController {
     @ResponseBody
     public ResponseEntity<?> showUploadedPageReservation(@AuthenticationPrincipal SecurityUser user,
                                                         @RequestParam Long experienceId) {
-        Map<LocalDate,UploadReservationDto> reservations = null; //예약날짜별로 구분된 예약
+        TreeMap<LocalDate, List<UploadReservationDto>> reservations = null; //예약날짜별로 구분된 예약
 
         if(!mypageService.isMyUploadedPage(user.getId(),experienceId)){
            return ResponseEntity

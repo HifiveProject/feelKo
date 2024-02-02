@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface ExperienceRepository extends JpaRepository<Experience,Long> {
 
-    @Query("SELECT new com.ll.feelko.domain.member.dto.uploadedPageDto(e.id, e.title) FROM Experience e WHERE e.member.id = :memberId ORDER BY e.id DESC")
+    @Query("SELECT new com.ll.feelko.domain.member.dto.UploadedPageDto(e.id, e.title) FROM Experience e WHERE e.member.id = :memberId ORDER BY e.id DESC")
     Page<UploadedPageDto> findIdTitleByMemberIdOrderByIdDesc(@Param("memberId") long memberId, Pageable pageable);
 
     @Query("SELECT e FROM Experience e WHERE e.location = :destination")

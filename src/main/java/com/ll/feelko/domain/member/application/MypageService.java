@@ -8,8 +8,9 @@ import com.ll.feelko.domain.member.entity.Member;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
+import java.util.TreeMap;
 
 public interface MypageService {
     Optional<Member> findById(Long id);
@@ -21,5 +22,5 @@ public interface MypageService {
 
     boolean isMyUploadedPage(long id, Long experienceId);
 
-    Map<LocalDate, UploadReservationDto> getUploadedPageReservation(Long experienceId);
+    TreeMap<LocalDate, List<UploadReservationDto>> getUploadedPageReservation(Long experienceId);
 }
