@@ -1,4 +1,4 @@
-package com.ll.feelko.domain.experience.api;
+package com.ll.feelko.domain.experience.web;
 
 import com.ll.feelko.domain.experience.application.ExperienceService;
 import com.ll.feelko.domain.experience.dto.ExperienceCreateDTO;
