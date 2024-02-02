@@ -75,7 +75,7 @@ public class MypageController {
     @GetMapping("/upload-list/reservation/{experienceId}")
     @ResponseBody
     public ResponseEntity<?> showUploadedPageReservation(@AuthenticationPrincipal SecurityUser user,
-                                                        @RequestParam Long experienceId) {
+                                                        @PathVariable Long experienceId) {
         TreeMap<LocalDate, List<UploadReservationDto>> reservations = null; //예약날짜별로 구분된 예약
 
         if(!mypageService.isMyUploadedPage(user.getId(),experienceId)){

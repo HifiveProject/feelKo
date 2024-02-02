@@ -75,7 +75,7 @@ public class NotProd {
             //테스트 결제 정보 데이터 생성
             Experience experience = experienceService.findByIdElseThrow(10L);
             Member member = memberService.findByIdElseThrow(3L);
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 10; i++) {
                 Payment payment = Payment.builder()
                         .paymentKey("1")
                         .price(new BigDecimal(1))
@@ -86,7 +86,7 @@ public class NotProd {
                         .build();
                 paymentRepository.save(payment);
             }
-            for (int i = 5; i < 10; i++) {
+            for (int i = 0; i < 10; i++) {
                 Payment payment = Payment.builder()
                         .paymentKey("1")
                         .price(new BigDecimal(1))
@@ -94,6 +94,17 @@ public class NotProd {
                         .member(member)
                         .experience(experience)
                         .reservationDate(LocalDate.now().minusDays(1))
+                        .build();
+                paymentRepository.save(payment);
+            }
+            for (int i = 0; i < 10; i++) {
+                Payment payment = Payment.builder()
+                        .paymentKey("1")
+                        .price(new BigDecimal(1))
+                        .orderId("1")
+                        .member(member)
+                        .experience(experience)
+                        .reservationDate(LocalDate.now().minusDays(2))
                         .build();
                 paymentRepository.save(payment);
             }

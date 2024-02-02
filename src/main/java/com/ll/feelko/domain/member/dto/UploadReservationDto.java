@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class UploadReservationDto {
     private String name;
-    private String phoneNumber;
+    private String phone;
     private String email;
     private String profile;
     private LocalDate reservationDate;
