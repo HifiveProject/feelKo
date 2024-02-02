@@ -72,8 +72,7 @@ public class Member {
 //    @JoinColumn(name = "member_id")
 //    private List<Experience> experiences;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "member")
     private List<WishList> wishLists;
 
     //보류

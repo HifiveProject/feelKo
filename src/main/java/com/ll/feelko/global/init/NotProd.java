@@ -60,8 +60,8 @@ public class NotProd {
                 experienceService.createExperience(ExperienceCreateDTO.builder()
                         .memberId(member.getId())
                         .title("title" + i)
-                        .imageFile(null)
-                        .location("서울")
+                        .imageFiles(null)
+                        .location("장소" + i)
                         .descriptionText("내용"+i)
                         .build());
             }));

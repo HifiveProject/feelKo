@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/footer.css">
     <link rel="stylesheet" href="/css/experience/detail.css">
-    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/experience/style.css}" type="text/css">
 
 
     <title>Feelko-template3</title>
@@ -49,6 +49,10 @@
                         <img th:src="${experience.imageUrl}" alt="Image">
                         <p th:text="${experience.location}"></p>
                         <p th:text="${experience.descriptionText}"></p>
+                        <p th:text="${experience.startDate}"></p>
+                        <p th:text="${experience.headcount}"></p>
+                        <p th:text="${experience.price}"></p>
+                        <button type="button" id="wishBtn" th:onclick="'saveWish()'">찜하기</button>
                     </div>
                 </div>
                 <!-- 두 번째 HTML 코드 삽입 끝 -->
@@ -56,6 +60,33 @@
             </div>
         </div>
         <!-- 콘텐츠 끝 -->
+        <!-- 찜 관련 script -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script th:inline="javascript">
+            /** 위시리스트에 추가 **/
+            function saveWish() {
+                var memberId = [[${#authentication.principal.id}]];
+                var experienceId = [[${experience.id}]];
+
+                $.ajax({
+                    url: '/member/mypage/wishlist',
+                    type: 'POST',
+                    data : JSON.stringify({
+                        memberId: memberId,
+                        experienceId: experienceId
+                    }),
+                    contentType: 'application/json;',
+                }).done(function(result){
+                    if(result){
+                        alert("찜이 등록되었습니다.");
+                    } else {
+                        alert("찜이 삭제되었습니다.");
+                    }
+                }).fail(function(error){
+                    alert("요청에 실패하였습니다.");
+                });
+            };
+        </script>
 
     </section>
     <aside class="template--rightAside"></aside>
