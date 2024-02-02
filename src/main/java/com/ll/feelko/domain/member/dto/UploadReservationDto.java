@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
-public class uploadReservationDto {
+public class UploadReservationDto {
     private String name;
     private String phoneNumber;
     private String email;

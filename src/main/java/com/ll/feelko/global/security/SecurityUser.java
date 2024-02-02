@@ -12,9 +12,13 @@ public class SecurityUser extends User implements OAuth2User {
     @Getter
     private long id;
 
-    public SecurityUser(long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    @Getter
+    private String profileImage;
+
+    public SecurityUser(long id, String username, String password, String profileImage, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.id = id;
+        this.profileImage = profileImage;
     }
 
     public SecurityUser(long id, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {

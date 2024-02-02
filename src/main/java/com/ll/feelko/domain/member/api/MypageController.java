@@ -4,15 +4,20 @@ import com.ll.feelko.domain.member.api.Request.MemberProfileUpdateRequest;
 import com.ll.feelko.domain.member.application.MypageService;
 import com.ll.feelko.domain.member.dto.MemberProfileDto;
 import com.ll.feelko.domain.member.dto.MemberProfileUpdateDto;
-import com.ll.feelko.domain.member.dto.uploadedPageDto;
+import com.ll.feelko.domain.member.dto.UploadReservationDto;
+import com.ll.feelko.domain.member.dto.UploadedPageDto;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member/mypage")
@@ -61,17 +66,25 @@ public class MypageController {
                                        @RequestParam(name = "page", defaultValue = "0") int page,
                                        @RequestParam(name = "size", defaultValue = "9") int size,
                                        Model model) {
-        Page<uploadedPageDto> uploads = mypageService.getUploadedPageList(user.getId(), page, size);
+        Page<UploadedPageDto> uploads = mypageService.getUploadedPageList(user.getId(), page, size);
         model.addAttribute("uploads",uploads);
         return "domain/member/mypage/uploadList";
     }
 
-    @GetMapping("/upload-list/reservation/{id}")
+    @GetMapping("/upload-list/reservation/{experienceId}")
     @ResponseBody
-    public String showUploadedPageReservation(@AuthenticationPrincipal SecurityUser user,
-                                       @RequestParam Long id) {
+    public ResponseEntity<?> showUploadedPageReservation(@AuthenticationPrincipal SecurityUser user,
+                                                        @RequestParam Long experienceId) {
+        Map<LocalDate,UploadReservationDto> reservations = null; //예약날짜별로 구분된 예약
 
-        return "ResponseEntity";
+        if(!mypageService.isMyUploadedPage(user.getId(),experienceId)){
+           return ResponseEntity
+                   .badRequest()
+                   .body("페이지에 접근할 권한이 없습니다.");
+        }
+        reservations = mypageService.getUploadedPageReservation(experienceId);
+
+        return ResponseEntity.ok(reservations);
     }
 
 }
