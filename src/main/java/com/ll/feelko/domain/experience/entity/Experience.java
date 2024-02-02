@@ -40,5 +40,4 @@ public class Experience {
     private String descriptionText;
 
     private String location;
-
 }

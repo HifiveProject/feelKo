@@ -31,6 +31,4 @@ public class ExperienceImage {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "experience_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Experience experience;
-
-
 }

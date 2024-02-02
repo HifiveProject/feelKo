@@ -19,7 +19,6 @@ public class ExperienceService {
 
         Member member = memberService.findByIdElseThrow(dto.getMemberId());
 
-        //리팩토링
         Experience experience = Experience.builder()
                 .member(member)
                 .title(dto.getTitle())
@@ -29,6 +28,9 @@ public class ExperienceService {
                 // TODO 실제 이미지처리가 필요함
                 .imageUrl("https://www.localnaeil.com/FileData/Article/201705/4e808dfd-795e-4671-b596-7e64e22d868a.jpg")
                 .descriptionText(dto.getDescriptionText())
+                .price(dto.getPrice())
+                .startDate(dto.getStartDate())
+                .headcount(dto.getHeadcount())
                 .build();
         return experienceRepository.save(experience);
     }
