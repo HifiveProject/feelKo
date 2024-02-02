@@ -6,6 +6,8 @@ import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.member.application.MemberService;
 import com.ll.feelko.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +21,7 @@ public class ExperienceService {
 
         Member member = memberService.findByIdElseThrow(dto.getMemberId());
 
+        //리팩토링
         Experience experience = Experience.builder()
                 .member(member)
                 .title(dto.getTitle())
@@ -41,5 +44,13 @@ public class ExperienceService {
     public Experience findByIdElseThrow(Long experienceId) {
         return experienceRepository.findById(experienceId)
                 .orElseThrow(() -> new RuntimeException("체험을 찾을 수 없습니다."));
+    }
+
+    public Page<Experience> searchExperiences(String destination, Pageable pageable) {
+        return experienceRepository.searchExperiences(destination, pageable);
+    }
+
+    public Page<Experience> searchAllExperiences(Pageable pageable) {
+        return experienceRepository.searchExperiencesAll(pageable);
     }
 }

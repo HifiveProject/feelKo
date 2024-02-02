@@ -22,4 +22,5 @@ public class ExperienceController {
 
         return "domain/experience/detail";
     }
+
 }

@@ -47,7 +47,7 @@ spring:
             user-name-attribute: id
 logging:
   level:
-    com.ll.medium: DEBUG
+    com.ll.feelko: DEBUG
     org.hibernate.SQL: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
     org.hibernate.orm.jdbc.extract: TRACE

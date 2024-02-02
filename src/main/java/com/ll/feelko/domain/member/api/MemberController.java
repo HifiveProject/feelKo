@@ -1,7 +1,9 @@
 package com.ll.feelko.domain.member.api;
 
+import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 import com.ll.feelko.domain.member.application.MemberServiceImpl;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
+import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 
 @Controller
 @RequestMapping("/member")
