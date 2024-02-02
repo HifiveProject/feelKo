@@ -2,10 +2,13 @@ package com.ll.feelko.global.init;
 
 import com.ll.feelko.domain.experience.application.ExperienceService;
 import com.ll.feelko.domain.experience.dto.ExperienceCreateDTO;
+import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.member.application.MemberService;
 import com.ll.feelko.domain.member.dao.MemberRepository;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
 import com.ll.feelko.domain.member.entity.Member;
+import com.ll.feelko.domain.payment.dao.PaymentRepository;
+import com.ll.feelko.domain.payment.entity.Payment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
@@ -14,6 +17,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -26,6 +31,7 @@ public class NotProd {
     private final MemberRepository memberRepository;
     private final ExperienceService experienceService;
     private final PasswordEncoder passwordEncoder;
+    private final PaymentRepository paymentRepository;
 
     @Bean
     public ApplicationRunner initNotProd() {
@@ -40,7 +46,7 @@ public class NotProd {
             Member admin = Member.builder()
                     .email("admin")
                     .password(passwordEncoder.encode("admin"))
-                    .roles("admin")
+                    .roles("ADMIN")
                     .build();
             memberRepository.save(admin);
 
@@ -62,9 +68,46 @@ public class NotProd {
                         .title("title" + i)
                         .imageFiles(null)
                         .location("장소" + i)
-                        .descriptionText("내용"+i)
+                        .descriptionText("내용" + i)
                         .build());
             }));
+
+            //테스트 결제 정보 데이터 생성
+            Experience experience = experienceService.findByIdElseThrow(10L);
+            Member member = memberService.findByIdElseThrow(3L);
+            for (int i = 0; i < 10; i++) {
+                Payment payment = Payment.builder()
+                        .paymentKey("1")
+                        .price(new BigDecimal(1))
+                        .orderId("1")
+                        .member(member)
+                        .experience(experience)
+                        .reservationDate(LocalDate.now())
+                        .build();
+                paymentRepository.save(payment);
+            }
+            for (int i = 0; i < 10; i++) {
+                Payment payment = Payment.builder()
+                        .paymentKey("1")
+                        .price(new BigDecimal(1))
+                        .orderId("1")
+                        .member(member)
+                        .experience(experience)
+                        .reservationDate(LocalDate.now().minusDays(1))
+                        .build();
+                paymentRepository.save(payment);
+            }
+            for (int i = 0; i < 10; i++) {
+                Payment payment = Payment.builder()
+                        .paymentKey("1")
+                        .price(new BigDecimal(1))
+                        .orderId("1")
+                        .member(member)
+                        .experience(experience)
+                        .reservationDate(LocalDate.now().minusDays(2))
+                        .build();
+                paymentRepository.save(payment);
+            }
         };
     }
 }

@@ -7,8 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class uploadedPageDto {
+public class UploadedPageDto {
     long id;
     String title;
+
     //이미지
 }

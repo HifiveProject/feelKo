@@ -1,5 +1,6 @@
 package com.ll.feelko.domain.payment.entity;
 
+import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.member.entity.Member;
 import com.ll.feelko.global.common.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -10,8 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-
-
+import java.time.LocalDate;
 
 
 @Getter
@@ -25,6 +25,10 @@ public class Payment extends BaseEntity {
     @JoinColumn(name = "member_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "experience_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Experience experience;
+
     private String status;
 
     private String orderId;
@@ -33,4 +37,5 @@ public class Payment extends BaseEntity {
 
     private BigDecimal price;
 
+    private LocalDate reservationDate;
 }
