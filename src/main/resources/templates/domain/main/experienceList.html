@@ -45,7 +45,7 @@
                 <div class="template--overlayedTitle2" style="color: black;">
                     <a>
                         <form action="/search" method="get">
-                            <label for="destination">여행지  :</label>
+                            <label for="destination">여행지 :</label>
                             <select id="destination" name="destination" required>
                                 <option value="" disabled selected hidden>여행할 장소를 선택하세요</option>
                                 <option value="전국">전국</option>
@@ -67,8 +67,8 @@
                                 <option value="제주">제주</option>
                                 <option value="세종">세종</option>
                             </select>
-                            <label for="start_date">날짜  :</label>
-                            <input type="date" id="start_date" name="start_date" >
+                            <label for="start_date">날짜 :</label>
+                            <input type="date" id="start_date" name="start_date">
                             <button type="submit">검색</button>
                         </form>
 
@@ -95,17 +95,19 @@
                             <span th:text="${experience.title}"></span>
                         </div>
                         <div class="postday">기간 : 2-15 ~ 2-16</div>
-<!--                        <div class="postday">기간 : <span th:text="${experience.startDate}"></span> ~ <span th:text="${experience.endDate}"></span></div>-->
+                        <!--                        <div class="postday">기간 : <span th:text="${experience.startDate}"></span> ~ <span th:text="${experience.endDate}"></span></div>-->
                         <div class="price">가격 : <span th:text="${experience.price}"></span>원</div>
                     </div>
                 </div>
-        </div>
-        <div class="main-2">
-            <button class="btn1" th:if="${currentPage > 0}"><a th:href="@{/search(destination=${selectedLocation}, page=${currentPage - 1})}">이전</a></button>
-            <button class="btn1" th:if="${currentPage < totalPages - 1}"><a th:href="@{/search(destination=${selectedLocation}, page=${currentPage + 1})}">다음</a></button>
-        </div>
+            </div>
+            <div class="main-2">
+                <button class="btn1" th:if="${currentPage > 0}"><a
+                        th:href="@{/search(destination=${selectedLocation}, page=${currentPage - 1})}">이전</a></button>
+                <button class="btn1" th:if="${currentPage < totalPages - 1}"><a
+                        th:href="@{/search(destination=${selectedLocation}, page=${currentPage + 1})}">다음</a></button>
+            </div>
 
-        <!--        </div>-->
+        </div>
         <!-- 콘텐츠 끝 -->
 
 

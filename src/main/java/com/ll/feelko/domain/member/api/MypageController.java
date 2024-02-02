@@ -12,7 +12,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/member/mypage")
@@ -21,6 +24,15 @@ import org.springframework.web.bind.annotation.*;
 public class MypageController {
 
     private final MypageService mypageService;
+
+    @GetMapping("")
+    public String showMypage(@AuthenticationPrincipal SecurityUser user, Model model){
+        MemberProfileDto profileDto = mypageService.getProfile(user.getId());
+        model.addAttribute("profileDto", profileDto);
+        return "domain/member/mypage";
+    }
+
+
 
     // 개인정보 열람
     @GetMapping("/profile")

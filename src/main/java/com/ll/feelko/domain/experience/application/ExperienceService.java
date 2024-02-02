@@ -46,17 +46,6 @@ public class ExperienceService {
                 .orElseThrow(() -> new RuntimeException("체험을 찾을 수 없습니다."));
     }
 
-//    public List<Experience> searchExperiences(String destination, String startDate) {
-//        // 검색 로직을 여기에 구현
-//        // 예를 들어, destination과 startDate를 이용하여 적절한 쿼리를 작성하고 검색 결과를 반환
-//        return experienceRepository.searchExperiences(destination, startDate);
-//    }
-//    public List<Experience> searchExperiences(String destination) {
-//        // 검색 로직을 여기에 구현
-//        // 예를 들어, destination을 이용하여 적절한 쿼리를 작성하고 검색 결과를 반환
-//        return experienceRepository.searchExperiences(destination);
-//    }
-
     public Page<Experience> searchExperiences(String destination, Pageable pageable) {
         return experienceRepository.searchExperiences(destination, pageable);
     }

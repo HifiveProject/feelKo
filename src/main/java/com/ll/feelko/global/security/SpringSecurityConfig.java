@@ -20,9 +20,12 @@ public class SpringSecurityConfig {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/**")
-                                .permitAll()
+                                .requestMatchers("/member/mypage/**")
+                                //예약,결제도 추가
+                                .authenticated()
                                 .requestMatchers("/h2-console/**")
+                                .permitAll()
+                                .anyRequest()
                                 .permitAll()
                 )
                 .csrf(

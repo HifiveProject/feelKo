@@ -17,35 +17,15 @@ import org.thymeleaf.util.StringUtils;
 @Slf4j
 @Controller
 public class MainController {
+
     @Autowired
     private ExperienceService experienceService;
 
     @GetMapping("/")
-    public String showMain() {
+    public String showMain(){
         log.info("called");
         return "/domain/main/mainpage";
     }
-
-//    @GetMapping("/experienceList")
-//    public String showExperienceList(){
-//        log.info("called");
-//        return "/domain/main/experienceList";
-//    }
-
-//    @GetMapping("/search")
-//    public String search(@RequestParam(name = "destination", required = false) String destination,
-////                         @RequestParam(name = "start_date", required = false) String startDate,
-//                         Model model) {
-//
-//        // 검색어를 이용한 비즈니스 로직 수행 (날짜는 제외)
-//        List<Experience> experiences = experienceService.searchExperiences(destination, pageable);
-//
-//        // 모델에 결과 추가
-//        model.addAttribute("experiences", experiences);
-//        model.addAttribute("selectedLocation", destination);
-//        return "domain/main/experienceList";
-//    }
-
 
     @GetMapping("/search")
     public String experienceList(
