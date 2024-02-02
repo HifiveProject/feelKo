@@ -37,6 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new SecurityUser(
                 member.getId(),
+                member.getName(),
                 member.getEmail(),
                 member.getPassword(),
                 member.getProfile(),
