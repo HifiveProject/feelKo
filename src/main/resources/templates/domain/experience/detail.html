@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/footer.css">
     <link rel="stylesheet" href="/css/experience/detail.css">
-    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/experience/style.css}" type="text/css">
 
 
     <title>Feelko-template3</title>
@@ -49,6 +49,9 @@
                         <img th:src="${experience.imageUrl}" alt="Image">
                         <p th:text="${experience.location}"></p>
                         <p th:text="${experience.descriptionText}"></p>
+                        <p th:text="${experience.startDate}"></p>
+                        <p th:text="${experience.headcount}"></p>
+                        <p th:text="${experience.price}"></p>
                         <button type="button" id="wishBtn" th:onclick="'saveWish()'">찜하기</button>
                     </div>
                 </div>
