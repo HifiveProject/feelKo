@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 목록</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            letter-spacing: 0.1em; /* 제목의 글자 사이 간격 조절 */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            letter-spacing: 0.05em; /* 테이블 내 텍스트의 글자 사이 간격 조절 */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h2>예약 목록</h2>
+
+<div th:if="${reservations.empty}">
+    <p>예약이 없습니다.</p>
+</div>
+
+<div th:unless="${reservations.empty}">
+    <table>
+        <thead>
+        <tr>
+            <th>체험 이미지</th>
+            <th>체험 ID</th>
+            <th>주문 ID</th>
+            <th>결제 키</th>
+            <th>가격</th>
+            <th>예약 날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 예약 데이터 반복 -->
+        <tr th:each="reservation : ${reservations}">
+            <td><img th:src="@{${reservation.experienceImage}}" alt="체험 이미지" style="width: 100px; height: auto;"/></td>
+            <td th:text="${reservation.experienceId}">체험 ID</td>
+            <td th:text="${reservation.orderId}">주문 ID</td>
+            <td th:text="${reservation.paymentKey}">결제 키</td>
+            <td th:text="${reservation.price}">가격</td>
+            <td th:text="${reservation.reservationDate}">예약 날짜</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
