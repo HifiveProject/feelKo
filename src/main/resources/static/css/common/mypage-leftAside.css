@@ -1,0 +1,8 @@
+.template--leftAside {
+    padding-top: 60px; /* 상단 패딩 추가 */
+}
+
+.nav-link {
+    font-size: 1rem; /* 링크 글씨 크기 */
+    margin-bottom: 10px; /* 링크 사이 간격 */
+}
