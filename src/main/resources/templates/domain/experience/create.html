@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Styled Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/experience/ec_styles.css}">
+</head>
+<body>
+<form th:action th:object="${experience}" method="post">
+    <label for="title">제목</label>
+    <input type="text" th:field="*{title}" id="title"/>
+
+    <label for="location">위치</label>
+    <input type="text" th:field="*{location}" id="location"/>
+
+    <label for="description">내용</label>
+    <input type="text" th:field="*{descriptionText}" id="description"/>
+
+    <label for="price">가격</label>
+    <input type="text" th:field="*{price}" id="price"/>
+
+    <label for="birthdayInput">시작날짜</label>
+    <input type="date" class="form-control" id="birthdayInput" name="birthday">
+
+    <label for="headcount">마감인원</label>
+    <input type="text" th:field="*{headcount}" id="headcount"/>
+
+    <input type="submit" value="제출">
+</form>
+</body>
+</html>

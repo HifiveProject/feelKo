@@ -4,6 +4,8 @@ import com.ll.feelko.domain.experience.entity.Experience;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 
 @Getter
 @Entity
@@ -21,8 +23,12 @@ public class Recommendation {
     @JoinColumn(name = "experience_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Experience experience;
 
+    //작성 날짜 LocalDate.now
+    private LocalDate createDate;
+
+    //내용
     private String comment;
 
-
+    //추천 평점 1 ~ 5
     private Long recommendation;
 }

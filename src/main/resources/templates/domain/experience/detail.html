@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/footer.css">
     <link rel="stylesheet" href="/css/experience/detail.css">
-    <link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/experience/style.css}" type="text/css">
 
 
     <title>Feelko-template3</title>
@@ -49,6 +49,9 @@
                         <img th:src="${experience.imageUrl}" alt="Image">
                         <p th:text="${experience.location}"></p>
                         <p th:text="${experience.descriptionText}"></p>
+                        <p th:text="${experience.startDate}"></p>
+                        <p th:text="${experience.headcount}"></p>
+                        <p th:text="${experience.price}"></p>
                         <button type="button" id="wishBtn" th:onclick="'saveWish()'">
                             <span th:if="${isWished}">찜 해제</span>
                             <span th:if="${!isWished}">찜 등록</span>
@@ -97,11 +100,22 @@
 <!-- Template-footer 끝 -->
 
 <script th:inline="javascript" type="text/javascript">
-
     const deleteProduct = (id) => {
-        window.location.href = "/payment/" + id;
-    }
+        // 여행지 선택 값 가져오기
+        var destinationSelect = document.getElementById('destination');
+        var selectedDestination = destinationSelect.value;
 
+        // 날짜 값 가져오기
+        var startDateInput = document.getElementById('start_date');
+        var selectedStartDate = startDateInput.value;
+
+        // 가져온 값을 콘솔에 출력 또는 다른 작업 수행
+        console.log("Selected Destination: " + selectedDestination);
+        console.log("Selected Start Date: " + selectedStartDate);
+
+        // 이후 작업 수행...
+        window.location.href = "/payment/" + id + "/" + selectedDestination + "/" + selectedStartDate;
+    }
 </script>
 
 <!-- bootstrap -->
