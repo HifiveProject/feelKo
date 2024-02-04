@@ -9,5 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class WishListPageDto {
     Long id;
+    Long experienceId;
     String title;
 }

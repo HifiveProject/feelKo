@@ -28,7 +28,7 @@ public class WishListController {
                                @RequestParam(name = "size", defaultValue = "10") int size,
                                Model model) {
         Page<WishListPageDto> wishListDtos = wishListService.getWishList(user.getId(), page, size);
-        model.addAttribute("wishListDtos", wishListDtos);
+        model.addAttribute("wishLists", wishListDtos);
         return "domain/member/mypage/wishlist";
     }
 

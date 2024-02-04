@@ -78,5 +78,4 @@ public class MypageController {
 
         return ResponseEntity.ok(reservations);
     }
-
 }

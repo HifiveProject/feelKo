@@ -51,11 +51,10 @@ public class WishListServiceImpl implements WishListService{
             return false;
         }
     }
-
-    @Override
-    public Page<WishListPageDto> getWishList(long memberId, int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return wishListRepository.findIdTitleByMemberIdOrderByIdDesc(memberId, pageable);
-    }
+@Override
+public Page<WishListPageDto> getWishList(long memberId, int page, int size){
+    Pageable pageable = PageRequest.of(page, size);
+    return wishListRepository.findIdAndExperienceIdAndTitleByMemberIdOrderByIdDesc(memberId, pageable);
+}
 
 }
