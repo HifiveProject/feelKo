@@ -13,6 +13,8 @@ import java.time.LocalDate;
 public class ReservationDto {
     private String experienceImage;
 
+    private String title;
+
     private Long experienceId;
 
     private String orderId;
