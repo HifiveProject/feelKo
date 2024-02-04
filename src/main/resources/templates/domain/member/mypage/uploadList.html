@@ -10,7 +10,7 @@
         }
 
         .upload-list-container {
-            width: 80%; /* 가로 길이 최대로 설정 */
+            width: 65%; /* 가로 길이 최대로 설정 */
             margin: auto; /* 중앙 정렬 */
             padding-top: 15px;
         }
@@ -51,7 +51,6 @@
         }
 
         .upload-item img {
-            max-width: 100%; /* 이미지 최대 너비 설정 */
             height: auto; /* 이미지 높이 자동 조절 */
             border-radius: 4px; /* 이미지 모서리 둥글게 */
             margin-bottom: 10px; /* 이미지 아래쪽 마진 */
@@ -73,6 +72,7 @@
             border-radius: 4px; /* 둥근 모서리 설정 */
         }
 
+
     </style>
 
 
@@ -92,7 +92,7 @@
 
 
 <!-- Template-main 시작 -->
-<main class="template--main">
+<main class="content">
     <!-- 예약자 정보 모달 -->
     <div class="modal" tabindex="-1" role="dialog" id="reservationModal">
         <div class="modal-dialog" role="document">
@@ -118,7 +118,7 @@
     <div th:replace="~{domain/layout/mypage-leftAside}"></div>
 
     <!-- 업로드 목록 섹션 -->
-    <section class="template--Section">
+    <section class="main-content">
         <div class="upload-list-container">
             <!-- uploads가 비어있지 않은 경우, 업로드된 목록을 표시 -->
             <div th:if="!${uploads.isEmpty()}" class="row">
@@ -128,17 +128,15 @@
                          onclick="location.href='/experiences/' + this.dataset.id">
                         <!-- 이미지 표시 -->
                         <!-- 실제 이미지 URL이 있는 경우 이미지 표시 -->
-                        <!--                        <img th:if="${uploadedPageDto.imageUrl}" th:src="${uploadedPageDto.imageUrl}" alt="Uploaded Image" class="img-fluid">-->
+                        <img th:if="${uploadedPageDto.imageUrl}" th:src="${uploadedPageDto.imageUrl}" alt="Uploaded Image" class="img-fluid">
                         <!-- 이미지 URL이 없는 경우 임시 이미지 표시 -->
-                        <img src="https://via.placeholder.com/400x300" alt="Default Image" class="img-fluid">
+                        <!--<img src="https://via.placeholder.com/400x300" alt="Default Image" class="img-fluid">-->
 
                         <!-- 업로드 정보 표시 -->
                         <div class="upload-item-content">
                             <p th:text="'제목 : ' + ${uploadedPageDto.title}">제목</p>
-                            <p>기간: 2-15 ~ 2-16</p>
-                            <!-- <p th:text="'기간 : ' + ${uploadedPageDto.startDate} + ' ~ ' + ${uploadedPageDto.endDate}">기간 : 2-15 ~ 2-16</p> -->
-                            <p>가격: 50,000원</p>
-                            <!-- <p th:text="'가격 : ' + ${uploadedPageDto.price}">가격 : 50,000원</p> -->
+                            <p th:text="'기간 : ' + ${uploadedPageDto.startDate} + ' ~ ' + ${uploadedPageDto.endDate}">기간</p>
+                            <p th:text="'가격 : ' + ${uploadedPageDto.price}">가격</p>
                             <!-- 예약자 정보 버튼 추가 -->
                             <button th:data-id="${uploadedPageDto.id}"
                                     onclick="fetchReservationInfo(event, this.dataset.id)" class="reservation-button">

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 public class ReservationDto {
-    private String experienceImage;
+    private String imageUrl;
 
     private String title;
 
