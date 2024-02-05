@@ -8,14 +8,13 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Collection;
 import java.util.Map;
 
+@Getter
 public class SecurityUser extends User implements OAuth2User {
-    @Getter
+
     private long id;
 
-    @Getter
     private String name;
 
-    @Getter
     private String profileImage;
 
     public SecurityUser(long id, String name, String username, String password, String profileImage, Collection<? extends GrantedAuthority> authorities) {
