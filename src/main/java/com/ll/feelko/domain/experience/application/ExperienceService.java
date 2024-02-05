@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ExperienceService {
@@ -48,11 +51,15 @@ public class ExperienceService {
                 .orElseThrow(() -> new RuntimeException("체험을 찾을 수 없습니다."));
     }
 
-    public Page<Experience> searchExperiences(String destination, Pageable pageable) {
-        return experienceRepository.searchExperiences(destination, pageable);
+    public Page<Experience> searchExperiences(String destination, LocalDate startDate, Pageable pageable) {
+        return experienceRepository.searchExperiences(destination, startDate, pageable);
     }
 
     public Page<Experience> searchAllExperiences(Pageable pageable) {
         return experienceRepository.searchExperiencesAll(pageable);
+    }
+
+    public List<Experience> findPopularExperiences(Pageable pageable) {
+        return experienceRepository.findPopularExperiences(pageable);
     }
 }

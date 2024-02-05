@@ -88,14 +88,15 @@
             <div class="main-hot">
                 <div th:each="experience : ${experiences}" class="hotpost-1">
                     <div class="hotpost-img1">
-                        사진
+                        <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
                     </div>
                     <div class="hotpost-name1">
                         <div class="postname">
-                            <span th:text="${experience.title}"></span>
+                            <a th:href="@{'/experiences/'+ ${experience.id}}">
+                                <span th:text="${experience.title}"></span>
+                            </a>
                         </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <!--                        <div class="postday">기간 : <span th:text="${experience.startDate}"></span> ~ <span th:text="${experience.endDate}"></span></div>-->
+                        <div class="postday">기간 : <span th:text="${experience.startDate}"></span></div>
                         <div class="price">가격 : <span th:text="${experience.price}"></span>원</div>
                     </div>
                 </div>
@@ -128,6 +129,7 @@
 <!-- ----------------------------------------------- -->
 
 <!-- bootstrap -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
