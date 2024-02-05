@@ -106,7 +106,7 @@
                     <div class="reservation-info-label">예약 날짜</div>
                     <div th:text="${reservationDto.reservationDate}" class="reservation-detail">Date</div>
                     <div class="reservation-info-label">가격</div>
-                    <div th:text="${#numbers.formatInteger(reservationDto.price, 0)}" class="reservation-detail">Price
+                    <div th:text="${#numbers.formatInteger(reservationDto.price, 0)} + ' (원)'" class="reservation-detail">Price
                     </div>
                 </div>
                 <div class="reservation-buttons">

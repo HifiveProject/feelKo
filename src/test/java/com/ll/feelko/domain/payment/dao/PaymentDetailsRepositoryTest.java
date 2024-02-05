@@ -6,10 +6,12 @@ import com.ll.feelko.domain.member.dao.MemberRepository;
 import com.ll.feelko.domain.member.entity.Member;
 import com.ll.feelko.domain.payment.api.response.TossPaymentResponse;
 import com.ll.feelko.domain.payment.entity.Payment;
-import com.ll.feelko.global.common.entity.PaymentStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.ll.feelko.global.common.entity.PaymentStatus.*;
+import static com.ll.feelko.global.common.entity.PaymentStatus.COMPLETE_PAYMENT;
 
 
 @Slf4j
@@ -111,7 +113,7 @@ class PaymentDetailsRepositoryTest {
                 .build();
 
         //userA 결제 정보
-        Payment paymentsFirst  = Payment.builder()
+        Payment paymentsFirst = Payment.builder()
                 .member(userA)
                 .experience(firstExperience)
                 .email(userA.getEmail())
@@ -121,7 +123,7 @@ class PaymentDetailsRepositoryTest {
                 .price(new BigDecimal(250000))
                 .reservationDate(LocalDate.now()).build();
 
-        Payment paymentsSecond  = Payment.builder()
+        Payment paymentsSecond = Payment.builder()
                 .member(userA)
                 .experience(secondExperience)
                 .email(userA.getEmail())
@@ -132,7 +134,7 @@ class PaymentDetailsRepositoryTest {
                 .reservationDate(LocalDate.now()).build();
 
         //userB 결제 정보
-        Payment payment  = Payment.builder()
+        Payment payment = Payment.builder()
                 .member(userB)
                 .email(userB.getEmail())
                 .experience(secondExperience)
