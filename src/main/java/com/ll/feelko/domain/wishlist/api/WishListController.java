@@ -2,7 +2,7 @@ package com.ll.feelko.domain.wishlist.api;
 
 import com.ll.feelko.domain.wishlist.application.WishListService;
 import com.ll.feelko.domain.wishlist.dto.WishListDto;
-import com.ll.feelko.domain.wishlist.dto.WishListSaveDto;
+import com.ll.feelko.domain.wishlist.dto.WishListPageDto;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,20 +24,21 @@ public class WishListController {
     // 찜 목록 열람
     @GetMapping("/wishlist")
     public String showWishList(@AuthenticationPrincipal SecurityUser user,
-                                       @RequestParam(name = "page", defaultValue = "0") int page,
-                                       @RequestParam(name = "size", defaultValue = "10") int size,
-                                       Model model) {
-        Page<WishListDto> wishListDtos = wishListService.getWishList(user.getId(), page, size);
-        model.addAttribute("wishListDtos",wishListDtos);
+                               @RequestParam(name = "page", defaultValue = "0") int page,
+                               @RequestParam(name = "size", defaultValue = "10") int size,
+                               Model model) {
+        Page<WishListPageDto> wishListDtos = wishListService.getWishList(user.getId(), page, size);
+        model.addAttribute("wishLists", wishListDtos);
         return "domain/member/mypage/wishlist";
     }
 
     // 찜 기능
     @PostMapping("/wishlist")
     @ResponseBody
-    public ResponseEntity<?> saveWish(@RequestBody WishListSaveDto wishListSaveDto) {
+    public ResponseEntity<?> saveWish(@RequestParam("experienceId") Long experienceId, @AuthenticationPrincipal SecurityUser user) {
+        WishListDto wishListDto = new WishListDto(user.getId(), experienceId);
 
-        return wishListService.saveWish(wishListSaveDto)
+        return wishListService.saveWish(wishListDto)
                 ? ResponseEntity.ok(true)
                 : ResponseEntity.ok(false);
     }

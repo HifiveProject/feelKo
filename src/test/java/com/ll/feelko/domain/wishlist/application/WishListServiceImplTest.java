@@ -5,7 +5,7 @@ import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.member.dao.MemberRepository;
 import com.ll.feelko.domain.member.entity.Member;
 import com.ll.feelko.domain.wishlist.dao.WishListRepository;
-import com.ll.feelko.domain.wishlist.dto.WishListSaveDto;
+import com.ll.feelko.domain.wishlist.dto.WishListDto;
 import com.ll.feelko.domain.wishlist.entity.WishList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,10 +56,10 @@ class WishListServiceImplTest {
         member = entityManager.merge(member);
         experience = entityManager.merge(experience);
 
-        WishListSaveDto wishListSaveDto = new WishListSaveDto(member.getId(), experience.getId());
+        WishListDto wishListDto = new WishListDto(member.getId(), experience.getId());
 
         // when
-        wishListService.saveWish(wishListSaveDto);
+        wishListService.saveWish(wishListDto);
 
         // then
         List<WishList> wishLists = wishListRepository.findAll();
