@@ -8,12 +8,15 @@ import com.ll.feelko.domain.wishlist.dao.WishListRepository;
 import com.ll.feelko.domain.wishlist.dto.WishListDto;
 import com.ll.feelko.domain.wishlist.dto.WishListPageDto;
 import com.ll.feelko.domain.wishlist.entity.WishList;
+import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +58,15 @@ public class WishListServiceImpl implements WishListService{
 public Page<WishListPageDto> getWishList(long memberId, int page, int size){
     Pageable pageable = PageRequest.of(page, size);
     return wishListRepository.findIdTitleByMemberIdOrderByIdDesc(memberId, pageable);
-}
+    }
+
+    @Override
+    public Optional<WishListDto> createWishListDtoIfLogined(SecurityUser user, Long experienceId){
+        if (user != null){
+            return Optional.of(new WishListDto(user.getId(), experienceId));
+        } else {
+            return Optional.empty();
+        }
+    }
 
 }
