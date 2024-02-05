@@ -43,8 +43,8 @@ class WishListServiceImplTest {
     }
 
     @Test
-    @DisplayName("회원이 체험을 찜 목록에 추가하는 테스트")
-    public void saveWish() {
+    @DisplayName("회원이 체험을 찜 목록에 추가하고 삭제하는 테스트")
+    public void saveAndDeleteWish() {
         // given
         Member member = Mockito.mock(Member.class);
         Experience experience = Mockito.mock(Experience.class);
@@ -59,14 +59,22 @@ class WishListServiceImplTest {
         WishListDto wishListDto = new WishListDto(member.getId(), experience.getId());
 
         // when
-        wishListService.saveWish(wishListDto);
+        wishListService.saveWish(wishListDto); // First call to add to wish list
 
         // then
         List<WishList> wishLists = wishListRepository.findAll();
         assertThat(wishLists).hasSize(1);
         assertThat(wishLists.get(0).getMember().getId()).isEqualTo(member.getId());
         assertThat(wishLists.get(0).getExperience().getId()).isEqualTo(experience.getId());
-
         assertThat(ReflectionTestUtils.getField(experience, "wishCounter")).isEqualTo(1L);
+
+        // when
+        wishListService.saveWish(wishListDto); // Second call to remove from wish list
+
+        // then
+        wishLists = wishListRepository.findAll();
+        assertThat(wishLists).isEmpty();
+        assertThat(ReflectionTestUtils.getField(experience, "wishCounter")).isEqualTo(0L);
     }
+
 }
