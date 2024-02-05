@@ -44,3 +44,8 @@ body {
     font-weight: bold;
     color: #333;
 }
+
+#wishBtn.btn-wished {
+    background-color: pink;
+}
+

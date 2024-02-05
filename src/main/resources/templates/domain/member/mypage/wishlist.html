@@ -66,6 +66,7 @@
             margin-bottom: 10px; /* 이미지 아래쪽 마진 */
         }
 
+
     </style>
 
 </head>
@@ -88,16 +89,22 @@
             <div th:if="!${wishLists.isEmpty()}" class="row">
                 <div th:each="experience : ${wishLists}" class="col-md-4 mb-3">
                     <!-- 각 찜한 체험 클릭 시 체험 상세 페이지로 이동 -->
-                    <div th:data-id="${experience.experienceId}" class="wish-item" onclick="location.href='/experiences/' + this.dataset.id">
-                        <img src="https://via.placeholder.com/400x300" alt="Default Image" class="img-fluid">
+                    <div th:data-id="${experience.id}" class="wish-item" onclick="location.href='/experiences/' + this.dataset.id">
+                        <!-- 이미지 표시 -->
+                        <!-- 실제 이미지 URL이 있는 경우 이미지 표시 -->
+                        <img th:if="${experience.imageUrl}" th:src="${experience.imageUrl}"
+                             alt="wishlist Image" class="img-fluid">
+                        <!-- 이미지 URL이 없는 경우 임시 이미지 표시 -->
+                        <!--<img src="https://via.placeholder.com/400x300" alt="Default Image" class="img-fluid">-->
 
                         <!-- 찜 체험 정보 표시 -->
                         <div class="wish-item-content">
                             <p th:text="'제목 : ' + ${experience.title}">제목</p>
-                            <p>기간: 2-15 ~ 2-16</p>
-                            <p>가격: 50,000원</p>
+                            <p th:text="'기간 : ' + ${experience.startDate} + ' ~ ' + ${experience.endDate}">
+                                기간</p>
+                            <p th:text="'가격 : ' + ${#numbers.formatInteger(experience.price, 0)} + ' (원)'">가격</p>
                             <!-- 찜 해제 버튼 추가 -->
-                            <button th:data-id="${experience.experienceId}" onclick="deleteWish(event, this.dataset.id)" class="delete-button">
+                            <button th:data-id="${experience.id}" onclick="deleteWish(event, this.dataset.id)" class="delete-button">
                                 찜 해제
                             </button>
                         </div>

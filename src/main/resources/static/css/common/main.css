@@ -76,15 +76,15 @@
     font-size: 1.5rem;
 }
 
-.hotpost-img1{
-    height: 220px;
-    width: 300px;
+.hotpost-img12{
+    height: 296px;
+    width: 335px;
 }
 
 .hotpost-name1{
     display: grid;
     font-size: 15px;
-    margin-top: 88px;
+    margin-left: 10px;
 
 }
 .postname{
