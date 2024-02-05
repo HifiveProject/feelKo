@@ -58,7 +58,7 @@
                         <!-- 버튼 형태로 변경, 햄버거 메뉴 아이콘과 프로필 아이콘을 포함 -->
                         <button class="btn" id="moreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="/images/menu-icon.svg" alt="메뉴 아이콘" class="hamburger-icon"> <!-- 햄버거 아이콘 -->
-                            <img th:src="${#authorization.expression('isAuthenticated()') ? #authentication.principal.profileImage : '/images/로그인 이미지.png'}" alt="사용자 아이콘" class="user-icon">
+                            <img src="/images/로그인 이미지.png" alt="사용자 아이콘" class="user-icon"> <!-- 프로필 아이콘 -->
                         </button>
 
                         <!-- 드롭다운 메뉴 -->
@@ -78,10 +78,6 @@
                                 <a class="dropdown-item" href="/member/mypage">마이페이지</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a class="dropdown-item" href="/member/mypage/profile">개인정보</a>
-                            </li>
-                            <li th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a class="dropdown-item" href="#">결제&예약 정보</a>
                                 <a class="dropdown-item" href="/member/mypage/reservation-list">결제&예약 정보</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">

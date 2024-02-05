@@ -20,18 +20,18 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MypageServiceImpl implements MypageService {
+public class MypageServiceImpl implements MypageService{
 
     private final ExperienceRepository experienceRepository;
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
 
+
     @Override
-    public Optional<Member> findById(Long id) {
+    public Optional<Member> findById(Long id){
         return memberRepository.findById(id);
     }
 
@@ -84,7 +84,7 @@ public class MypageServiceImpl implements MypageService {
     }
 
     @Override
-    public Page<ReservationDto> getReservationListByMemberId(long memberId, int page, int size) {
+    public Page<ReservationDto> getReservationListByMemberId(long memberId, int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         return paymentRepository.findByMemberIdOrderByCreatedAtDescWithExperience(memberId, pageable);
     }

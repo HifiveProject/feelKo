@@ -2,6 +2,7 @@ package com.ll.feelko.domain.experience.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
@@ -17,7 +18,9 @@ public class ExperienceCreateDTO {
     private String location;
     public String descriptionText;
     private BigDecimal price;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private Long headcount;
     private Long wishCounter;
