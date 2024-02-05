@@ -4,9 +4,10 @@
     <title>Feelko-template3</title>
 
     <style>
-        /* 전체 페이지와 섹션의 기본 스타일을 설정합니다. */
-        .template--Section {
-            padding-top: 30px;
+        .reservation-list-container{
+            width: 80%;
+            margin: auto; /* 중앙 정렬 */
+            padding-top: 15px;
         }
 
         /* 박스의 스타일을 정의합니다. */
@@ -96,8 +97,8 @@
 
     <!-- 사용자 정보 섹션 -->
     <section class="main-content">
-        <div th:if="!${reservations.isEmpty()}" class="reservation-list-container">
-            <div th:each="reservationDto : ${reservations}" class="reservation-item">
+        <div class="reservation-list-container">
+            <div th:if="!${reservations.isEmpty()}" th:each="reservationDto : ${reservations}" class="reservation-item">
                 <img th:src="${reservationDto.imageUrl}" alt="체험 이미지" class="reservation-image">
                 <div class="reservation-info">
                     <div class="reservation-info-label">체험 제목</div>
@@ -114,38 +115,38 @@
                     <a th:href="@{/experiences/{id}(id=${reservationDto.experienceId})}" class="button1">취소하기</a>
                 </div>
             </div>
-        </div>
 
+            <div th:if="${reservations.isEmpty()}">
+                <p>예약 정보가 없습니다.</p>
+            </div>
 
-        <div th:if="${reservations.isEmpty()}">
-            <p>예약이 없습니다.</p>
-        </div>
+            <!-- 페이징 처리 -->
+            <div th:if="${reservations.totalPages > 1}" class="pagination-container mt-4">
+                <ul class="pagination justify-content-center">
+                    <!-- 이전 페이지 버튼 -->
+                    <li th:classappend="${!reservations.hasPrevious} ? 'disabled' : ''" class="page-item">
+                        <a class="page-link" th:href="@{reservation-list(page=${reservations.number - 1})}"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
 
-        <!-- 페이징 처리 -->
-        <div th:if="${reservations.totalPages > 1}" class="pagination-container mt-4">
-            <ul class="pagination justify-content-center">
-                <!-- 이전 페이지 버튼 -->
-                <li th:classappend="${!reservations.hasPrevious} ? 'disabled' : ''" class="page-item">
-                    <a class="page-link" th:href="@{reservation-list(page=${reservations.number - 1})}"
-                       aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
+                    <!-- 페이지 번호 -->
+                    <li th:each="pageNum : ${#numbers.sequence(0, reservations.totalPages - 1)}"
+                        th:classappend="${pageNum == reservations.number} ? 'active' : ''" class="page-item">
+                        <a class="page-link" th:href="@{reservation-list(page=${pageNum})}" th:text="${pageNum + 1}"></a>
+                    </li>
 
-                <!-- 페이지 번호 -->
-                <li th:each="pageNum : ${#numbers.sequence(0, reservations.totalPages - 1)}"
-                    th:classappend="${pageNum == reservations.number} ? 'active' : ''" class="page-item">
-                    <a class="page-link" th:href="@{reservation-list(page=${pageNum})}" th:text="${pageNum + 1}"></a>
-                </li>
+                    <!-- 다음 페이지 버튼 -->
+                    <li th:classappend="${!reservations.hasNext} ? 'disabled' : ''" class="page-item">
+                        <a class="page-link" th:href="@{reservation-list(page=${reservations.number + 1})}"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-                <!-- 다음 페이지 버튼 -->
-                <li th:classappend="${!reservations.hasNext} ? 'disabled' : ''" class="page-item">
-                    <a class="page-link" th:href="@{reservation-list(page=${reservations.number + 1})}"
-                       aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
         </div>
 
     </section>
