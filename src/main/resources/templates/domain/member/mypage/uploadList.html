@@ -1,23 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- css -->
-    <link rel="stylesheet" href="/css/template/template.css"> <!-- 문서 기본 화면 배치/기본 폰트 등 기본 설정 -->
-    <link rel="stylesheet" href="/css/common/header.css">
-    <link rel="stylesheet" href="/css/common/main.css">
-    <link rel="stylesheet" href="/css/common/footer.css">
-
     <title>Feelko-template3</title>
-
-    <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <!-- fontAwesome -->
-    <script src="https://kit.fontawesome.com/ae1a88d4e2.js" crossorigin="anonymous"></script>
 
     <style>
         /* 사용자 정보 섹션 스타일 */
@@ -25,50 +9,26 @@
             padding-top: 30px; /* 섹션 상단 패딩 추가 */
         }
 
-
-        .template--leftAside {
-            padding-top: 60px; /* 상단 패딩 추가 */
-        }
-
-        .nav-link {
-            font-size: 1rem; /* 링크 글씨 크기 */
-            margin-bottom: 10px; /* 링크 사이 간격 */
-        }
-
         .upload-list-container {
-            width: 80%; /* 가로 길이 최대로 설정 */
+            width: 65%; /* 가로 길이 최대로 설정 */
             margin: auto; /* 중앙 정렬 */
-        }
-
-        .upload-item {
-            background-color: #f8f9fa; /* 배경색 */
-            border: 1px solid #dee2e6; /* 테두리 */
-            padding: 15px; /* 패딩 */
-            margin-bottom: 10px; /* 아래쪽 마진 */
-            border-radius: 5px; /* 둥근 모서리 */
-        }
-
-        .pagination-container {
-            display: flex;
-            justify-content: center; /* 페이지네이션을 중앙 정렬 */
-            padding-top: 10px; /* 상단 패딩 */
+            padding-top: 15px;
         }
 
         .upload-item {
             background-color: #fff; /* 배경색을 흰색으로 설정 */
             border: 1px solid #dee2e6; /* 테두리 색상 설정 */
-            border-radius: 4px; /* 모서리를 둥글게 */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 그림자 효과 추가 */
+            padding: 15px; /* 패딩 */
             margin-bottom: 20px; /* 마진 설정 */
-            padding: 20px; /* 패딩 설정 */
+            border-radius: 4px; /* 모서리를 둥글게 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
             transition: transform 0.3s ease; /* 호버 효과를 위한 변환 설정 */
         }
-
 
         /* 호버 효과 */
         .upload-item:hover {
             transform: translateY(-5px); /* 위로 약간 이동 */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* 그림자 효과 강조 */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 강조 */
         }
 
         /* 예약자 정보 버튼 스타일 */
@@ -91,122 +51,109 @@
         }
 
         .upload-item img {
-            max-width: 100%; /* 이미지 최대 너비 설정 */
             height: auto; /* 이미지 높이 자동 조절 */
             border-radius: 4px; /* 이미지 모서리 둥글게 */
             margin-bottom: 10px; /* 이미지 아래쪽 마진 */
         }
 
+        .modal-body {
+            max-height: 400px; /* 최대 높이 설정 */
+            overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+        }
+
+        .reservation-list, .reservation-item {
+            list-style-type: none; /* 목록 스타일 제거 */
+            padding: 0; /* 패딩 제거 */
+            margin: 0; /* 마진 제거 */
+            background-color: #ffffff; /* 배경색 설정 */
+            border: 1px solid #dee2e6; /* 테두리 설정 */
+            padding: 10px; /* 패딩 설정 */
+            margin-bottom: 10px; /* 아이템 간의 마진 설정 */
+            border-radius: 4px; /* 둥근 모서리 설정 */
+        }
+
+
     </style>
 
-    <script>
-        function fetchReservationInfo(event, id) {
-            event.stopPropagation();
-            const url = `/member/mypage/upload-list/reservation/${id}`; // URL 동적 생성
-            // AJAX 요청으로 예약자 목록을 서버에 요청
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    // 예약자 목록을 모달에 표시
-                    const reservationList = document.getElementById('reservationList');
-                    reservationList.innerHTML = ''; // 이전 내용을 지움
-
-                    // 날짜별로 예약 정보를 표시
-                    Object.keys(data).forEach(date => {
-                        const dateHeader = document.createElement('h5');
-                        dateHeader.textContent = date; // 날짜 표시
-                        reservationList.appendChild(dateHeader);
-
-                        const list = document.createElement('ul');
-                        data[date].forEach(reservation => {
-                            const listItem = document.createElement('li');
-                            listItem.textContent = `${reservation.name} - ${reservation.phoneNumber}`;
-                            list.appendChild(listItem);
-                        });
-                        reservationList.appendChild(list);
-                    });
-
-                    // Bootstrap 모달을 표시
-                    $('#reservationModal').modal('show');
-                })
-                .catch(error => {
-                    console.error('Error fetching reservation info:', error);
-                });
-        }
-    </script>
 
 </head>
 <body class="template--body">
-<!-- ----------------------------------------------- -->
-<!-- Template-header 시작 -->
-<th:block th:replace="domain/layout/header"></th:block>
-<!-- Template-header 끝 -->
-<!-- ----------------------------------------------- -->
-<!-- Template-main 시작 -->
-<main class="template--main">
 
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- Template-header 시작 -->
+<th:block th:replace="~{domain/layout/header}"></th:block>
+<!-- Template-header 끝 -->
+
+
+<!-- ----------------------------------------------- -->
+
+
+<!-- Template-main 시작 -->
+<main class="content">
     <!-- 예약자 정보 모달 -->
     <div class="modal" tabindex="-1" role="dialog" id="reservationModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">예약자 정보</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
+                    <!-- 달력 UI - 예약 정보 모달에 날짜 선택기 추가 -->
+                    <!-- 달력 UI에 이벤트 리스너 추가 -->
+                    <input type="date" id="reservationDate" onchange="filterReservationInfoByDate()">
                     <p id="reservationList">로딩 중...</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 왼쪽 네비게이션 메뉴 -->
-    <aside class="template--leftAside">
-        <nav class="nav flex-column">
-            <a class="nav-link" href="/member/mypage/profile/update">개인정보 수정</a>
-            <a class="nav-link" href="/member/mypage/payment">결제&예약 정보</a>
-            <a class="nav-link" href="/member/mypage/write">체험 작성</a>
-            <a class="nav-link" href="/member/mypage/upload-list">작성한 체험 목록</a>
-            <a class="nav-link" href="/member/mypage/wish-list">위시 리스트</a>
-            <a class="nav-link" href="/member/mypage/message">메시지</a>
-        </nav>
-    </aside>
+
+    <!-- 왼쪽 메뉴바 포함 -->
+    <div th:replace="~{domain/layout/mypage-leftAside}"></div>
+
     <!-- 업로드 목록 섹션 -->
-    <section class="template--Section">
+    <section class="main-content">
         <div class="upload-list-container">
             <!-- uploads가 비어있지 않은 경우, 업로드된 목록을 표시 -->
             <div th:if="!${uploads.isEmpty()}" class="row">
                 <div th:each="uploadedPageDto : ${uploads}" class="col-md-4 mb-3">
                     <!-- 각 업로드 아이템 클릭 시 체험 상세 페이지로 이동 -->
-                    <div th:data-id="${uploadedPageDto.id}" class="upload-item" onclick="location.href='/experiences/' + this.dataset.id">
+                    <div th:data-id="${uploadedPageDto.id}" class="upload-item"
+                         onclick="location.href='/experiences/' + this.dataset.id">
                         <!-- 이미지 표시 -->
                         <!-- 실제 이미지 URL이 있는 경우 이미지 표시 -->
-                        <!--                        <img th:if="${uploadedPageDto.imageUrl}" th:src="${uploadedPageDto.imageUrl}" alt="Uploaded Image" class="img-fluid">-->
+                        <img th:if="${uploadedPageDto.imageUrl}" th:src="${uploadedPageDto.imageUrl}" alt="Uploaded Image" class="img-fluid">
                         <!-- 이미지 URL이 없는 경우 임시 이미지 표시 -->
-                        <img src="https://via.placeholder.com/400x300" alt="Default Image" class="img-fluid">
+                        <!--<img src="https://via.placeholder.com/400x300" alt="Default Image" class="img-fluid">-->
 
                         <!-- 업로드 정보 표시 -->
                         <div class="upload-item-content">
                             <p th:text="'제목 : ' + ${uploadedPageDto.title}">제목</p>
-                            <p>기간: 2-15 ~ 2-16</p>
-                            <!-- <p th:text="'기간 : ' + ${uploadedPageDto.startDate} + ' ~ ' + ${uploadedPageDto.endDate}">기간 : 2-15 ~ 2-16</p> -->
-                            <p>가격: 50,000원</p>
-                            <!-- <p th:text="'가격 : ' + ${uploadedPageDto.price}">가격 : 50,000원</p> -->
+                            <p th:text="'기간 : ' + ${uploadedPageDto.startDate} + ' ~ ' + ${uploadedPageDto.endDate}">기간</p>
+                            <p th:text="'가격 : ' + ${uploadedPageDto.price}">가격</p>
                             <!-- 예약자 정보 버튼 추가 -->
-                            <button th:data-id="${uploadedPageDto.id}" onclick="fetchReservationInfo(event, this.dataset.id)" class="reservation-button">
+                            <button th:data-id="${uploadedPageDto.id}"
+                                    onclick="fetchReservationInfo(event, this.dataset.id)" class="reservation-button">
                                 예약자 정보 보기
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- uploads가 비어 있는 경우, 메시지 표시 -->
+            <div th:if="${uploads.isEmpty()}">
+                <p>작성한 체험 정보가 없습니다.</p>
+            </div>
+
             <!-- 페이징 처리 -->
-            <div class="pagination-container mt-4">
+            <div th:if="${uploads.totalPages > 1}" class="pagination-container mt-4">
                 <ul class="pagination justify-content-center">
                     <!-- 이전 페이지 버튼 -->
                     <li th:classappend="${!uploads.hasPrevious} ? 'disabled' : ''" class="page-item">
@@ -216,7 +163,8 @@
                     </li>
 
                     <!-- 페이지 번호 -->
-                    <li th:each="pageNum : ${#numbers.sequence(0, uploads.totalPages - 1)}" th:classappend="${pageNum == uploads.number} ? 'active' : ''" class="page-item">
+                    <li th:each="pageNum : ${#numbers.sequence(0, uploads.totalPages - 1)}"
+                        th:classappend="${pageNum == uploads.number} ? 'active' : ''" class="page-item">
                         <a class="page-link" th:href="@{upload-list(page=${pageNum})}" th:text="${pageNum + 1}"></a>
                     </li>
 
@@ -229,28 +177,79 @@
                 </ul>
             </div>
 
-            <!-- uploads가 비어 있는 경우, 메시지 표시 -->
-            <div th:if="${uploads.isEmpty()}">
-                <p>작성한 체험 정보가 없습니다.</p>
-            </div>
         </div>
     </section>
 
     <aside class="template--rightAside"></aside>
 </main>
+
 <!-- Template-main 끝 -->
+
+
 <!-- ----------------------------------------------- -->
+
+
 <!-- Template-footer 시작 -->
-<th:block th:replace="domain/layout/footer"></th:block>
+<th:block th:replace="~{domain/layout/footer}"></th:block>
 <!-- Template-footer 끝 -->
+
+
 <!-- ----------------------------------------------- -->
-<!-- bootstrap -->
+
+<script>
+    let allReservations = {};
+
+    function fetchReservationInfo(event, id) {
+        event.stopPropagation();
+        const url = `/member/mypage/upload-list/reservation/${id}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                allReservations = data; // 서버로부터 받은 데이터를 저장
+                displayReservationInfo(); // 최초 데이터 로드 시 모든 정보를 표시
+            })
+            .catch(error => {
+                console.error('Error fetching reservation info:', error);
+            });
+    }
+
+    function displayReservationInfo(selectedDate = '') {
+        const reservationList = document.getElementById('reservationList');
+        reservationList.innerHTML = ''; // 이전 내용을 지움
+        reservationList.className = 'reservation-list'; // 클래스 추가
+
+        Object.keys(allReservations).forEach(date => {
+            // 선택된 날짜가 있고, 해당 날짜와 일치하지 않으면 스킵
+            if (selectedDate && date !== selectedDate) return;
+
+            const dateHeader = document.createElement('h5');
+            dateHeader.textContent = date; // 날짜 표시
+            reservationList.appendChild(dateHeader);
+
+            const list = document.createElement('ul');
+            list.className = 'reservation-list'; // 클래스 추가
+            allReservations[date].forEach(reservation => {
+                const listItem = document.createElement('li');
+                listItem.className = 'reservation-item'; // 클래스 추가
+                listItem.textContent = `${reservation.name}  ${reservation.phone} ${reservation.email}`;
+                list.appendChild(listItem);
+            });
+            reservationList.appendChild(list);
+        });
+
+        // Bootstrap 모달을 표시
+        $('#reservationModal').modal('show');
+    }
+
+    function filterReservationInfoByDate() {
+        const selectedDate = document.getElementById('reservationDate').value;
+        displayReservationInfo(selectedDate); // 선택된 날짜로 예약 정보 필터링하여 표시
+    }
+</script>
+
+<!-- bootstrap (header에 있어서 지워봤는데 네비바 작동안함 header에 있는 script부분은 지우는걸 제안-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
-<!-- js -->
-<script src="/js/common/header.js"></script>
-<script src="/js/common/main.js"></script>
-<script src="/js/common/footer.js"></script>
 </body>
 </html>

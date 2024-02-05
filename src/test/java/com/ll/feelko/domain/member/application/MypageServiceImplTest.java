@@ -32,7 +32,7 @@ class MypageServiceImplTest {
         // 테스트 데이터 생성
         List<UploadedPageDto> testExperienceList = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
-            testExperienceList.add(new UploadedPageDto(i,"test"));
+            testExperienceList.add(new UploadedPageDto(i,null,"test",null,null,null));
         }
         Page<UploadedPageDto> expectedPage = new PageImpl<>(testExperienceList.subList(1, 11),
                 PageRequest.of(1, 11),
