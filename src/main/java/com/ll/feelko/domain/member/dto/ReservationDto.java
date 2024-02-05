@@ -11,14 +11,16 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 public class ReservationDto {
+
     private String imageUrl;
 
     private String title;
 
     private Long experienceId;
 
+    private Long paymentId;
+
     private String paymentKey;
-    // 결제 상세 버튼 누르면 findByPaymentKey로 찾기
 
     private BigDecimal price;
 
