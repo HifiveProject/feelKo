@@ -74,6 +74,73 @@
 </head>
 <body class="template--body">
 
+<script>
+    let allReservations = {};
+
+    function fetchReservationInfo(event, id) {
+        event.stopPropagation();
+        const url = `/member/mypage/upload-list/reservation/${id}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                allReservations = data; // 서버로부터 받은 데이터를 저장
+                displayReservationInfo(); // 최초 데이터 로드 시 모든 정보를 표시
+            })
+            .catch(error => {
+                console.error('Error fetching reservation info:', error);
+            });
+    }
+
+    function displayReservationInfo(selectedDate = '') {
+        const reservationList = document.getElementById('reservationList');
+        reservationList.innerHTML = ''; // 이전 내용을 지움
+        reservationList.className = 'reservation-list'; // 클래스 추가
+
+        let hasReservations = false; // 예약 정보 존재 여부를 추적하는 변수, 초기값은 false
+
+        Object.keys(allReservations).forEach(date => {
+            // 선택된 날짜가 있고, 해당 날짜와 일치하지 않으면 스킵
+            if (selectedDate && date !== selectedDate) return;
+
+            const reservations = allReservations[date];
+
+            if (reservations.length > 0) {
+                hasReservations = true; // 예약 정보가 존재함을 표시
+            }
+
+            const dateHeader = document.createElement('h5');
+            dateHeader.textContent = date; // 날짜 표시
+            reservationList.appendChild(dateHeader);
+
+            const list = document.createElement('ul');
+            list.className = 'reservation-list'; // 클래스 추가
+            reservations.forEach(reservation => {
+                const listItem = document.createElement('li');
+                listItem.className = 'reservation-item'; // 클래스 추가
+                listItem.textContent = `${reservation.name}  ${reservation.phoneNumber} ${reservation.email}`;
+                list.appendChild(listItem);
+            });
+            reservationList.appendChild(list);
+
+
+        });
+        //예약 정보가 없는 경우 표시
+        if (!hasReservations) {
+            const noReservationMsg = document.createElement('p');
+            noReservationMsg.textContent = '예약 정보가 없습니다.';
+            reservationList.appendChild(noReservationMsg);
+        }
+
+        // Bootstrap 모달을 표시
+        $('#reservationModal').modal('show');
+    }
+
+    function filterReservationInfoByDate() {
+        const selectedDate = document.getElementById('reservationDate').value;
+        displayReservationInfo(selectedDate); // 선택된 날짜로 예약 정보 필터링하여 표시
+    }
+
+</script>
 
 <!-- ----------------------------------------------- -->
 
@@ -123,14 +190,16 @@
                          onclick="location.href='/experiences/' + this.dataset.id">
                         <!-- 이미지 표시 -->
                         <!-- 실제 이미지 URL이 있는 경우 이미지 표시 -->
-                        <img th:if="${uploadedPageDto.imageUrl}" th:src="${uploadedPageDto.imageUrl}" alt="Uploaded Image" class="img-fluid">
+                        <img th:if="${uploadedPageDto.imageUrl}" th:src="${uploadedPageDto.imageUrl}"
+                             alt="Uploaded Image" class="img-fluid">
                         <!-- 이미지 URL이 없는 경우 임시 이미지 표시 -->
                         <!--<img src="https://via.placeholder.com/400x300" alt="Default Image" class="img-fluid">-->
 
                         <!-- 업로드 정보 표시 -->
                         <div class="upload-item-content">
                             <p th:text="'제목 : ' + ${uploadedPageDto.title}">제목</p>
-                            <p th:text="'기간 : ' + ${uploadedPageDto.startDate} + ' ~ ' + ${uploadedPageDto.endDate}">기간</p>
+                            <p th:text="'기간 : ' + ${uploadedPageDto.startDate} + ' ~ ' + ${uploadedPageDto.endDate}">
+                                기간</p>
                             <p th:text="'가격 : ' + ${uploadedPageDto.price}">가격</p>
                             <!-- 예약자 정보 버튼 추가 -->
                             <button th:data-id="${uploadedPageDto.id}"
@@ -191,60 +260,13 @@
 
 <!-- ----------------------------------------------- -->
 
-<script>
-    let allReservations = {};
-
-    function fetchReservationInfo(event, id) {
-        event.stopPropagation();
-        const url = `/member/mypage/upload-list/reservation/${id}`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                allReservations = data; // 서버로부터 받은 데이터를 저장
-                displayReservationInfo(); // 최초 데이터 로드 시 모든 정보를 표시
-            })
-            .catch(error => {
-                console.error('Error fetching reservation info:', error);
-            });
-    }
-
-    function displayReservationInfo(selectedDate = '') {
-        const reservationList = document.getElementById('reservationList');
-        reservationList.innerHTML = ''; // 이전 내용을 지움
-        reservationList.className = 'reservation-list'; // 클래스 추가
-
-        Object.keys(allReservations).forEach(date => {
-            // 선택된 날짜가 있고, 해당 날짜와 일치하지 않으면 스킵
-            if (selectedDate && date !== selectedDate) return;
-
-            const dateHeader = document.createElement('h5');
-            dateHeader.textContent = date; // 날짜 표시
-            reservationList.appendChild(dateHeader);
-
-            const list = document.createElement('ul');
-            list.className = 'reservation-list'; // 클래스 추가
-            allReservations[date].forEach(reservation => {
-                const listItem = document.createElement('li');
-                listItem.className = 'reservation-item'; // 클래스 추가
-                listItem.textContent = `${reservation.name}  ${reservation.phone} ${reservation.email}`;
-                list.appendChild(listItem);
-            });
-            reservationList.appendChild(list);
-        });
-
-        // Bootstrap 모달을 표시
-        $('#reservationModal').modal('show');
-    }
-
-    function filterReservationInfoByDate() {
-        const selectedDate = document.getElementById('reservationDate').value;
-        displayReservationInfo(selectedDate); // 선택된 날짜로 예약 정보 필터링하여 표시
-    }
-</script>
-
 <!-- bootstrap (header에 있어서 지워봤는데 네비바 작동안함 header에 있는 script부분은 지우는걸 제안-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
+
+
 </body>
+
+
 </html>
