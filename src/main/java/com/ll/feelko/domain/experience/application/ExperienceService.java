@@ -23,6 +23,7 @@ public class ExperienceService {
 
         Member member = memberService.findByIdElseThrow(dto.getMemberId());
 
+        //리팩토링
         Experience experience = Experience.builder()
                 .memberId(member.getId())
                 .title(dto.getTitle())
@@ -34,6 +35,7 @@ public class ExperienceService {
                 .descriptionText(dto.getDescriptionText())
                 .price(dto.getPrice())
                 .startDate(dto.getStartDate())
+                .endDate(dto.getEndDate())
                 .headcount(dto.getHeadcount())
                 .build();
         return experienceRepository.save(experience);
