@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,8 +26,9 @@ public class ExperienceService {
 
         Member member = memberService.findByIdElseThrow(dto.getMemberId());
 
+        //리팩토링
         Experience experience = Experience.builder()
-                .member(member)
+                .memberId(member.getId())
                 .title(dto.getTitle())
                 .location(dto.getLocation())
                 // TODO 추후 삭제 요망
@@ -35,9 +38,18 @@ public class ExperienceService {
                 .descriptionText(dto.getDescriptionText())
                 .price(dto.getPrice())
                 .startDate(dto.getStartDate())
+                .endDate(dto.getEndDate())
                 .headcount(dto.getHeadcount())
                 .build();
         return experienceRepository.save(experience);
+    }
+
+    public BigDecimal sumPrice(BigDecimal price , Long people) {
+
+        BigDecimal result = price;
+
+        return result.multiply(BigDecimal.valueOf(people));
+
     }
 
     public Experience detail(Long experienceId) {

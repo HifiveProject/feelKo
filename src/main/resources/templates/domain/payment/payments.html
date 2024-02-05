@@ -67,46 +67,68 @@
 </head>
 <body>
 <section>
+    <!-- 가상계좌 결제하기 폼 -->
     <form id="payment-form">
-        <label for="check-in">예약 날짜:</label>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            title = /*[[${experiences.getTitle()}]]*/ '';
+            prices = /*[[${experiences.getPrice()}]]*/ '';
+            id = /*[[${experiences.getId()}]]*/ '';
+            count = /*[[${count}]]*/ '';
+            days = /*[[${day}]]*/ '';
+            hap = /*[[${hap}]]*/ '';
+            /*]]>*/
+        </script>
+
+        <label for="check-in">체험 정보</label>
         <input type="text" id="check-in" th:value="${experiences.getTitle()}"  readonly>
 
-        <label for="guest">인원수:</label>
-        <input type="text" id="guest" th:value="${experiences.getHeadcount()}"  readonly>
+        <label for="locations">예약 장소</label>
+        <input type="text" id="locations" th:value="${experiences.getLocation()}"  readonly>
 
-        <label for="description">상세 설명:</label>
-        <input type="text" id="description" th:value="${experiences.getDescriptionText()}" readonly>
+        <label for="description">에약 날짜 </label>
+        <input type="text" id="description" th:value="${day}" readonly>
 
-        <label for="location">인원수:</label>
-        <input type="text" id="location" th:value="${experiences.getLocation()}"  readonly>
+        <label for="location">인원수 </label>
+        <input type="text" id="location" th:value="${count}"  readonly>
 
+        <label for="price">총 금액 </label>
+        <input type="text" id="price" th:value="${hap}"  readonly>
+
+        <!--Toss UI Input Value Start-->
         <label for="customerName" class="hidden">이름:</label>
         <input type="text" id="customerName" name="customerName" required class="hidden">
 
         <label for="customerEmail" class="hidden">이메일:</label>
         <input type="email" id="customerEmail" name="customerEmail" required class="hidden">
 
+        <label for="experiencesId" class="hidden">체험 정보 아이디:</label>
+        <input type="email" id="experiencesId"  th:value="${experiences.getId()}" name="experiencesId" required class="hidden">
+        <!--Toss UI Input Value End-->
+
         <button type="button" id="payment-button">가상계좌로 결제하기</button>
     </form>
 </section>
 
 <script>
-    var clientKey = 'test_ck_AQ92ymxN34MNDpl69MnAVajRKXvd';
-    var button = document.getElementById('payment-button');
-    var chargeAmount = 50000; // 예시 충전 금액
+    const clientKey = 'test_ck_AQ92ymxN34MNDpl69MnAVajRKXvd';
+    const button = document.getElementById('payment-button');
+
 
     button.addEventListener('click', function () {
-        var customerName = document.getElementById('customerName').value;
-        var customerEmail = document.getElementById('customerEmail').value;
+
+
+        const customerName = document.getElementById('customerName').value;
+        const customerEmail = document.getElementById('customerEmail').value;
 
         // Data to be sent to the server
-        var requestData = {
-            amount: chargeAmount,
+        const requestData = {
+            amount: hap,
             orderId: generateOrderId(),
-            orderName: '포인트 충전',
+            orderName: title,
             customerName: customerName,
             customerEmail: customerEmail,
-            successUrl: 'http://localhost:8080/success',
+            successUrl: 'http://localhost:8080/success/' + count + "/" + days + "/" + id,
             failUrl: 'http://localhost:8081/api/v1/payments/toss/fail',
             validHours: 12,
             cashReceipt: {
@@ -115,8 +137,7 @@
             useEscrow: false,
         };
 
-        // Open Toss Payments window
-        var tossPayments = TossPayments(clientKey);
+        const tossPayments = TossPayments(clientKey);
         tossPayments.requestPayment('가상계좌', requestData);
     });
 

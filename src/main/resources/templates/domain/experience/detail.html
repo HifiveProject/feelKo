@@ -52,41 +52,55 @@
                         <p th:text="${experience.startDate}"></p>
                         <p th:text="${experience.headcount}"></p>
                         <p th:text="${experience.price}"></p>
-                        <button type="button" id="wishBtn" th:onclick="'saveWish()'">찜하기</button>
+                        <button type="button" id="wishBtn" th:onclick="'saveWish()'">
+                            <span th:if="${isWished}">찜 해제</span>
+                            <span th:if="${!isWished}">찜 등록</span>
+                        </button>
                     </div>
                 </div>
+
+                <script>
+                    var selectedDestination = "";
+                    function getSelectedDestination() {
+                        var destinationSelect = document.getElementById('destination');
+                        selectedDestination = destinationSelect.value;
+                    }
+                </script>
+
+                <div class="template--pageTitleContainer2">
+                    <div class="template--pageTitleBox">
+                        <div class="template--overlayedTitle2" style="color: black;">
+                            <a>
+                                <form action="/search" method="get">
+                                    <label for="destination">인원수 :</label>
+                                    <select id="destination" name="destination" required onchange="getSelectedDestination()">
+                                        <option value="" disabled selected hidden>인원수를 선택하세요</option>
+                                        <option name="count">1</option>
+                                        <option name="count">2</option>
+                                        <option name="count">3</option>
+                                        <option name="count">4</option>
+                                        <option name="count">5</option>
+                                        <option name="count">6</option>
+                                        <option name="count">7</option>
+                                        <option name="count">8</option>
+                                        <option name="count">9</option>
+                                        <option name="count">10</option>
+                                        <option></option>
+                                    </select>
+                                    <label for="start_date">날짜 :</label>
+                                    <input type="date" id="start_date" name="start_date">
+                                </form>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 두 번째 HTML 코드 삽입 끝 -->
                 <button th:onclick="'deleteProduct(' + ${experience.getId()} + ')'" > 결제 하기 </button>
             </div>
         </div>
         <!-- 콘텐츠 끝 -->
-        <!-- 찜 관련 script -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script th:inline="javascript">
-            /** 위시리스트에 추가 **/
-            function saveWish() {
-                var memberId = [[${#authentication.principal.id}]];
-                var experienceId = [[${experience.id}]];
-
-                $.ajax({
-                    url: '/member/mypage/wishlist',
-                    type: 'POST',
-                    data : JSON.stringify({
-                        memberId: memberId,
-                        experienceId: experienceId
-                    }),
-                    contentType: 'application/json;',
-                }).done(function(result){
-                    if(result){
-                        alert("찜이 등록되었습니다.");
-                    } else {
-                        alert("찜이 삭제되었습니다.");
-                    }
-                }).fail(function(error){
-                    alert("요청에 실패하였습니다.");
-                });
-            };
-        </script>
 
     </section>
     <aside class="template--rightAside"></aside>
@@ -98,11 +112,22 @@
 <!-- Template-footer 끝 -->
 
 <script th:inline="javascript" type="text/javascript">
-
     const deleteProduct = (id) => {
-        window.location.href = "/payment/" + id;
-    }
+        // 여행지 선택 값 가져오기
+        var destinationSelect = document.getElementById('destination');
+        var selectedDestination = destinationSelect.value;
 
+        // 날짜 값 가져오기
+        var startDateInput = document.getElementById('start_date');
+        var selectedStartDate = startDateInput.value;
+
+        // 가져온 값을 콘솔에 출력 또는 다른 작업 수행
+        console.log("Selected Destination: " + selectedDestination);
+        console.log("Selected Start Date: " + selectedStartDate);
+
+        // 이후 작업 수행...
+        window.location.href = "/payment/" + id + "/" + selectedDestination + "/" + selectedStartDate;
+    }
 </script>
 
 <!-- bootstrap -->
@@ -113,5 +138,33 @@
 <script src="/js/common/header.js"></script>
 <script src="/js/common/main.js"></script>
 <script src="/js/common/footer.js"></script>
+
+<!-- 찜 관련 script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:inline="javascript">
+    /** 위시리스트에 추가 **/
+    function saveWish() {
+        var experienceId = [[${experience.id}]];
+
+        $.ajax({
+            url: '/member/mypage/wishlist',
+            type: 'POST',
+            data : {
+                experienceId: experienceId
+            }
+        }).done(function(result){
+            if(result){
+                alert("찜이 등록되었습니다.");
+                $('#wishBtn').html('찜 해제');
+            } else {
+                alert("찜이 삭제되었습니다.");
+                $('#wishBtn').html('찜 등록');
+            }
+        }).fail(function(error){
+            alert("요청에 실패하였습니다.\n로그인 상태인지 확인 해주세요.");
+        });
+    };
+</script>
+
 </body>
 </html>

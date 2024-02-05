@@ -1,9 +1,11 @@
-package com.ll.feelko.domain.experience.web;
+package com.ll.feelko.domain.experience.api;
 
 import com.ll.feelko.domain.experience.application.ExperienceService;
 import com.ll.feelko.domain.experience.dto.ExperienceCreateDTO;
 import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.experience.form.ExperienceCreateForm;
+import com.ll.feelko.domain.wishlist.application.WishListService;
+import com.ll.feelko.domain.wishlist.dto.WishListDto;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,14 +22,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ExperienceController {
 
     private final ExperienceService experienceService;
+    private final WishListService wishListService;
 
     @GetMapping("/{experienceId}")
-    public String detail(@PathVariable(name = "experienceId") Long experienceId, Model model) {
+    public String detail(@PathVariable(name = "experienceId") Long experienceId, Model model, @AuthenticationPrincipal SecurityUser user) {
+        WishListDto wishListCheckDto = new WishListDto(user.getId(), experienceId);
 
         model.addAttribute("experience", experienceService.detail(experienceId));
+        model.addAttribute("isWished", wishListService.checkWish(wishListCheckDto));
 
         return "domain/experience/detail";
     }
+
 
     @GetMapping("/create")
     public String showCreatePage(ExperienceCreateForm form, Model model) {

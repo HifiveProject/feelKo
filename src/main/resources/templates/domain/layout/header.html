@@ -14,6 +14,8 @@
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- fontAwesome -->
     <script src="https://kit.fontawesome.com/ae1a88d4e2.js" crossorigin="anonymous"></script>
 </head>
@@ -76,10 +78,7 @@
                                 <a class="dropdown-item" href="/member/mypage">마이페이지</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a class="dropdown-item" href="/member/mypage/profile">개인정보</a>
-                            </li>
-                            <li th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a class="dropdown-item" href="#">결제&예약 정보</a>
+                                <a class="dropdown-item" href="/member/mypage/reservation-list">결제&예약 정보</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">
                                 <a class="dropdown-item" href="/experiences/create">체험 등록</a>
@@ -88,7 +87,7 @@
                                 <a class="dropdown-item" href="/member/mypage/upload-list">본인 업로드 체험 정보</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a class="dropdown-item" href="#">찜, 위시 리스트</a>
+                                <a class="dropdown-item" href="/member/mypage/wishlist">찜, 위시 리스트</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">
                                 <a class="dropdown-item" href="#">메시지</a>
@@ -109,7 +108,7 @@
 <!-- bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous" defer></script>
 <!-- js -->
 <script src="/js/common/header.js"></script>
 </body>

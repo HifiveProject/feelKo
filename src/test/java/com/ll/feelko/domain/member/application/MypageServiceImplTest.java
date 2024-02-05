@@ -1,7 +1,7 @@
 package com.ll.feelko.domain.member.application;
 
 import com.ll.feelko.domain.experience.dao.ExperienceRepository;
-import com.ll.feelko.domain.member.dto.uploadedPageDto;
+import com.ll.feelko.domain.member.dto.UploadedPageDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,17 +30,17 @@ class MypageServiceImplTest {
     void testGetUploadedPageList() {
         long memberId = 1L;
         // 테스트 데이터 생성
-        List<uploadedPageDto> testExperienceList = new ArrayList<>();
+        List<UploadedPageDto> testExperienceList = new ArrayList<>();
         for (int i = 0; i < 25; i++) {
-            testExperienceList.add(new uploadedPageDto(i,"test"));
+            testExperienceList.add(new UploadedPageDto(i,null,"test",null,null,null));
         }
-        Page<uploadedPageDto> expectedPage = new PageImpl<>(testExperienceList.subList(1, 11),
+        Page<UploadedPageDto> expectedPage = new PageImpl<>(testExperienceList.subList(1, 11),
                 PageRequest.of(1, 11),
                 testExperienceList.size());
 
         when(experienceRepository.findIdTitleByMemberIdOrderByIdDesc(memberId, PageRequest.of(1, 10))).thenReturn(expectedPage);
 
-        Page<uploadedPageDto> result = mypageService.getUploadedPageList(memberId, 1, 10);
+        Page<UploadedPageDto> result = mypageService.getUploadedPageList(memberId, 1, 10);
 
         assertEquals(expectedPage, result);
     }

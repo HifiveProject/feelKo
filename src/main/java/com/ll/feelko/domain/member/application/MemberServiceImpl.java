@@ -19,6 +19,7 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+
     @Override
     @Transactional
     public Member register(MemberRegisterDto registerDto) {
@@ -26,6 +27,12 @@ public class MemberServiceImpl implements MemberService{
             //중복 검사
             throw new RuntimeException("이미 존재하는 이메일입니다.");
         }
+
+        if( registerDto.getProfile() == null) {
+            registerDto.setProfile("/images/기본 프로필.jpg");
+            //yml에 등록해서 하드코딩하지 않도록
+        }
+
         Member member = Member.builder()
                 .email(registerDto.getEmail())
                 .name(registerDto.getName())
