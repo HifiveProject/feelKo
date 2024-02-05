@@ -67,7 +67,7 @@ public class MypageServiceImpl implements MypageService {
     public boolean isMyUploadedPage(long id, Long experienceId) {
         Optional<Experience> optExp = experienceRepository.findById(experienceId);
         if (optExp.isEmpty()) throw new RuntimeException("체험을 찾을 수 없습니다.");
-        return id == optExp.get().getMember().getId();
+        return id == optExp.get().getMemberId();
     }
 
     @Override

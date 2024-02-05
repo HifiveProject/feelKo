@@ -38,12 +38,13 @@ class ExperienceRepositoryTest {
         // 테스트용 Experience 엔티티 생성 및 저장
         for (int i = 0; i < 30; i++) {
             Experience experience = Experience.builder()
-                    .member(member)
+                    .memberId(member.getId())
                     .title("Title " + i)
                     // Experience 엔티티의 다른 필요한 필드를 설정
                     .build();
             entityManager.persist(experience);
         }
+
         entityManager.flush(); //db에 저장되는 것과 같은 역할 (여기까지 given)
 
         // 페이징을 위한 Pageable 객체 생성
