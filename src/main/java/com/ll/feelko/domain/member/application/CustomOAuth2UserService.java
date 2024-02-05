@@ -47,7 +47,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         Member member = memberService.whenSocialLogin(socialLoginDto);
 
-        return new SecurityUser(member.getId(), member.getEmail(), member.getPassword(),
+        return new SecurityUser(member.getId(), member.getName(), member.getEmail(), member.getPassword(), member.getProfile(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + member.getRoles())));
     }
 

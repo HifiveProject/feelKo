@@ -1,7 +1,7 @@
 package com.ll.feelko.domain.experience.dao;
 
 import com.ll.feelko.domain.experience.entity.Experience;
-import com.ll.feelko.domain.member.dto.uploadedPageDto;
+import com.ll.feelko.domain.member.dto.UploadedPageDto;
 import com.ll.feelko.domain.member.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ class ExperienceRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10); // 첫 페이지, 페이지 당 10개의 아이템
 
         // 테스트 실행
-        Page<uploadedPageDto> result = experienceRepository.findIdTitleByMemberIdOrderByIdDesc(member.getId(), pageable);
+        Page<UploadedPageDto> result = experienceRepository.findIdTitleByMemberIdOrderByIdDesc(member.getId(), pageable);
 
         // 검증
         assertEquals(10, result.getContent().size()); // 반환된 페이지의 아이템 수 확인

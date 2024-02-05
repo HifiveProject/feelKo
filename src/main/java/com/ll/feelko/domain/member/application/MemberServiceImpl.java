@@ -19,6 +19,7 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+
     @Override
     @Transactional
     public Member register(MemberRegisterDto registerDto) {
