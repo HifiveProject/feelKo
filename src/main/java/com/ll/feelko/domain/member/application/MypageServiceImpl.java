@@ -84,7 +84,7 @@ public class MypageServiceImpl implements MypageService {
     }
 
     @Override
-    public Page<ReservationDto> getReservationListByMemberId(long memberId, int page, int size){
+    public Page<ReservationDto> getReservationListByMemberId(long memberId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return paymentRepository.findByMemberIdOrderByCreatedAtDescWithExperience(memberId, pageable);
     }

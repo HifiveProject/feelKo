@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.Optional;
 
-public interface WishListService{
+public interface WishListService {
 
     boolean saveWish(WishListDto wishListDto);
 

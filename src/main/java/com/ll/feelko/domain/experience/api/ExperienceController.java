@@ -30,7 +30,7 @@ public class ExperienceController {
     public String detail(@PathVariable(name = "experienceId") Long experienceId, Model model, @AuthenticationPrincipal SecurityUser user) {
         model.addAttribute("experience", experienceService.detail(experienceId));
         Optional<WishListDto> createWishListDto = wishListService.createWishListDtoIfLogined(user, experienceId);
-        if(!createWishListDto.isEmpty()) {
+        if (!createWishListDto.isEmpty()) {
             model.addAttribute("isWished", wishListService.checkWish(createWishListDto.get()));
             model.addAttribute("isLogined", true);
         } else {
