@@ -17,8 +17,6 @@ public class ReservationDto {
 
     private Long experienceId;
 
-    private String orderId;
-
     private String paymentKey;
     // 결제 상세 버튼 누르면 findByPaymentKey로 찾기
 

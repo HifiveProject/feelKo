@@ -20,18 +20,18 @@ import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MypageServiceImpl implements MypageService{
+public class MypageServiceImpl implements MypageService {
 
     private final ExperienceRepository experienceRepository;
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
 
-
     @Override
-    public Optional<Member> findById(Long id){
+    public Optional<Member> findById(Long id) {
         return memberRepository.findById(id);
     }
 
@@ -67,7 +67,7 @@ public class MypageServiceImpl implements MypageService{
     public boolean isMyUploadedPage(long id, Long experienceId) {
         Optional<Experience> optExp = experienceRepository.findById(experienceId);
         if (optExp.isEmpty()) throw new RuntimeException("체험을 찾을 수 없습니다.");
-        return id == optExp.get().getMember().getId();
+        return id == optExp.get().getMemberId();
     }
 
     @Override
