@@ -84,6 +84,7 @@ public class NotProd {
                         .price(new BigDecimal(1))
                         .paymentKey("1")
                         .member(member)
+                        .experience(experience)
                         .reservationDate(LocalDate.now())
                         .experience(experience)
                         .build();
@@ -95,6 +96,7 @@ public class NotProd {
                         .price(new BigDecimal(1))
                         .paymentKey("1")
                         .member(member)
+                        .experience(experience)
                         .reservationDate(LocalDate.now().minusDays(1))
                         .experience(experience)
                         .build();
@@ -106,6 +108,7 @@ public class NotProd {
                         .price(new BigDecimal(1))
                         .paymentKey("1")
                         .member(member)
+                        .experience(experience)
                         .reservationDate(LocalDate.now().minusDays(2))
                         .experience(experience)
                         .build();

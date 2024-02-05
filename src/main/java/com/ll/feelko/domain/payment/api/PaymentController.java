@@ -3,20 +3,23 @@ package com.ll.feelko.domain.payment.api;
 
 import com.ll.feelko.domain.experience.application.ExperienceService;
 import com.ll.feelko.domain.experience.entity.Experience;
-import com.ll.feelko.domain.payment.api.response.TossPaymentResponse;
 import com.ll.feelko.domain.payment.application.PaymentApiService;
 import com.ll.feelko.domain.payment.dao.PaymentDetailsRepository;
+import com.ll.feelko.domain.payment.dto.PaymentDetailDto;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -49,7 +52,6 @@ public class PaymentController {
         return "domain/payment/payments";
     }
 
-    //태훈 :
     @GetMapping("/success/{headcount}/{reservationDate}/{experiencesId}")
     public String handleSuccess(
             @PathVariable(name = "headcount") Long headcount,
@@ -72,24 +74,19 @@ public class PaymentController {
 
         paymentApiService.decreaseParticipants(experiencesId , headcount);
 
-        return "redirect:/reservation-details/" + user.getId();
+        return "redirect:/member/mypage/reservation-list";
     }
 
-    @GetMapping({"/reservation-details/{memberId}"})
+    @GetMapping("/payment/detail/{paymentId}")
     @ResponseBody
-    public String reservation(@PathVariable(name = "memberId") Long memberId , Model model) {
-
-        List<TossPaymentResponse> reservations =
-                paymentDetailsRepository.getAllReservations(memberId);
-
-        model.addAttribute("reservations", reservations);
-
-        for (TossPaymentResponse reservation : reservations) {
-            log.info("모든 예약 정보 = {}" , reservation);
+    public ResponseEntity<?> showPaymentDetail(@AuthenticationPrincipal SecurityUser user,
+                                               @PathVariable Long paymentId){
+        if(!paymentApiService.isMyPayment(user.getId(),paymentId)){
+            return ResponseEntity.badRequest().body("페이지에 접근할 권한이 없습니다.");
         }
 
-        log.info("memberId = {}" ,memberId);
+        PaymentDetailDto detail = paymentApiService.findPaymentDetailByPaymentId(paymentId);
 
-        return "/domain/member/mypage/reservation-details-page";
+        return ResponseEntity.ok(detail);
     }
 }
