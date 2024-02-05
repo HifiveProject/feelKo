@@ -85,6 +85,7 @@ public class NotProd {
                         .paymentKey("1")
                         .member(member)
                         .reservationDate(LocalDate.now())
+                        .experience(experience)
                         .build();
                 paymentRepository.save(payment);
             }
@@ -95,6 +96,7 @@ public class NotProd {
                         .paymentKey("1")
                         .member(member)
                         .reservationDate(LocalDate.now().minusDays(1))
+                        .experience(experience)
                         .build();
                 paymentRepository.save(payment);
             }
@@ -105,6 +107,7 @@ public class NotProd {
                         .paymentKey("1")
                         .member(member)
                         .reservationDate(LocalDate.now().minusDays(2))
+                        .experience(experience)
                         .build();
                 paymentRepository.save(payment);
             }
