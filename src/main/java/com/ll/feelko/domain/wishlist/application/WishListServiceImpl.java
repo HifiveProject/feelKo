@@ -54,7 +54,7 @@ public class WishListServiceImpl implements WishListService{
 @Override
 public Page<WishListPageDto> getWishList(long memberId, int page, int size){
     Pageable pageable = PageRequest.of(page, size);
-    return wishListRepository.findIdAndExperienceIdAndTitleByMemberIdOrderByIdDesc(memberId, pageable);
+    return wishListRepository.findIdTitleByMemberIdOrderByIdDesc(memberId, pageable);
 }
 
 }
