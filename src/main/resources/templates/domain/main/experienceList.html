@@ -92,6 +92,7 @@
             <div class="main-hot" th:if="${experiences.size() > 0}">
                 <div th:each="experience : ${experiences}" class="hotpost-1">
                     <div class="hotpost-img1">
+                        <a th:href="@{'/experiences/'+ ${experience.id}}">
                         <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
                     </div>
                     <div class="hotpost-name1">
