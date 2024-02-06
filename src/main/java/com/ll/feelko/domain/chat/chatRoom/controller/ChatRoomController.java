@@ -2,14 +2,17 @@ package com.ll.feelko.domain.chat.chatRoom.controller;
 
 import com.ll.feelko.domain.chat.chatMessage.entity.ChatMessage;
 import com.ll.feelko.domain.chat.chatMessage.service.ChatMessageService;
+import com.ll.feelko.domain.chat.chatRoom.dto.TheirInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.feelko.domain.chat.chatRoom.service.ChatRoomService;
 import com.ll.feelko.global.rsData.RsData;
+import com.ll.feelko.global.security.SecurityUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,12 +54,15 @@ public class ChatRoomController {
     }
 
     @GetMapping("/list")
-    public String showList(Model model) {
-        List<ChatRoom> chatRooms = chatRoomService.findAll();
+    public String showList(
+            @AuthenticationPrincipal SecurityUser user,
+            Model model) {
+        List<ChatRoom> chatRooms = chatRoomService.findByMemberId(user.getId());
         model.addAttribute("chatRooms", chatRooms);
 
         return "domain/chat/chatRoom/list";
     }
+
 
     @Setter
     @Getter
@@ -85,4 +91,24 @@ public class ChatRoomController {
 
         return RsData.of("S-1", "성공");
     }
+
+    @GetMapping("/make/{theirInfo}")
+    public String makeChatRoom(
+            @AuthenticationPrincipal SecurityUser user,
+            @PathVariable String theirInfo) {
+
+        TheirInfoDto theirInfoDto = null;
+
+        if (chatRoomService.isNumeric(theirInfo)) {
+            theirInfoDto = chatRoomService.createInfoDtoByExperienceId(Long.parseLong(theirInfo));
+        } else {
+            theirInfoDto = chatRoomService.createInfoDtoByEmail(theirInfo);
+        }
+
+        Long chatRoomId = chatRoomService.makeChatRoom(user.getId(), theirInfoDto);
+
+        return "redirect:/chat/room/" + chatRoomId;
+
+    }
+
 }
