@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,6 +29,11 @@ public class SpringSecurityConfig {
                                 .anyRequest()
                                 .permitAll()
                 )
+                .sessionManagement(session -> session
+                        .sessionFixation().migrateSession() // 세션 고정 공격 방지
+                        .invalidSessionUrl("/member/login?error=invalidSession") // 유효하지 않은 세션 접근 시 리다이렉트
+                        .maximumSessions(1).expiredUrl("/member/login?error=expiredSession") // 동시 세션 제어
+                )
                 .csrf(
                         csrf ->
                                 csrf.ignoringRequestMatchers(
@@ -36,9 +42,9 @@ public class SpringSecurityConfig {
                 )
                 .headers(
                         headers ->
-                                headers.frameOptions(
-                                        frameOptions ->
-                                                frameOptions.sameOrigin()
+                                headers
+                                        .frameOptions(
+                                                HeadersConfigurer.FrameOptionsConfig::sameOrigin
                                 )
                 )
                 .formLogin(

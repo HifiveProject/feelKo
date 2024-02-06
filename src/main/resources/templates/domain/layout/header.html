@@ -95,7 +95,7 @@
                                 <a class="dropdown-item" href="/member/mypage/wishlist">찜, 위시 리스트</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a class="dropdown-item" href="#">메시지</a>
+                                <a class="dropdown-item" href="/chat/room/list">메시지</a>
                             </li>
                         </ul>
                     </div>
