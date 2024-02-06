@@ -1,5 +1,6 @@
 package com.ll.feelko.domain.member.entity;
 
+import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMember;
 import com.ll.feelko.domain.wishlist.entity.WishList;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -48,12 +49,12 @@ public class Member {
 
     private String providerId;
 
-    public Collection<? extends GrantedAuthority> getAuthorities(){
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         authorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
 
-        if(List.of("admin").contains(roles)){
+        if (List.of("admin").contains(roles)) {
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
 
@@ -81,14 +82,18 @@ public class Member {
 //    private List<PaymentDetail> paymentDetails;
 
     // 회원정보 수정 메소드
-    public void updateProfile(String profile){
+    public void updateProfile(String profile) {
         this.profile = profile;
     }
-    public void profileUpdate(String name, String profile, String phone, LocalDate birthday){
+
+    public void profileUpdate(String name, String profile, String phone, LocalDate birthday) {
         this.name = name;
         this.profile = profile;
         this.phone = phone;
         this.birthday = birthday;
     }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChatRoomMember> chatRoomMembers;
 
 }

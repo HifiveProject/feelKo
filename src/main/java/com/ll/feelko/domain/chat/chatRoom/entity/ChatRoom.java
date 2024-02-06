@@ -46,6 +46,11 @@ public class ChatRoom{
     @JsonIgnore
     private List<ChatMessage> chatMessages = new ArrayList<>();
 
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // 무한 재귀 방지
+    private List<ChatRoomMember> chatRoomMembers;
+
     public ChatMessage writeMessage(String writerName, String content) {
         ChatMessage chatMessage = ChatMessage
                 .builder()

@@ -134,7 +134,7 @@
                 </div>
                 <div class="reservation-buttons">
                     <a href="#" th:data-paymentid="${reservationDto.paymentId}" class="button1 detail-view">예약상세보기</a>
-                    <a th:href="@{/experiences/{id}(id=${reservationDto.experienceId})}" class="button1">문의하기</a>
+                    <a th:href="@{/chat/room/make/{theirInfo}(theirInfo=${reservationDto.experienceId})}" class="button1">문의하기</a>
                     <a th:href="@{/experiences/{id}(id=${reservationDto.experienceId})}" class="button1">취소하기</a>
                 </div>
             </div>
