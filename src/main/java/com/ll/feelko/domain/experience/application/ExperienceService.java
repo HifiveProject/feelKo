@@ -42,6 +42,7 @@ public class ExperienceService {
                 .endDate(dto.getEndDate())
                 .headcount(dto.getHeadcount())
                 .originalHeadcount(dto.getHeadcount()) // 초기 마감 인원수 설정
+                .experienceClose(dto.getExperienceClose())
                 .build();
         return experienceRepository.save(experience);
     }
