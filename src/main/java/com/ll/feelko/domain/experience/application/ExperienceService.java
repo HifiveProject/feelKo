@@ -87,4 +87,12 @@ public class ExperienceService {
 
         return closingSoonExperiences;
     }
+
+    public Page<Experience> searchAllExperiencesIncludingClosing(Pageable pageable) {
+        return experienceRepository.searchAllExperiencesIncludingClosing(pageable);
+    }
+
+    public Page<Experience> searchExperiencesIncludingClosing(String destination, LocalDate startDate, Pageable pageable) {
+        return experienceRepository.searchExperiencesIncludingClosing(destination, startDate, pageable);
+    }
 }

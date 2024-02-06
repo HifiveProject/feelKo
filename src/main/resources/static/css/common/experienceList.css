@@ -118,7 +118,6 @@
     .template--overlayedTitle2 label {
         font-weight: bold; /* 라벨 글꼴 가중치 */
         margin-right: 11px;
-        margin-left: 30px;
     }
 }
 /*조회 검색 버튼*/

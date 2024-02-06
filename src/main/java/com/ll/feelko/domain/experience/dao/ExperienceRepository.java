@@ -26,4 +26,11 @@ public interface ExperienceRepository extends JpaRepository<Experience,Long> {
     List<Experience> findPopularExperiences(Pageable pageable);
 
     List<Experience> findByExperienceCloseFalse();
+    @Query("SELECT e FROM Experience e")
+    Page<Experience> searchAllExperiencesIncludingClosing(Pageable pageable);
+
+    @Query("SELECT e FROM Experience e WHERE e.location = :destination AND (:startDate IS NULL OR e.startDate = :startDate)")
+    Page<Experience> searchExperiencesIncludingClosing(String destination, LocalDate startDate, Pageable pageable);
+
+
 }
