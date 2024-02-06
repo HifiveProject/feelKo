@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService{
             throw new RuntimeException("이미 존재하는 이메일입니다.");
         }
 
-        if( registerDto.getProfile() == null) {
+        if( registerDto.getProfile() == null||registerDto.getProfile() == "") {
             registerDto.setProfile("/images/기본 프로필.jpg");
             //yml에 등록해서 하드코딩하지 않도록
         }
