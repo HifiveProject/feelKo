@@ -57,6 +57,7 @@ public class ExperienceController {
                 .descriptionText(form.getDescriptionText())
                 .price(form.getPrice())
                 .startDate(form.getStartDate())
+                .endDate(form.getEndDate())
                 .headcount(form.getHeadcount())
                 .build());
 
