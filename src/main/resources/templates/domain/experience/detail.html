@@ -51,6 +51,7 @@
                         <p th:text="${experience.descriptionText}"></p>
                         <p th:text="${experience.startDate}"></p>
                         <p th:text="${experience.endDate}"></p>
+                        <p th:text="${experience.experienceClose} ? '마감' : '운영중'"></p>
                         <p th:text="${experience.headcount}"></p>
                         <p th:text="${experience.price}"></p>
                         <div th:if="${isLogined}">
