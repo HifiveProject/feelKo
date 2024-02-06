@@ -34,7 +34,7 @@ public class MainController {
     @GetMapping("/search")
     public String experienceList(
             @RequestParam(name = "destination", required = false) String destination,
-            @RequestParam(name = "start_date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name = "selectDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate selectDate,
             @RequestParam(name = "include_closing", defaultValue = "false") boolean includeClosing,
             @RequestParam(name = "page", defaultValue = "0") int page,
             Model model
@@ -51,10 +51,20 @@ public class MainController {
             }
         } else {
             // 특정 지역이 선택된 경우 해당 지역의 경험 검색
-            if (includeClosing) {
-                experiencePage = experienceService.searchExperiencesIncludingClosing(destination, startDate, pageable);
+            if (selectDate == null) {
+                if(includeClosing)
+                {
+                    experiencePage = experienceService.searchExperiencesIncludingClosing(destination, selectDate, pageable);
+                }
+                else {
+                    experiencePage = experienceService.searchExperiencesByLocation(destination, pageable);
+                }
             } else {
-                experiencePage = experienceService.searchExperiences(destination, startDate, pageable);
+                if (includeClosing) {
+                    experiencePage = experienceService.searchExperiencesIncludingClosing(destination, selectDate, pageable);
+                } else {
+                    experiencePage = experienceService.searchExperiencesByDateRange(destination, selectDate, pageable);
+                }
             }
         }
 
@@ -62,9 +72,11 @@ public class MainController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", experiencePage.getTotalPages());
         model.addAttribute("selectedLocation", destination);
+        model.addAttribute("selectDate", selectDate);
 
         return "domain/main/experienceList";
     }
+
     @GetMapping("/")
     public String popularExperiences(Model model) {
         Pageable pageable = PageRequest.of(0, 6); // 최대 6개의 결과를 가져오도록 설정

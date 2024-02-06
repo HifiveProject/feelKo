@@ -66,10 +66,6 @@ public class ExperienceService {
                 .orElseThrow(() -> new RuntimeException("체험을 찾을 수 없습니다."));
     }
 
-    public Page<Experience> searchExperiences(String destination, LocalDate startDate, Pageable pageable) {
-        return experienceRepository.searchExperiences(destination, startDate, pageable);
-    }
-
     public Page<Experience> searchAllExperiences(Pageable pageable) {
         return experienceRepository.searchExperiencesAll(pageable);
     }
@@ -93,7 +89,19 @@ public class ExperienceService {
         return experienceRepository.searchAllExperiencesIncludingClosing(pageable);
     }
 
-    public Page<Experience> searchExperiencesIncludingClosing(String destination, LocalDate startDate, Pageable pageable) {
-        return experienceRepository.searchExperiencesIncludingClosing(destination, startDate, pageable);
+    public Page<Experience> searchExperiencesIncludingClosing(String destination, LocalDate selectDate, Pageable pageable) {
+        return experienceRepository.searchExperiencesIncludingClosing(destination, selectDate, pageable);
     }
+
+    public Page<Experience> searchExperiencesByDateRange(String destination, LocalDate selectDate, Pageable pageable) {
+        return experienceRepository.findByDateRangeAndLocation(destination, selectDate, pageable);
+    }
+
+    public Page<Experience> searchExperiencesByLocation(String destination, Pageable pageable) {
+        return experienceRepository.findByLocation(destination, pageable);
+    }
+
+    //    public Page<Experience> searchExperiences(String destination, LocalDate startDate, Pageable pageable) {
+//        return experienceRepository.searchExperiences(destination, startDate, pageable);
+//    }
 }
