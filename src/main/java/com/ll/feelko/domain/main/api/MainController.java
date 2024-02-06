@@ -62,7 +62,11 @@ public class MainController {
         Pageable pageable = PageRequest.of(0, 6); // 최대 6개의 결과를 가져오도록 설정
         List<Experience> popularExperiences = experienceService.findPopularExperiences(pageable);
 
+        // 마감 임박 체험 리스트 가져오기
+        List<Experience> closingSoonExperiences = experienceService.findClosingSoonExperiences();
+
         model.addAttribute("popularExperiences", popularExperiences);
+        model.addAttribute("closingSoonExperiences", closingSoonExperiences);
         return "domain/main/mainpage";
     }
 }

@@ -107,40 +107,20 @@
                 마감 임박
             </div>
             <div class="main-hot">
-                <div class="hotpost-1">
+                <div th:each="experience : ${closingSoonExperiences}" class="hotpost-1">
+                    <!-- 마감 임박 표시 -->
+
                     <div class="hotpost-img1">
-                        사진
+                        <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
                     </div>
                     <div class="hotpost-name1">
                         <div class="postname">
-                            제목 : 인기글1
+                            <a th:href="@{'/experiences/'+ ${experience.id}}">
+                                <span th:text="${experience.title}"></span>
+                            </a>
                         </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-                <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글2
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
-                    </div>
-                </div>
-                <div class="hotpost-1">
-                    <div class="hotpost-img1">
-                        사진
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            제목 : 인기글3
-                        </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <div class="price">가격 : 50000원</div>
+                        <div class="postday">기간 :<span th:text="${experience.startDate}"> </span></div>
+                        <div class="price">가격 : <span th:text="${experience.price}"></span></div>
                     </div>
                 </div>
             </div>

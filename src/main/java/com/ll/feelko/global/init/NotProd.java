@@ -71,7 +71,9 @@ public class NotProd {
                         .price(new BigDecimal(1000))
                         .imageFiles(null)
                         .location("장소" + i)
+                        .experienceClose(false)
                         .descriptionText("내용" + i)
+                        .headcount(10L)
                         .build());
             }));
 

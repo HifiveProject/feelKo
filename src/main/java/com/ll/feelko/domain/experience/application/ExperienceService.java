@@ -10,13 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import java.math.BigDecimal;
-
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +41,7 @@ public class ExperienceService {
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
                 .headcount(dto.getHeadcount())
+                .originalHeadcount(dto.getHeadcount()) // 초기 마감 인원수 설정
                 .build();
         return experienceRepository.save(experience);
     }
@@ -76,5 +75,16 @@ public class ExperienceService {
 
     public List<Experience> findPopularExperiences(Pageable pageable) {
         return experienceRepository.findPopularExperiences(pageable);
+    }
+
+
+    public List<Experience> findClosingSoonExperiences() {
+        List<Experience> closingSoonExperiences = experienceRepository.findByExperienceCloseFalse().stream()
+                .filter(experience -> experience.getHeadcount() != null && experience.isClosingSoon())
+                .sorted(Comparator.comparingLong(Experience::getHeadcount))
+                .limit(3) // 최대 3개까지만 리스트에 추가
+                .collect(Collectors.toList());
+
+        return closingSoonExperiences;
     }
 }
