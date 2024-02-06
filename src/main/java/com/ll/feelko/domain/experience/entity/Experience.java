@@ -79,7 +79,7 @@ public class Experience {
 
     public boolean isClosingSoon() {
         // 현재 참가자 인원수가 1 이상이면서 70% 미만인 경우에 마감 임박으로 표시
-        return this.headcount != null && this.headcount >= 1 && this.headcount < (0.7 * this.originalHeadcount);
+        return this.headcount != null && this.headcount >= 1 && this.headcount < (0.3 * this.originalHeadcount);
     }
     // 체험을 생성할 때 초기 마감 인원수를 기록
     public void setOriginalHeadcount(Long headcount) {
