@@ -69,7 +69,7 @@
                             </select>
                             <label for="start_date">날짜 :</label>
                             <input type="date" id="start_date" name="start_date">
-                            <button type="submit">검색</button>
+                            <button type="submit" id="search-button">검색</button>
                         </form>
 
                     </a>
@@ -85,7 +85,7 @@
                 <span th:if="${selectedLocation != null}" th:text="${selectedLocation}" th:remove="tag"></span>
                 <span th:if="${selectedLocation == null}">전국</span>
             </div>
-            <div class="main-hot">
+            <div class="main-hot" th:if="${experiences.size() > 0}">
                 <div th:each="experience : ${experiences}" class="hotpost-1">
                     <div class="hotpost-img1">
                         <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
@@ -100,6 +100,10 @@
                         <div class="price">가격 : <span th:text="${experience.price}"></span>원</div>
                     </div>
                 </div>
+            </div>
+            <div th:if="${experiences.size() == 0}">
+                <p>검색 결과 없음</p>
+                <p>더 많은 검색 결과를 보려면 날짜를 변경하여 검색해보세요.</p>
             </div>
             <div class="main-2">
                 <button class="btn1" th:if="${currentPage > 0}"><a

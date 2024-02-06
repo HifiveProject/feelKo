@@ -70,7 +70,7 @@
                             </select>
                             <label for="start_date">날짜 :</label>
                             <input type="date" id="start_date" name="start_date">
-                            <button type="submit">검색</button>
+                            <button type="submit" id="search-button">검색</button>
                         </form>
 
                     </a>
@@ -88,6 +88,7 @@
             <div class="main-hot">
                 <div th:each="experience : ${popularExperiences}" class="hotpost-1">
                     <div class="hotpost-img1">
+                        <a th:href="@{'/experiences/'+ ${experience.id}}">
                         <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
                     </div>
                     <div class="hotpost-name1">
