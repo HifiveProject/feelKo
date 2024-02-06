@@ -86,5 +86,4 @@ public class Experience {
         this.originalHeadcount = headcount;
     }
 
-
 }
