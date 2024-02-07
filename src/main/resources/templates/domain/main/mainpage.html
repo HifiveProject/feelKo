@@ -27,7 +27,6 @@
 
 
 <!-- Template-header 시작 -->
-<!--<th:block layout:fragment="header"> </th:block>-->
 <th:block th:replace="domain/layout/header"></th:block>
 <!-- Template-header 끝 -->
 
@@ -42,7 +41,46 @@
 
 
         <!-- 페이지 제목 시작 -->
-        <th:block th:replace="domain/layout/search"></th:block>
+        <div class="template--pageTitleContainer2">
+            <div class="template--pageTitleBox">
+                <div class="template--overlayedTitle2" style="color: black;">
+                    <a>
+                        <form action="/search" method="get">
+                            <label for="destination">여행지 :</label>
+                            <select id="destination" name="destination" required style="margin-right: 16px;">
+                                <option value="" disabled selected hidden>여행할 장소를 선택하세요</option>
+                                <option value="전국">전국</option>
+                                <option value="서울">서울</option>
+                                <option value="인천">인천</option>
+                                <option value="대전">대전</option>
+                                <option value="대구">대구</option>
+                                <option value="경기">경기</option>
+                                <option value="부산">부산</option>
+                                <option value="울산">울산</option>
+                                <option value="광주">광주</option>
+                                <option value="강원">강원</option>
+                                <option value="충북">충북</option>
+                                <option value="충남">충남</option>
+                                <option value="경북">경북</option>
+                                <option value="경남">경남</option>
+                                <option value="전북">전북</option>
+                                <option value="전남">전남</option>
+                                <option value="제주">제주</option>
+                                <option value="세종">세종</option>
+                            </select>
+                            <label for="selectDate">날짜 :</label>
+                            <input type="date" id="selectDate" name="selectDate">
+
+                            <input type="checkbox" id="include_closing" name="include_closing" style="margin-left: 10px;">
+                            <label for="include_closing">마감 체험 포함</label>
+
+                            <button type="submit" id="search-button">검색</button>
+                        </form>
+
+                    </a>
+                </div>
+            </div>
+        </div>
         <!-- 페이지 제목 끝 -->
 
 
