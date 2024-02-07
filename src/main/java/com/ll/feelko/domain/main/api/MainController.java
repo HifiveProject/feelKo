@@ -25,12 +25,6 @@ public class MainController {
     @Autowired
     private ExperienceService experienceService;
 
-//    @GetMapping("/")
-//    public String showMain(){
-//        log.info("called");
-//        return "/domain/main/mainpage";
-//    }
-
     @GetMapping("/search")
     public String experienceList(
             @RequestParam(name = "destination", required = false) String destination,
@@ -39,7 +33,7 @@ public class MainController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             Model model
     ) {
-        Pageable pageable = PageRequest.of(page, 9);
+        Pageable pageable = PageRequest.of(page, 12);
         Page<Experience> experiencePage;
 
         if (StringUtils.isEmpty(destination) || destination.equals("전국")) {
@@ -79,7 +73,7 @@ public class MainController {
 
     @GetMapping("/")
     public String popularExperiences(Model model) {
-        Pageable pageable = PageRequest.of(0, 6); // 최대 6개의 결과를 가져오도록 설정
+        Pageable pageable = PageRequest.of(0, 8); // 최대 6개의 결과를 가져오도록 설정
         List<Experience> popularExperiences = experienceService.findPopularExperiences(pageable);
 
         // 마감 임박 체험 리스트 가져오기
