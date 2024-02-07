@@ -26,6 +26,7 @@ public class ExperienceController {
 
         model.addAttribute("experience", experienceService.detail(experienceId));
 
+
         return "domain/experience/detail";
     }
 
@@ -34,6 +35,7 @@ public class ExperienceController {
     public String showCreatePage(ExperienceCreateForm form, Model model) {
 
         model.addAttribute("experience", form);
+        model.addAttribute("Answer", form);
         return "domain/experience/create";
     }
 
@@ -48,6 +50,7 @@ public class ExperienceController {
                 .price(form.getPrice())
                 .startDate(form.getStartDate())
                 .headcount(form.getHeadcount())
+                .answer(form.getAnswer())
                 .build());
 
         return "redirect:/experiences/" + experience.getId();

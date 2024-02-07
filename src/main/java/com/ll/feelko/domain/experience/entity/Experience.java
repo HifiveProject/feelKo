@@ -44,6 +44,11 @@ public class Experience {
 
     private String location;
 
+    private String answer;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "experience")
+    private List<Answer> answers;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "experience")
     private List<WishList> wishLists;
 
@@ -58,6 +63,4 @@ public class Experience {
             this.wishCounter--;
         }
     }
-
-
 }

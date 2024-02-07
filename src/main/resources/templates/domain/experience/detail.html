@@ -52,6 +52,15 @@
                         <p th:text="${experience.startDate}"></p>
                         <p th:text="${experience.headcount}"></p>
                         <p th:text="${experience.price}"></p>
+                        <div>
+                            <form th:action="@{|/answer/create/${experienceId}|}" method="post">
+                                <textarea name="content" id="content" rows="5"></textarea>
+                                <input type="submit" value="답변등록">
+                            </form>
+                            <ul>
+                                <li th:each="answer : ${experience.getAnswers()}" th:text="${answer.getContent()}"></li>
+                            </ul>
+                        </div>
                         <button type="button" id="wishBtn" th:onclick="'saveWish()'">찜하기</button>
 
 

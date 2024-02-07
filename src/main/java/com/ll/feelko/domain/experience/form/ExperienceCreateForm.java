@@ -13,4 +13,5 @@ public class ExperienceCreateForm {
     private BigDecimal price;
     private LocalDate startDate;
     private Long headcount;
+    private String answer;
 }

@@ -33,6 +33,7 @@ public class ExperienceService {
                 .price(dto.getPrice())
                 .startDate(dto.getStartDate())
                 .headcount(dto.getHeadcount())
+                .answer(dto.getAnswer())
                 .build();
         return experienceRepository.save(experience);
     }
