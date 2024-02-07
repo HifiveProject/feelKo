@@ -45,13 +45,15 @@
                 <!-- 두 번째 HTML 코드 삽입 -->
                 <div class="card">
                     <div class="container">
-                        <h4 th:text="${experience.title}"></h4>
+                        <h4 th:text="'제목: ' + ${experience.title}"></h4>
                         <img th:src="${experience.imageUrl}" alt="Image">
-                        <p th:text="${experience.location}"></p>
-                        <p th:text="${experience.descriptionText}"></p>
-                        <p th:text="${experience.startDate}"></p>
-                        <p th:text="${experience.headcount}"></p>
-                        <p th:text="${experience.price}"></p>
+                        <p th:text="'지역: ' + ${experience.location}"></p>
+                        <p th:text="'설명: ' + ${experience.descriptionText}"></p>
+                        <p th:text="'시작 날짜: ' + ${experience.startDate}"></p>
+                        <p th:text="'종료 날짜: ' + ${experience.endDate}"></p>
+                        <p th:text="${experience.experienceClose} ? '상태: 마감' : '상태: 운영중'"></p>
+                        <p th:text="'남은 인원수: ' + ${experience.headcount}"></p>
+                        <p th:text="'가격 : ' + ${#numbers.formatInteger(experience.price, 1, 'COMMA')} + ' 원'"></p>
                         <div th:if="${isLogined}">
                             <button type="button" id="wishBtn" th:onclick="'saveWish()'" th:class="${isWished} ? 'btn-wished' : ''">
                                 <span th:if="${isWished}">찜 해제</span>

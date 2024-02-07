@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TheirInfoDto {
+public class ChatRoomMemberInfoDto {
     Long id;
     String name;
 }

@@ -2,7 +2,7 @@ package com.ll.feelko.domain.chat.chatRoom.controller;
 
 import com.ll.feelko.domain.chat.chatMessage.entity.ChatMessage;
 import com.ll.feelko.domain.chat.chatMessage.service.ChatMessageService;
-import com.ll.feelko.domain.chat.chatRoom.dto.TheirInfoDto;
+import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomMemberInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.feelko.domain.chat.chatRoom.service.ChatRoomService;
 import com.ll.feelko.global.rsData.RsData;
@@ -30,15 +30,21 @@ public class ChatRoomController {
     @GetMapping("/{roomId}")
     public String showRoom(
             @PathVariable final long roomId,
-            final String writerName,
+            @AuthenticationPrincipal SecurityUser user,
             Model model
     ) {
+        if(!chatRoomService.isIncludeMe(user.getId(),roomId)){
+            throw new RuntimeException("참여 권한이 없습니다.");
+        }
+
         ChatRoom room = chatRoomService.findById(roomId).get();
+
         model.addAttribute("room", room);
 
         return "domain/chat/chatRoom/room";
     }
 
+    //지우던가 public private필드 만들어서 채팅방 접근시에 확인하게 만들기
     @GetMapping("/make")
     public String showMake() {
         return "domain/chat/chatRoom/make";
@@ -67,7 +73,6 @@ public class ChatRoomController {
     @Setter
     @Getter
     public static class WriteRequestBody {
-        private String writerName;
         private String content;
     }
 
@@ -81,9 +86,10 @@ public class ChatRoomController {
     @ResponseBody
     public RsData<?> write(
             @PathVariable final long roomId,
+            @AuthenticationPrincipal SecurityUser user,
             @RequestBody final WriteRequestBody requestBody
     ) {
-        ChatMessage chatMessage = chatRoomService.write(roomId, requestBody.getWriterName(), requestBody.getContent());
+        ChatMessage chatMessage = chatRoomService.write(roomId, user.getName(), requestBody.getContent(), user.getId());
 
         RsData<WriteResponseBody> writeRs = RsData.of("S-1", "%d번 메시지를 작성하였습니다.".formatted(chatMessage.getId()), new WriteResponseBody(chatMessage));
 
@@ -92,12 +98,13 @@ public class ChatRoomController {
         return RsData.of("S-1", "성공");
     }
 
+    //직접 상대방에게 신청하는 경우
     @GetMapping("/make/{theirInfo}")
     public String makeChatRoom(
             @AuthenticationPrincipal SecurityUser user,
             @PathVariable String theirInfo) {
-
-        TheirInfoDto theirInfoDto = null;
+        ChatRoomMemberInfoDto myInfoDto = new ChatRoomMemberInfoDto(user.getId(), user.getName());
+        ChatRoomMemberInfoDto theirInfoDto = null;
 
         if (chatRoomService.isNumeric(theirInfo)) {
             theirInfoDto = chatRoomService.createInfoDtoByExperienceId(Long.parseLong(theirInfo));
@@ -105,7 +112,7 @@ public class ChatRoomController {
             theirInfoDto = chatRoomService.createInfoDtoByEmail(theirInfo);
         }
 
-        Long chatRoomId = chatRoomService.makeChatRoom(user.getId(), theirInfoDto);
+        Long chatRoomId = chatRoomService.makeChatRoom(myInfoDto, theirInfoDto);
 
         return "redirect:/chat/room/" + chatRoomId;
 
