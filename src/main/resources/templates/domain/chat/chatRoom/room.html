@@ -4,12 +4,10 @@
 <h1 th:text="|${roomId}번 채팅방|"></h1>
 
 <nav>
-    <a href="make">채팅방 생성</a>
     <a href="list">채팅방 목록</a>
 </nav>
 
 <form onsubmit="submitWriteForm(this); return false;" method="POST">
-    <input autocomplete="off" type="text" name="writerName" placeholder="작성자 명">
     <input autocomplete="off" type="text" name="content" placeholder="내용">
     <input type="submit" value="작성">
 </form>

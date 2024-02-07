@@ -1,7 +1,7 @@
 package com.ll.feelko.domain.chat.chatRoom.service;
 
 import com.ll.feelko.domain.chat.chatMessage.entity.ChatMessage;
-import com.ll.feelko.domain.chat.chatRoom.dto.TheirInfoDto;
+import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomMemberInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMember;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMemberId;
@@ -44,10 +44,10 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public ChatMessage write(long roomId, String writerName, String content) {
+    public ChatMessage write(long roomId, String writerName, String content, long senderId) {
         ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
 
-        ChatMessage chatMessage = chatRoom.writeMessage(writerName, content);
+        ChatMessage chatMessage = chatRoom.writeMessage(writerName, content, senderId);
 
         return chatMessage;
     }
@@ -64,15 +64,15 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public Long makeChatRoom(Long myId, TheirInfoDto theirInfoDto) {
+    public Long makeChatRoom(ChatRoomMemberInfoDto myInfoDto, ChatRoomMemberInfoDto theirInfoDto) {
         //상대 이름으로 방 이름 설정
-        ChatRoom chatRoom = ChatRoom.builder().name(theirInfoDto.getName()).build();
+        ChatRoom chatRoom = ChatRoom.builder().name(theirInfoDto.getName()+", "+myInfoDto.getName()).build();
 
         Long chatRoomId = chatRoomRepository.save(chatRoom).getId();
         //복합키 생성
         ChatRoomMemberId myRoomId = ChatRoomMemberId.builder()
                 .chatRoomId(chatRoomId)
-                .memberId(myId)
+                .memberId(myInfoDto.getId())
                 .build();
 
         ChatRoomMemberId theirRoomId = ChatRoomMemberId.builder()
@@ -82,13 +82,15 @@ public class ChatRoomService {
         //중간 테이블 데이터 생성
         ChatRoomMember myChatRoomMember = ChatRoomMember.builder()
                 .id(myRoomId)
-                .member(memberRepository.findById(myId).orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
+                .member(memberRepository.findById(myInfoDto.getId())
+                        .orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
                 .chatRoom(chatRoom)
                 .build();
 
         ChatRoomMember theirChatRoomMember = ChatRoomMember.builder()
                 .id(theirRoomId)
-                .member(memberRepository.findById(theirInfoDto.getId()).orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
+                .member(memberRepository.findById(theirInfoDto.getId())
+                        .orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
                 .chatRoom(chatRoom)
                 .build();
 
@@ -99,18 +101,18 @@ public class ChatRoomService {
     }
 
     //리팩토링 필요
-    public TheirInfoDto createInfoDtoByExperienceId(Long experienceId){
+    public ChatRoomMemberInfoDto createInfoDtoByExperienceId(Long experienceId){
         Experience experience = experienceRepository.findById(experienceId).get();
         Member member = memberRepository.findById(experience.getMemberId()).get();
 
-        return new TheirInfoDto(member.getId(),member.getName());
+        return new ChatRoomMemberInfoDto(member.getId(),member.getName());
     }
 
     //리팩토링 필요
-    public TheirInfoDto createInfoDtoByEmail(String email){
+    public ChatRoomMemberInfoDto createInfoDtoByEmail(String email){
         Member member = memberRepository.findByEmail(email).get();
 
-        return new TheirInfoDto(member.getId(),member.getName());
+        return new ChatRoomMemberInfoDto(member.getId(),member.getName());
     }
 
     public Optional<ChatRoom> findById(long roomId) {
@@ -124,5 +126,9 @@ public class ChatRoomService {
             }
         }
         return true;
+    }
+
+    public boolean isIncludeMe(long id, long roomId) {
+        return chatRoomMemberRepository.existsByChatRoomIdAndMemberId(roomId, id);
     }
 }

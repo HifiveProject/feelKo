@@ -42,4 +42,6 @@ public class ChatMessage {
     private String writerName;
 
     private String content;
+
+    private Long senderId;
 }

@@ -21,11 +21,9 @@ public class SpringSecurityConfig {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/member/mypage/**","/payment/**")
+                                .requestMatchers("/member/mypage/**","/payment/**","/chat/**")
                                 //예약,결제도 추가
                                 .authenticated()
-                                .requestMatchers("/h2-console/**")
-                                .permitAll()
                                 .anyRequest()
                                 .permitAll()
                 )
@@ -37,7 +35,8 @@ public class SpringSecurityConfig {
                 .csrf(
                         csrf ->
                                 csrf.ignoringRequestMatchers(
-                                        "**"
+                                        "**", //모든 post요청에 csrf토큰 심고나서 삭제
+                                        "/oauth2/**" //소셜 로그인시 토큰과 사용자정보 받을 수 있도록
                                 )
                 )
                 .headers(
