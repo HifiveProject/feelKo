@@ -44,4 +44,6 @@ public class ChatMessage {
     private String content;
 
     private Long senderId;
+
+    private String chatRoomName;
 }

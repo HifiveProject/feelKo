@@ -2,6 +2,7 @@ package com.ll.feelko.domain.chat.chatRoom.controller;
 
 import com.ll.feelko.domain.chat.chatMessage.entity.ChatMessage;
 import com.ll.feelko.domain.chat.chatMessage.service.ChatMessageService;
+import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomListDto;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomMemberInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.feelko.domain.chat.chatRoom.service.ChatRoomService;
@@ -44,26 +45,11 @@ public class ChatRoomController {
         return "domain/chat/chatRoom/room";
     }
 
-    //지우던가 public private필드 만들어서 채팅방 접근시에 확인하게 만들기
-    @GetMapping("/make")
-    public String showMake() {
-        return "domain/chat/chatRoom/make";
-    }
-
-    @PostMapping("/make")
-    public String make(
-            final String name
-    ) {
-        chatRoomService.make(name);
-
-        return "redirect:/chat/room/list";
-    }
-
     @GetMapping("/list")
     public String showList(
             @AuthenticationPrincipal SecurityUser user,
             Model model) {
-        List<ChatRoom> chatRooms = chatRoomService.findByMemberId(user.getId());
+        List<ChatRoomListDto> chatRooms = chatRoomService.findByMemberId(user.getId());
         model.addAttribute("chatRooms", chatRooms);
 
         return "domain/chat/chatRoom/list";
@@ -92,6 +78,8 @@ public class ChatRoomController {
         ChatMessage chatMessage = chatRoomService.write(roomId, user.getName(), requestBody.getContent(), user.getId());
 
         RsData<WriteResponseBody> writeRs = RsData.of("S-1", "%d번 메시지를 작성하였습니다.".formatted(chatMessage.getId()), new WriteResponseBody(chatMessage));
+//        RsData<WriteResponseBody> writeRs = RsData.of("S-MODIFIED", "%d번 메시지를 작성하였습니다.".formatted(chatMessage.getId()), new WriteResponseBody(chatMessage));
+//        RsData<WriteResponseBody> writeRs = RsData.of("S-DELETED", "%d번 메시지를 작성하였습니다.".formatted(chatMessage.getId()), new WriteResponseBody(chatMessage));
 
         messagingTemplate.convertAndSend("/topic/chat/room/" + roomId + "/messageCreated", writeRs);
 
@@ -111,8 +99,11 @@ public class ChatRoomController {
         } else {
             theirInfoDto = chatRoomService.createInfoDtoByEmail(theirInfo);
         }
-
-        Long chatRoomId = chatRoomService.makeChatRoom(myInfoDto, theirInfoDto);
+        Long chatRoomId;
+        //존재 하는 방일 때 0보다 큰값이 return됨
+        if((chatRoomId = chatRoomService.findChatRoom(user.getId(),theirInfoDto.getId()))<0){
+            chatRoomId = chatRoomService.makeChatRoom(myInfoDto, theirInfoDto); //0보다 작으면 새로운 방 생성
+        }
 
         return "redirect:/chat/room/" + chatRoomId;
 
