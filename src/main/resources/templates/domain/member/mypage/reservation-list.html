@@ -129,12 +129,12 @@
                     <div class="reservation-info-label">예약 날짜</div>
                     <div th:text="${reservationDto.reservationDate}" class="reservation-detail">Date</div>
                     <div class="reservation-info-label">가격</div>
-                    <div th:text="${#numbers.formatInteger(reservationDto.price, 0)}" class="reservation-detail">Price
+                    <div th:text="${#numbers.formatInteger(reservationDto.price, 1, 'COMMA')} + ' 원'" class="reservation-detail">Price
                     </div>
                 </div>
                 <div class="reservation-buttons">
                     <a href="#" th:data-paymentid="${reservationDto.paymentId}" class="button1 detail-view">예약상세보기</a>
-                    <a th:href="@{/experiences/{id}(id=${reservationDto.experienceId})}" class="button1">문의하기</a>
+                    <a th:href="@{/chat/room/make/{theirInfo}(theirInfo=${reservationDto.experienceId})}" class="button1">문의하기</a>
                     <a th:href="@{/experiences/{id}(id=${reservationDto.experienceId})}" class="button1">취소하기</a>
                 </div>
             </div>
@@ -229,7 +229,7 @@
                     $("#modalReservationDate").text(data.reservationDate);
                     $("#modalHeadCount").text(data.headCount);
                     $("#modalPaymentKey").text(data.paymentKey);
-                    $("#modalPrice").text(data.price);
+                    $("#modalPrice").text(data.price.toLocaleString() + ' 원');
                     // 모달 표시
                     $("#reservationDetailModal").modal("show");
                 },
