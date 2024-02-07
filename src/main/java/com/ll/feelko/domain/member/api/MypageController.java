@@ -2,10 +2,7 @@ package com.ll.feelko.domain.member.api;
 
 import com.ll.feelko.domain.member.api.Request.MemberProfileUpdateRequest;
 import com.ll.feelko.domain.member.application.MypageService;
-import com.ll.feelko.domain.member.dto.MemberProfileDto;
-import com.ll.feelko.domain.member.dto.MemberProfileUpdateDto;
-import com.ll.feelko.domain.member.dto.UploadReservationDto;
-import com.ll.feelko.domain.member.dto.UploadedPageDto;
+import com.ll.feelko.domain.member.dto.*;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,21 +25,12 @@ public class MypageController {
 
     private final MypageService mypageService;
 
+    // 개인정보 열람
     @GetMapping("")
     public String showMypage(@AuthenticationPrincipal SecurityUser user, Model model){
         MemberProfileDto profileDto = mypageService.getProfile(user.getId());
         model.addAttribute("profileDto", profileDto);
         return "domain/member/mypage";
-    }
-
-
-
-    // 개인정보 열람
-    @GetMapping("/profile")
-    public String showProfile(@AuthenticationPrincipal SecurityUser user, Model model){
-        MemberProfileDto profileDto = mypageService.getProfile(user.getId());
-        model.addAttribute("profileDto", profileDto);
-        return "domain/member/mypage/profile";
     }
 
     // 개인정보 수정
@@ -59,7 +47,7 @@ public class MypageController {
                 profileUpdateRequest.getProfile()
         );
         mypageService.updateProfile(user.getId(), profileUpdateDto);
-        return "redirect:/member/mypage/profile";
+        return "redirect:/member/mypage";
     }
 
     @GetMapping("/upload-list")
@@ -86,6 +74,16 @@ public class MypageController {
         reservations = mypageService.getUploadedPageReservation(experienceId);
 
         return ResponseEntity.ok(reservations);
+    }
+
+    @GetMapping("/reservation-list")
+    public String showReservationList(@AuthenticationPrincipal SecurityUser user,
+                                      @RequestParam(name = "page", defaultValue = "0") int page,
+                                      @RequestParam(name = "size", defaultValue = "9") int size,
+                                      Model model) {
+        Page<ReservationDto> reservations = mypageService.getReservationListByMemberId(user.getId(), page, size);
+        model.addAttribute("reservations",reservations);
+        return "domain/member/mypage/reservation-list";
     }
 
 }

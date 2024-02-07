@@ -22,7 +22,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.IntStream;
 
-//@Configuration
+@Configuration
 @Profile("!prod")
 @Slf4j
 @RequiredArgsConstructor
@@ -33,7 +33,7 @@ public class NotProd {
     private final PasswordEncoder passwordEncoder;
     private final PaymentRepository paymentRepository;
 
-    //@Bean
+    @Bean
     public ApplicationRunner initNotProd() {
         return args -> {
 
@@ -66,9 +66,14 @@ public class NotProd {
                 experienceService.createExperience(ExperienceCreateDTO.builder()
                         .memberId(member.getId())
                         .title("title" + i)
+                        .startDate(LocalDate.now())
+                        .endDate(LocalDate.now())
+                        .price(new BigDecimal(1000))
                         .imageFiles(null)
                         .location("장소" + i)
+                        .experienceClose(false)
                         .descriptionText("내용" + i)
+                        .headcount(10L)
                         .build());
             }));
 
@@ -81,7 +86,9 @@ public class NotProd {
                         .price(new BigDecimal(1))
                         .paymentKey("1")
                         .member(member)
+                        .experience(experience)
                         .reservationDate(LocalDate.now())
+                        .experience(experience)
                         .build();
                 paymentRepository.save(payment);
             }
@@ -91,7 +98,9 @@ public class NotProd {
                         .price(new BigDecimal(1))
                         .paymentKey("1")
                         .member(member)
+                        .experience(experience)
                         .reservationDate(LocalDate.now().minusDays(1))
+                        .experience(experience)
                         .build();
                 paymentRepository.save(payment);
             }
@@ -101,7 +110,9 @@ public class NotProd {
                         .price(new BigDecimal(1))
                         .paymentKey("1")
                         .member(member)
+                        .experience(experience)
                         .reservationDate(LocalDate.now().minusDays(2))
+                        .experience(experience)
                         .build();
                 paymentRepository.save(payment);
             }

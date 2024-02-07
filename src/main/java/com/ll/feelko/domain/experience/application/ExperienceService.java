@@ -11,6 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ public class ExperienceService {
 
         Member member = memberService.findByIdElseThrow(dto.getMemberId());
 
+        //리팩토링
         Experience experience = Experience.builder()
                 .memberId(member.getId())
                 .title(dto.getTitle())
@@ -34,7 +39,10 @@ public class ExperienceService {
                 .descriptionText(dto.getDescriptionText())
                 .price(dto.getPrice())
                 .startDate(dto.getStartDate())
+                .endDate(dto.getEndDate())
                 .headcount(dto.getHeadcount())
+                .originalHeadcount(dto.getHeadcount()) // 초기 마감 인원수 설정
+                .experienceClose(dto.getExperienceClose())
                 .answer(dto.getAnswer())
                 .build();
         return experienceRepository.save(experience);
@@ -59,11 +67,42 @@ public class ExperienceService {
                 .orElseThrow(() -> new RuntimeException("체험을 찾을 수 없습니다."));
     }
 
-    public Page<Experience> searchExperiences(String destination, Pageable pageable) {
-        return experienceRepository.searchExperiences(destination, pageable);
-    }
-
     public Page<Experience> searchAllExperiences(Pageable pageable) {
         return experienceRepository.searchExperiencesAll(pageable);
     }
+
+    public List<Experience> findPopularExperiences(Pageable pageable) {
+        return experienceRepository.findPopularExperiences(pageable);
+    }
+
+
+    public List<Experience> findClosingSoonExperiences() {
+        List<Experience> closingSoonExperiences = experienceRepository.findByExperienceCloseFalse().stream()
+                .filter(experience -> experience.getHeadcount() != null && experience.isClosingSoon())
+                .sorted(Comparator.comparingLong(Experience::getHeadcount))
+                .limit(3) // 최대 3개까지만 리스트에 추가
+                .collect(Collectors.toList());
+
+        return closingSoonExperiences;
+    }
+
+    public Page<Experience> searchAllExperiencesIncludingClosing(Pageable pageable) {
+        return experienceRepository.searchAllExperiencesIncludingClosing(pageable);
+    }
+
+    public Page<Experience> searchExperiencesIncludingClosing(String destination, LocalDate selectDate, Pageable pageable) {
+        return experienceRepository.searchExperiencesIncludingClosing(destination, selectDate, pageable);
+    }
+
+    public Page<Experience> searchExperiencesByDateRange(String destination, LocalDate selectDate, Pageable pageable) {
+        return experienceRepository.findByDateRangeAndLocation(destination, selectDate, pageable);
+    }
+
+    public Page<Experience> searchExperiencesByLocation(String destination, Pageable pageable) {
+        return experienceRepository.findByLocation(destination, pageable);
+    }
+
+    //    public Page<Experience> searchExperiences(String destination, LocalDate startDate, Pageable pageable) {
+//        return experienceRepository.searchExperiences(destination, startDate, pageable);
+//    }
 }

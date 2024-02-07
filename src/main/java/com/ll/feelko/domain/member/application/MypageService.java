@@ -1,9 +1,6 @@
 package com.ll.feelko.domain.member.application;
 
-import com.ll.feelko.domain.member.dto.MemberProfileDto;
-import com.ll.feelko.domain.member.dto.MemberProfileUpdateDto;
-import com.ll.feelko.domain.member.dto.UploadReservationDto;
-import com.ll.feelko.domain.member.dto.UploadedPageDto;
+import com.ll.feelko.domain.member.dto.*;
 import com.ll.feelko.domain.member.entity.Member;
 import org.springframework.data.domain.Page;
 
@@ -23,4 +20,6 @@ public interface MypageService {
     boolean isMyUploadedPage(long id, Long experienceId);
 
     TreeMap<LocalDate, List<UploadReservationDto>> getUploadedPageReservation(Long experienceId);
+
+    Page<ReservationDto> getReservationListByMemberId(long id, int page, int size);
 }

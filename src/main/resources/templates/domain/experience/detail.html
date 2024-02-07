@@ -45,14 +45,25 @@
                 <!-- 두 번째 HTML 코드 삽입 -->
                 <div class="card">
                     <div class="container">
-                        <h4 th:text="${experience.title}"></h4>
+                        <h4 th:text="'제목: ' + ${experience.title}"></h4>
                         <img th:src="${experience.imageUrl}" alt="Image">
-                        <p th:text="${experience.location}"></p>
-                        <p th:text="${experience.descriptionText}"></p>
-                        <p th:text="${experience.startDate}"></p>
-                        <p th:text="${experience.headcount}"></p>
-                        <p th:text="${experience.price}"></p>
-                        <div>
+                        <p th:text="'지역: ' + ${experience.location}"></p>
+                        <p th:text="'설명: ' + ${experience.descriptionText}"></p>
+                        <p th:text="'시작 날짜: ' + ${experience.startDate}"></p>
+                        <p th:text="'종료 날짜: ' + ${experience.endDate}"></p>
+                        <p th:text="${experience.experienceClose} ? '상태: 마감' : '상태: 운영중'"></p>
+                        <p th:text="'남은 인원수: ' + ${experience.headcount}"></p>
+                        <p th:text="'가격 : ' + ${#numbers.formatInteger(experience.price, 1, 'COMMA')} + ' 원'"></p>
+                        <div th:if="${isLogined}">
+                            <button type="button" id="wishBtn" th:onclick="'saveWish()'" th:class="${isWished} ? 'btn-wished' : ''">
+                                <span th:if="${isWished}">찜 해제</span>
+                                <span th:if="${!isWished}">찜 등록</span>
+                            </button>
+                        </div>
+                        <div th:if="${!isLogined}">
+                            <button type="button" onclick="window.location.href='/member/login'">
+                                로그인 후 찜 가능
+                            </button>
                             <form th:action="@{|/answer/create/${experienceId}|}" method="post">
                                 <textarea name="content" id="content" rows="5"></textarea>
                                 <input type="submit" value="답변등록">
@@ -61,7 +72,6 @@
                                 <li th:each="answer : ${experience.getAnswers()}" th:text="${answer.getContent()}"></li>
                             </ul>
                         </div>
-                        <button type="button" id="wishBtn" th:onclick="'saveWish()'">찜하기</button>
                     </div>
                 </div>
 
@@ -104,36 +114,7 @@
                 <button th:onclick="'deleteProduct(' + ${experience.getId()} + ')'" > 결제 하기 </button>
             </div>
         </div>
-
-
         <!-- 콘텐츠 끝 -->
-        <!-- 찜 관련 script -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script th:inline="javascript">
-            /** 위시리스트에 추가 **/
-            function saveWish() {
-                var memberId = [[${#authentication.principal.id}]];
-                var experienceId = [[${experience.id}]];
-
-                $.ajax({
-                    url: '/member/mypage/wishlist',
-                    type: 'POST',
-                    data : JSON.stringify({
-                        memberId: memberId,
-                        experienceId: experienceId
-                    }),
-                    contentType: 'application/json;',
-                }).done(function(result){
-                    if(result){
-                        alert("찜이 등록되었습니다.");
-                    } else {
-                        alert("찜이 삭제되었습니다.");
-                    }
-                }).fail(function(error){
-                    alert("요청에 실패하였습니다.");
-                });
-            };
-        </script>
 
     </section>
     <aside class="template--rightAside"></aside>
@@ -171,5 +152,35 @@
 <script src="/js/common/header.js"></script>
 <script src="/js/common/main.js"></script>
 <script src="/js/common/footer.js"></script>
+
+<!-- 찜 관련 script -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:inline="javascript">
+    /** 위시리스트에 추가 **/
+    function saveWish() {
+        var experienceId = [[${experience.id}]];
+
+        $.ajax({
+            url: '/member/mypage/wishlist',
+            type: 'POST',
+            data : {
+                experienceId: experienceId
+            }
+        }).done(function(result){
+            if(result){
+                alert("찜이 등록되었습니다.");
+                $('#wishBtn').html('찜 해제');
+                $('#wishBtn').addClass('btn-wished');
+            } else {
+                alert("찜이 삭제되었습니다.");
+                $('#wishBtn').html('찜 등록');
+                $('#wishBtn').removeClass('btn-wished');
+            }
+        }).fail(function(error){
+            alert("요청에 실패하였습니다.\n로그인 상태인지 확인 해주세요.");
+        });
+    };
+</script>
+
 </body>
 </html>

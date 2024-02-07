@@ -20,7 +20,7 @@ public class SpringSecurityConfig {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/member/mypage/**")
+                                .requestMatchers("/member/mypage/**","/payment/**")
                                 //예약,결제도 추가
                                 .authenticated()
                                 .requestMatchers("/h2-console/**")

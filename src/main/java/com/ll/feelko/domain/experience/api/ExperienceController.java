@@ -4,6 +4,8 @@ import com.ll.feelko.domain.experience.application.ExperienceService;
 import com.ll.feelko.domain.experience.dto.ExperienceCreateDTO;
 import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.experience.form.ExperienceCreateForm;
+import com.ll.feelko.domain.wishlist.application.WishListService;
+import com.ll.feelko.domain.wishlist.dto.WishListDto;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,19 +16,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/experiences")
 public class ExperienceController {
 
     private final ExperienceService experienceService;
+    private final WishListService wishListService;
 
     @GetMapping("/{experienceId}")
-    public String detail(@PathVariable Long experienceId, Model model) {
-
+    public String detail(@PathVariable(name = "experienceId") Long experienceId, Model model, @AuthenticationPrincipal SecurityUser user) {
         model.addAttribute("experience", experienceService.detail(experienceId));
-
-
+        Optional<WishListDto> createWishListDto = wishListService.createWishListDtoIfLogined(user, experienceId);
+        if (!createWishListDto.isEmpty()) {
+            model.addAttribute("isWished", wishListService.checkWish(createWishListDto.get()));
+            model.addAttribute("isLogined", true);
+        } else {
+            model.addAttribute("isLogined", false);
+        }
         return "domain/experience/detail";
     }
 
@@ -49,6 +58,8 @@ public class ExperienceController {
                 .descriptionText(form.getDescriptionText())
                 .price(form.getPrice())
                 .startDate(form.getStartDate())
+                .endDate(form.getEndDate())
+                .experienceClose(form.getExperienceClose())
                 .headcount(form.getHeadcount())
                 .answer(form.getAnswer())
                 .build());

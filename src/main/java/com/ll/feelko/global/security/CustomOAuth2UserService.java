@@ -1,8 +1,8 @@
-package com.ll.feelko.domain.member.application;
+package com.ll.feelko.global.security;
 
+import com.ll.feelko.domain.member.application.MemberService;
 import com.ll.feelko.domain.member.dto.SocialLoginDto;
 import com.ll.feelko.domain.member.entity.Member;
-import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

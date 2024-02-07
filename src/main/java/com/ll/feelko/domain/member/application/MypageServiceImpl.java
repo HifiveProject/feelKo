@@ -3,10 +3,7 @@ package com.ll.feelko.domain.member.application;
 import com.ll.feelko.domain.experience.dao.ExperienceRepository;
 import com.ll.feelko.domain.experience.entity.Experience;
 import com.ll.feelko.domain.member.dao.MemberRepository;
-import com.ll.feelko.domain.member.dto.MemberProfileDto;
-import com.ll.feelko.domain.member.dto.MemberProfileUpdateDto;
-import com.ll.feelko.domain.member.dto.UploadReservationDto;
-import com.ll.feelko.domain.member.dto.UploadedPageDto;
+import com.ll.feelko.domain.member.dto.*;
 import com.ll.feelko.domain.member.entity.Member;
 import com.ll.feelko.domain.payment.dao.PaymentRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 
@@ -82,4 +82,11 @@ public class MypageServiceImpl implements MypageService {
                 ));
 
     }
+
+    @Override
+    public Page<ReservationDto> getReservationListByMemberId(long memberId, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return paymentRepository.findByMemberIdOrderByCreatedAtDescWithExperience(memberId, pageable);
+    }
+
 }

@@ -10,12 +10,22 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UploadedPageDto {
-    private long id;
+public class ReservationDto {
+
     private String imageUrl;
+
     private String title;
+
+    private Long experienceId;
+
+    private Long paymentId;
+
+    private String paymentKey;
+
     private BigDecimal price;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    //이미지
+
+    private LocalDate reservationDate;
+
+    //private String status;
 }
+

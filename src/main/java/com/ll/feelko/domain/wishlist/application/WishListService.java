@@ -1,12 +1,19 @@
 package com.ll.feelko.domain.wishlist.application;
 
 import com.ll.feelko.domain.wishlist.dto.WishListDto;
-import com.ll.feelko.domain.wishlist.dto.WishListSaveDto;
+import com.ll.feelko.domain.wishlist.dto.WishListPageDto;
+import com.ll.feelko.global.security.SecurityUser;
 import org.springframework.data.domain.Page;
 
-public interface WishListService{
+import java.util.Optional;
 
-    boolean saveWish(WishListSaveDto wishListSaveDto);
+public interface WishListService {
 
-    Page<WishListDto> getWishList(long memberId, int page, int size);
+    boolean saveWish(WishListDto wishListDto);
+
+    boolean checkWish(WishListDto wishListDto);
+
+    Page<WishListPageDto> getWishList(long memberId, int page, int size);
+
+    Optional<WishListDto> createWishListDtoIfLogined(SecurityUser user, Long experienceId);
 }

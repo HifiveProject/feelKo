@@ -1,4 +1,4 @@
-package com.ll.feelko.domain.member.dto;
+package com.ll.feelko.domain.wishlist.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,12 +10,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UploadedPageDto {
+public class WishListPageDto {
     private long id;
     private String imageUrl;
     private String title;
     private BigDecimal price;
     private LocalDate startDate;
     private LocalDate endDate;
-    //이미지
 }

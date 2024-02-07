@@ -46,7 +46,7 @@
                     <a>
                         <form action="/search" method="get">
                             <label for="destination">여행지 :</label>
-                            <select id="destination" name="destination" required>
+                            <select id="destination" name="destination" required style="margin-right: 16px;">
                                 <option value="" disabled selected hidden>여행할 장소를 선택하세요</option>
                                 <option value="전국">전국</option>
                                 <option value="서울">서울</option>
@@ -67,9 +67,14 @@
                                 <option value="제주">제주</option>
                                 <option value="세종">세종</option>
                             </select>
-                            <label for="start_date">날짜 :</label>
-                            <input type="date" id="start_date" name="start_date">
-                            <button type="submit">검색</button>
+                            <label for="selectDate">날짜 :</label>
+                            <input type="date" id="selectDate" name="selectDate">
+
+                            <input type="checkbox" id="include_closing" name="include_closing"
+                                   style="margin-left: 10px;">
+                            <label for="include_closing">마감 체험 포함</label>
+
+                            <button type="submit" id="search-button">검색</button>
                         </form>
 
                     </a>
@@ -85,20 +90,36 @@
                 <span th:if="${selectedLocation != null}" th:text="${selectedLocation}" th:remove="tag"></span>
                 <span th:if="${selectedLocation == null}">전국</span>
             </div>
-            <div class="main-hot">
+            <div class="main-hot" th:if="${experiences.size() > 0}">
                 <div th:each="experience : ${experiences}" class="hotpost-1">
                     <div class="hotpost-img1">
-                        사진
+                        <a th:href="@{'/experiences/'+ ${experience.id}}">
+                            <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
                     </div>
                     <div class="hotpost-name1">
                         <div class="postname">
-                            <span th:text="${experience.title}"></span>
+                            <a th:href="@{'/experiences/'+ ${experience.id}}">
+                                <span th:text="${experience.title}"></span>
+                            </a>
                         </div>
-                        <div class="postday">기간 : 2-15 ~ 2-16</div>
-                        <!--                        <div class="postday">기간 : <span th:text="${experience.startDate}"></span> ~ <span th:text="${experience.endDate}"></span></div>-->
+                        <div class="postday">
+                            <span th:if="${experience.startDate != null and experience.endDate != null}">
+                                기간 : <span th:text="${experience.startDate} + ' ~ ' + ${experience.endDate}"></span>
+                            </span>
+                            <span th:if="${experience.startDate == null and experience.endDate != null}">
+                                기간 : <span th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' ~ ' + ${experience.endDate}"></span>
+                            </span>
+                            <span th:if="${experience.endDate == null}">
+                                기간 : <span th:text="${experience.startDate != null ? experience.startDate : #temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' ~ 상시 운영중'"></span>
+                            </span>
+                        </div>
                         <div class="price">가격 : <span th:text="${experience.price}"></span>원</div>
                     </div>
                 </div>
+            </div>
+            <div th:if="${experiences.size() == 0}">
+                <p>검색 결과 없음</p>
+                <p>더 많은 검색 결과를 보려면 날짜를 변경하여 검색해보세요.</p>
             </div>
             <div class="main-2">
                 <button class="btn1" th:if="${currentPage > 0}"><a
@@ -107,8 +128,8 @@
                         th:href="@{/search(destination=${selectedLocation}, page=${currentPage + 1})}">다음</a></button>
             </div>
 
-            <!--        </div>-->
-            <!-- 콘텐츠 끝 -->
+        </div>
+        <!-- 콘텐츠 끝 -->
 
 
     </section>
@@ -128,6 +149,7 @@
 <!-- ----------------------------------------------- -->
 
 <!-- bootstrap -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
