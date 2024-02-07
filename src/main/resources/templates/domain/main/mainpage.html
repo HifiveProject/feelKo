@@ -70,7 +70,8 @@
                             <label for="selectDate">날짜 :</label>
                             <input type="date" id="selectDate" name="selectDate">
 
-                            <input type="checkbox" id="include_closing" name="include_closing" style="margin-left: 10px;">
+                            <input type="checkbox" id="include_closing" name="include_closing"
+                                   style="margin-left: 10px;">
                             <label for="include_closing">마감 체험 포함</label>
 
                             <button type="submit" id="search-button">검색</button>
@@ -92,8 +93,8 @@
                 <div th:each="experience : ${popularExperiences}" class="hotpost-1">
                     <div class="hotpost-img1">
                         <a th:href="@{'/experiences/'+ ${experience.id}}">
+                            <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
                         </a>
-                        <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
                     </div>
                     <div class="hotpost-name1">
                         <div class="postname">
@@ -106,10 +107,12 @@
                                 기간 : <span th:text="${experience.startDate} + ' ~ ' + ${experience.endDate}"></span>
                             </span>
                             <span th:if="${experience.startDate == null and experience.endDate != null}">
-                                기간 : <span th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' ~ ' + ${experience.endDate}"></span>
+                                기간 : <span
+                                    th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' ~ ' + ${experience.endDate}"></span>
                             </span>
                             <span th:if="${experience.endDate == null}">
-                                기간 : <span th:text="${experience.startDate != null ? experience.startDate : #temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' ~ 상시 운영중'"></span>
+                                기간 : <span
+                                    th:text="${experience.startDate != null ? experience.startDate : #temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' ~ 상시 운영중'"></span>
                             </span>
                         </div>
                         <div class="price">가격 : <span th:text="${experience.price}"></span></div>
@@ -135,7 +138,8 @@
                                 <span th:text="${experience.title}"></span>
                             </a>
                         </div>
-                        <div class="postday">기간 : <span th:text="${experience.startDate} + ' ~ ' + ${experience.endDate}"></span></div>
+                        <div class="postday">기간 : <span
+                                th:text="${experience.startDate} + ' ~ ' + ${experience.endDate}"></span></div>
                         <div class="price">가격 : <span th:text="${experience.price}"></span></div>
                     </div>
                 </div>

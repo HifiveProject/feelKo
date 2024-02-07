@@ -3,7 +3,7 @@
 
 .main-hot {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 40px; /* 항목들 간의 간격 조절 */
     justify-content: center; /* 수평 가운데 정렬을 위한 스타일 */
     align-items: center; /* 수직 가운데 정렬을 위한 스타일 */
