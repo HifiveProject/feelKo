@@ -7,12 +7,11 @@
 
     <!-- css -->
     <link rel="stylesheet" href="/css/template/template.css"> <!-- 문서 기본 화면 배치/기본 폰트 등 기본 설정 -->
-    <link rel="stylesheet" href="/css/common/header.css">
+<!--    <link rel="stylesheet" href="/css/common/header.css">-->
     <link rel="stylesheet" href="/css/common/experienceList.css">
     <link rel="stylesheet" href="/css/common/footer.css">
 
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <title>FeelKo</title>
+    <title>Feelko-template3</title>
 
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -24,24 +23,9 @@
 
 
 <!-- ----------------------------------------------- -->
-
-
-<!-- Template-header 시작 -->
-<th:block th:replace="domain/layout/header"></th:block>
-<!-- Template-header 끝 -->
-
-
 <!-- ----------------------------------------------- -->
-
-
-<!-- Template-main 시작 -->
-<main class="template--main">
-    <aside class="template--leftAside"></aside>
-    <section class="template--Section">
-
-
         <!-- 페이지 제목 시작 -->
-        <div class="template--pageTitleContainer2">
+        <div class="template--pageTitleContainer2" th:fragment="search">
             <div class="template--pageTitleBox">
                 <div class="template--overlayedTitle2" style="color: black;">
                     <a>
@@ -83,82 +67,16 @@
         </div>
         <!-- 페이지 제목 끝 -->
 
-
-        <!-- 콘텐츠 시작 -->
-        <div class="main-1">
-            <div class="hotpost">
-                <span th:if="${selectedLocation != null}" th:text="${selectedLocation}" th:remove="tag"></span>
-                <span th:if="${selectedLocation == null}">전국</span>
-            </div>
-            <div class="main-hot" th:if="${experiences.size() > 0}">
-                <div th:each="experience : ${experiences}" class="hotpost-1">
-                    <div class="hotpost-img1">
-                        <a th:href="@{'/experiences/'+ ${experience.id}}">
-                            <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
-                        </a>
-                    </div>
-                    <div class="hotpost-name1">
-                        <div class="postname">
-                            <a th:href="@{'/experiences/'+ ${experience.id}}">
-                                <span th:text="${experience.title}"></span>
-                            </a>
-                        </div>
-                        <div class="postday">
-                            <span th:if="${experience.startDate != null and experience.endDate != null}">
-                                기간 : <span th:text="${experience.startDate} + ' ~ ' + ${experience.endDate}"></span>
-                            </span>
-                            <span th:if="${experience.startDate == null and experience.endDate != null}">
-                                기간 : <span th:text="${#temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' ~ ' + ${experience.endDate}"></span>
-                            </span>
-                            <span th:if="${experience.endDate == null}">
-                                기간 : <span th:text="${experience.startDate != null ? experience.startDate : #temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' ~ 상시 운영중'"></span>
-                            </span>
-                        </div>
-                        <div class="price">가격 : <span th:text="${#numbers.formatInteger(experience.price, 1, 'COMMA')} + ' 원'"></span></div>
-                    </div>
-                </div>
-            </div>
-            <div th:if="${experiences.size() == 0}">
-                <p>검색 결과 없음</p>
-                <p>더 많은 검색 결과를 보려면 날짜를 변경하여 검색해보세요.</p>
-            </div>
-            <div class="main-2">
-                <button class="btn1" th:if="${currentPage > 0}"><a
-                        th:href="@{/search(destination=${selectedLocation}, page=${currentPage - 1})}">이전</a></button>
-                <button class="btn1" th:if="${currentPage < totalPages - 1}"><a
-                        th:href="@{/search(destination=${selectedLocation}, page=${currentPage + 1})}">다음</a></button>
-            </div>
-
-        </div>
-        <!-- 콘텐츠 끝 -->
-
-
-    </section>
-    <aside class="template--rightAside"></aside>
-</main>
-<!-- Template-main 끝 -->
-
-
 <!-- ----------------------------------------------- -->
 
-
-<!-- Template-footer 시작 -->
-<th:block th:replace="domain/layout/footer"></th:block>
-<!-- Template-footer 끝 -->
-
-
-<!-- ----------------------------------------------- -->
 
 <!-- bootstrap -->
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
 <!-- js -->
-<!--<script src="../js/template/template.js"></script>-->
 <script src="/js/common/header.js"></script>
 <script src="/js/common/main.js"></script>
 <script src="/js/common/footer.js"></script>
-
 </body>
 </html>

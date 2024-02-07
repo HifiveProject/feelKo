@@ -43,6 +43,7 @@ public class ExperienceService {
                 .headcount(dto.getHeadcount())
                 .originalHeadcount(dto.getHeadcount()) // 초기 마감 인원수 설정
                 .experienceClose(dto.getExperienceClose())
+                .answer(dto.getAnswer())
                 .build();
         return experienceRepository.save(experience);
     }
@@ -79,7 +80,7 @@ public class ExperienceService {
         List<Experience> closingSoonExperiences = experienceRepository.findByExperienceCloseFalse().stream()
                 .filter(experience -> experience.getHeadcount() != null && experience.isClosingSoon())
                 .sorted(Comparator.comparingLong(Experience::getHeadcount))
-                .limit(3) // 최대 3개까지만 리스트에 추가
+                .limit(4) // 최대 3개까지만 리스트에 추가
                 .collect(Collectors.toList());
 
         return closingSoonExperiences;
