@@ -113,7 +113,7 @@
                                 기간 : <span th:text="${experience.startDate != null ? experience.startDate : #temporals.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd')} + ' ~ 상시 운영중'"></span>
                             </span>
                         </div>
-                        <div class="price">가격 : <span th:text="${experience.price}"></span>원</div>
+                        <div class="price">가격 : <span th:text="${#numbers.formatInteger(experience.price, 1, 'COMMA')} + ' 원'"></span></div>
                     </div>
                 </div>
             </div>
