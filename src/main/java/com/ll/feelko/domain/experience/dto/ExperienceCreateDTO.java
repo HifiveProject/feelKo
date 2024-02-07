@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @Builder
 public class ExperienceCreateDTO {
+
     private Long memberId;
     private String title;
     private List<MultipartFile> imageFiles;
@@ -24,5 +25,8 @@ public class ExperienceCreateDTO {
     private LocalDate endDate;
     private Long headcount;
     private Long wishCounter;
+    @Builder.Default
+    private Boolean experienceClose = false;
+
     //private boolean end_priod;
 }
