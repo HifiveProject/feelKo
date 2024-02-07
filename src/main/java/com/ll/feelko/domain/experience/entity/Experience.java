@@ -21,9 +21,10 @@ public class Experience {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Member member;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+//    private Member member;
+    private Long memberId; //업로드한 사용자 Fk
 
     private String title;
 
@@ -33,7 +34,7 @@ public class Experience {
 
     private LocalDate endDate;
 
-    private Long headcount;
+    private Long headcount; //인원수
 
     @Builder.Default
     private Long wishCounter = 0L;
@@ -63,4 +64,20 @@ public class Experience {
             this.wishCounter--;
         }
     }
+
+    //인원수 감소
+    public void headcountReduction(Long decrease) {
+        if (decrease == null || decrease < 0) {
+            throw new IllegalArgumentException("참가자 인원을 확인해주세요");
+        }
+        if (this.headcount - decrease != this.headcount) {
+            this.headcount = this.headcount - decrease;
+        }
+    }
+
+    public void headcountUpdate(Long headcountUpdate) {
+        this.headcount = headcountUpdate;
+    }
+
+
 }

@@ -72,8 +72,10 @@
             /*<![CDATA[*/
             title = /*[[${experiences.getTitle()}]]*/ '';
             prices = /*[[${experiences.getPrice()}]]*/ '';
+            id = /*[[${experiences.getId()}]]*/ '';
             count = /*[[${count}]]*/ '';
             days = /*[[${day}]]*/ '';
+            hap = /*[[${hap}]]*/ '';
             /*]]>*/
         </script>
 
@@ -90,7 +92,7 @@
         <input type="text" id="location" th:value="${count}"  readonly>
 
         <label for="price">총 금액 </label>
-        <input type="text" id="price" th:value="${experiences.getPrice()}"  readonly>
+        <input type="text" id="price" th:value="${hap}"  readonly>
 
         <!--Toss UI Input Value Start-->
         <label for="customerName" class="hidden">이름:</label>
@@ -98,6 +100,9 @@
 
         <label for="customerEmail" class="hidden">이메일:</label>
         <input type="email" id="customerEmail" name="customerEmail" required class="hidden">
+
+        <label for="experiencesId" class="hidden">체험 정보 아이디:</label>
+        <input type="email" id="experiencesId"  th:value="${experiences.getId()}" name="experiencesId" required class="hidden">
         <!--Toss UI Input Value End-->
 
         <button type="button" id="payment-button">가상계좌로 결제하기</button>
@@ -117,12 +122,12 @@
 
         // Data to be sent to the server
         const requestData = {
-            amount: prices,
+            amount: hap,
             orderId: generateOrderId(),
             orderName: title,
             customerName: customerName,
             customerEmail: customerEmail,
-            successUrl: 'http://localhost:8080/success/' + count + "/" + days,
+            successUrl: 'http://localhost:8080/success/' + count + "/" + days + "/" + id,
             failUrl: 'http://localhost:8081/api/v1/payments/toss/fail',
             validHours: 12,
             cashReceipt: {

@@ -62,25 +62,14 @@
                             </ul>
                         </div>
                         <button type="button" id="wishBtn" th:onclick="'saveWish()'">찜하기</button>
-
-
                     </div>
                 </div>
 
                 <script>
-                    // 전역 변수로 selectedDestination 선언
                     var selectedDestination = "";
-
-                    // 이벤트를 트리거할 때마다 호출되는 함수
                     function getSelectedDestination() {
-                        // <select> 요소 가져오기
                         var destinationSelect = document.getElementById('destination');
-
-                        // 선택된 옵션의 값을 가져오기
                         selectedDestination = destinationSelect.value;
-
-                        // 가져온 값을 콘솔에 출력 (실제로는 이 값을 사용하여 다른 작업을 수행할 수 있음)
-                        console.log("Selected Destination: " + selectedDestination);
                     }
                 </script>
 
@@ -112,9 +101,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                <!-- 두 번째 HTML 코드 삽입 끝 -->
                 <button th:onclick="'deleteProduct(' + ${experience.getId()} + ')'" > 결제 하기 </button>
             </div>
         </div>
