@@ -14,5 +14,10 @@ public class ExperienceCreateForm {
     private BigDecimal price;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
     private Long headcount;
+
+    private Boolean experienceClose = false;
+
 }
