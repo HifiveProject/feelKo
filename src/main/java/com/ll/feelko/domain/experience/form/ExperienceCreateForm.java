@@ -17,6 +17,7 @@ public class ExperienceCreateForm {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private Long headcount;
+    private String answer;
 
     private Boolean experienceClose = false;
 

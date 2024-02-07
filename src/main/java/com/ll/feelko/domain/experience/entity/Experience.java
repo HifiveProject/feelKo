@@ -48,6 +48,11 @@ public class Experience {
 
     private Boolean experienceClose;
 
+    private String answer;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "experience")
+    private List<Answer> answers;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "experience")
     private List<WishList> wishLists;
 

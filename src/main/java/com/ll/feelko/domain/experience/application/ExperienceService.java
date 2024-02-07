@@ -43,6 +43,7 @@ public class ExperienceService {
                 .headcount(dto.getHeadcount())
                 .originalHeadcount(dto.getHeadcount()) // 초기 마감 인원수 설정
                 .experienceClose(dto.getExperienceClose())
+                .answer(dto.getAnswer())
                 .build();
         return experienceRepository.save(experience);
     }
