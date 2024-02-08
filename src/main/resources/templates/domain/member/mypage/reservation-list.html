@@ -118,7 +118,6 @@
     <!-- 왼쪽 메뉴바 포함 -->
     <div th:replace="~{domain/layout/mypage-leftAside}"></div>
 
-    <!-- 사용자 정보 섹션 -->
     <section class="main-content">
         <div class="reservation-list-container">
             <div th:if="!${reservations.isEmpty()}" th:each="reservationDto : ${reservations}" class="reservation-item">
