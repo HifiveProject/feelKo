@@ -11,9 +11,9 @@
 <h1>채팅방 목록</h1>
 
 <ul class="chat__messages">
-    <li th:each="chatRoomListDto : ${chatRooms}">
+    <li th:each="chatRoomListDto : ${chatRooms}" th:data-chat-room-id="${chatRoomListDto.getChatRoomId()}">
         <a th:href="@{/chat/room/{chatRoomId}(chatRoomId=${chatRoomListDto.getChatRoomId()})}">
-            <span th:text="|${chatRoomListDto.getChatRoomId()}.|">채팅방 id</span>
+<!--            <span th:text="|${chatRoomListDto.getChatRoomId()}.|">채팅방 id</span>-->
             <span th:text="${chatRoomListDto.getName()}">채팅방 이름</span>
             <span th:text="${chatRoomListDto.getLastMessage()}">마지막 메세지</span>
         </a>
@@ -33,13 +33,23 @@
     var memberId = /*[[${#authentication.principal.id}]]*/ 0;
 
     function drawMoreChatMessage(message) {
-        lastChatMessageId = message.id;
+        // 기존의 채팅방 메시지가 있는지 확인하고, 있다면 해당 요소를 삭제합니다.
+        const existingChatRoomElement = chatMessagesEl.querySelector(`li[data-chat-room-id="${message.chatRoom.id}"]`);
+        if (existingChatRoomElement) {
+            existingChatRoomElement.remove();
+        }
 
-        chatMessagesEl
-            .insertAdjacentHTML(
-                "afterBegin",
-                `<li>${message.chatRoom.id}. ${message.chatRoomName} ${message.content}</li>`
-            );
+        // 새 채팅방 메시지를 삽입합니다. 링크 추가 포함
+        const chatRoomItemHtml = `
+        <li data-chat-room-id="${message.chatRoom.id}">
+            <a href="/chat/room/${message.chatRoom.id}">
+<!--                <span>${message.chatRoom.id}. </span>-->
+                <span>${message.chatRoomName} </span>
+                <span>${message.content}</span>
+            </a>
+        </li>
+    `;
+        chatMessagesEl.insertAdjacentHTML("afterBegin", chatRoomItemHtml);
     }
 
     function subscribeToNewChatRoom(chatRoomId) {
