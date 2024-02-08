@@ -76,30 +76,50 @@
         <!-- 콘텐츠 시작 -->
         <div class="login-container">
             <div class="login-box">
-                <form method="POST" onsubmit="submitLoginForm(this);" class="form-container">
+                <form method="POST" onsubmit="return submitLoginForm(event);" class="form-container">
                     <div class="mb-3">
-                        <label for="emailInput" class="form-label">사용자 email</label>
-                        <input type="text" class="form-control" id="emailInput" name="email">
+                        <label for="emailInput" class="form-label">
+                            사용자(email)    <i class="fa-solid fa-asterisk" style="color: red;"></i>
+                        </label>
+                        <input type="email" class="form-control" id="emailInput" name="email">
+                        <div id="emailError" class="form-text" style="color: red; display: none;">
+                            올바른 이메일 형식이 아닙니다. 다시 확인해 주세요.
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="passwordInput" class="form-label">비밀번호</label>
+                        <label for="passwordInput" class="form-label">
+                            비밀번호    <i class="fa-solid fa-asterisk" style="color: red;"></i>
+                        </label>
                         <input type="password" class="form-control" id="passwordInput" name="password">
+                        <div id="passwordError" class="form-text" style="color: red; display: none;">
+                            비밀번호를 입력해 주세요.
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="nameInput" class="form-label">이름</label>
+                        <label for="nameInput" class="form-label">
+                            이름    <i class="fa-solid fa-asterisk" style="color: red;"></i>
+                        </label>
                         <input type="text" class="form-control" id="nameInput" name="name">
+                        <div id="nameError" class="form-text" style="color: red; display: none;">
+                            이름을 입력해 주세요.
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="profileInput" class="form-label">프로필</label>
+                        <label for="profileInput" class="form-label">프로필(URL)</label>
                         <input type="text" class="form-control" id="profileInput" name="profile">
                     </div>
 
                     <div class="mb-3">
-                        <label for="phoneInput" class="form-label">전화번호</label>
-                        <input type="text" class="form-control" id="phoneInput" name="phone">
+                        <label for="phoneInput" class="form-label">
+                            전화번호    <i class="fa-solid fa-asterisk" style="color: red;"></i>
+                        </label>
+                        <input type="tel" class="form-control" id="phoneInput" name="phone">
+                        <div id="phoneError" class="form-text" style="color: red; display: none;">
+                            올바른 전화번호 형식이 아닙니다. 예시: 010-1234-5678
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -139,5 +159,59 @@
 <script src="/js/common/header.js"></script>
 <script src="/js/common/main.js"></script>
 <script src="/js/common/footer.js"></script>
+
+<script>
+    function submitLoginForm(event){
+        var isValid = true; // 폼 유효성 기본값 true
+
+        // 이메일 유효성 검사
+        var emailInput = document.getElementById('emailInput');
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailInput.value)) {
+            document.getElementById('emailError').style.display = 'block';
+            isValid = false; // 유효하지 않다면 false
+        } else {
+            document.getElementById('emailError').style.display = 'none';
+        }
+
+        // 전화번호 유효성 검사
+        var phoneInput = document.getElementById('phoneInput');
+        var phonePattern = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
+        if (!phonePattern.test(phoneInput.value)) {
+            document.getElementById('phoneError').style.display = 'block';
+            isValid = false; // 유효하지 않다면 false
+        } else {
+            document.getElementById('phoneError').style.display = 'none';
+        }
+
+        // 이름 필드 공백 검사
+        var nameInput = document.getElementById('nameInput');
+        if (!nameInput.value.trim()) {
+            document.getElementById('nameError').style.display = 'block';
+            isValid = false; // 유효하지 않다면 false
+        } else {
+            document.getElementById('nameError').style.display = 'none';
+        }
+
+        // 비밀번호 필드 공백 검사
+        var passwordInput = document.getElementById('passwordInput');
+        if (!passwordInput.value.trim()) {
+            document.getElementById('passwordError').style.display = 'block';
+            isValid = false; // 유효하지 않다면 false
+        } else {
+            document.getElementById('passwordError').style.display = 'none';
+        }
+
+        // 유효하지 않은 입력이 있으면 폼 제출 방지
+        if (!isValid) {
+            event.preventDefault(); // 폼 제출 방지
+            alert('입력 형식을 확인해 주세요.');
+            return false; // onsubmit return false 반환
+        }
+        return true;
+    }
+</script>
+
+
 </body>
 </html>
