@@ -22,7 +22,7 @@
     <input type="date" class="form-control" id="startDate" name="startDate" onchange="updateEndDate()">
 
     <label for="endDate">마감날짜</label>
-    <input type="date" class="form-control" id="endDate" name="endDate">
+    <input type="date" class="form-control" id="endDate" name="endDate" disabled>
 
     <label for="headcount">마감인원</label>
     <input type="text" th:field="*{headcount}" id="headcount"/>
@@ -35,24 +35,23 @@
         const startDateInput = document.getElementById('startDate');
         const endDateInput = document.getElementById('endDate');
 
-        // 시작 날짜의 값을 가져옵니다.
+        // 시작 날짜 값 가져오기
         const startDate = startDateInput.value;
 
-        // 마감 날짜 입력 필드의 min 속성을 시작 날짜로 설정합니다.
-        endDateInput.min = startDate;
+        endDateInput.disabled = false; // 시작 날짜 입력되기 전 비활성화된 마감 날짜 입력을 활성화 시킨다.
+        endDateInput.min = startDate; // 마감 날짜에 시작 날짜를 넣는다.
 
-        // 만약 마감 날짜가 시작 날짜보다 이전이라면 마감 날짜를 시작 날짜와 동일하게 조정합니다.
+        // 만약 마감 날짜가 선택되어 있고, 시작 날짜보다 이전이라면 마감 날짜를 초기화한다.
         if (endDateInput.value < startDate) {
-            endDateInput.value = startDate;
+            endDateInput.value = '';
         }
     }
 
-    // 페이지 로드 시, 오늘 날짜를 시작 날짜와 마감 날짜의 최소값으로 설정합니다.
     window.onload = function() {
         const today = new Date().toISOString().split('T')[0];
         document.getElementById('startDate').min = today;
-        document.getElementById('endDate').min = today;
     }
+
 </script>
 
 </body>
