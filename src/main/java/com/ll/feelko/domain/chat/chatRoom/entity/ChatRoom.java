@@ -60,6 +60,7 @@ public class ChatRoom{
                 .writerName(writerName)
                 .content(content)
                 .senderId(senderId)
+                .chatRoomName(this.name)
                 .build();
 
         chatMessages.add(chatMessage);

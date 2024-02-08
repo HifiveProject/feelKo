@@ -2,8 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>채팅방 목록</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <body>
+
 <h1>채팅방 목록</h1>
 
 <ul class="chat__messages">
@@ -11,35 +15,67 @@
         <a th:href="@{/chat/room/{chatRoomId}(chatRoomId=${chatRoomListDto.getChatRoomId()})}">
             <span th:text="|${chatRoomListDto.getChatRoomId()}.|">채팅방 id</span>
             <span th:text="${chatRoomListDto.getName()}">채팅방 이름</span>
+            <span th:text="${chatRoomListDto.getLastMessage()}">마지막 메세지</span>
         </a>
     </li>
 </ul>
 </body>
 </html>
 
-<!--<script>-->
-<!--    const chatMessagesEl = document.querySelector('.chat__messages');-->
+<script th:inline="javascript">
+    // 서버 사이드에서 받은 채팅방 ID 목록을 JavaScript 배열로 변환
+    /*<![CDATA[*/
+    var chatRoomIds = /*[[${chatRoomIds}]]*/ [];
+    /*]]>*/
 
-<!--    function drawMoreChatMessage(message) {-->
-<!--        lastChatMessageId = message.id;-->
+    const chatMessagesEl = document.querySelector('.chat__messages');
+    var email = /*[[${#authentication.principal.username}]]*/ '';
+    var memberId = /*[[${#authentication.principal.id}]]*/ 0;
 
-<!--        chatMessagesEl-->
-<!--            .insertAdjacentHTML(-->
-<!--                "afterBegin",-->
-<!--                `<li>${message.writerName} : ( ${message.id} ) ${message.content}</li>`-->
-<!--            );-->
-<!--    }-->
+    function drawMoreChatMessage(message) {
+        lastChatMessageId = message.id;
 
-<!--    const socket = new SockJS('/ws');-->
-<!--    const stompClient = Stomp.over(socket);-->
+        chatMessagesEl
+            .insertAdjacentHTML(
+                "afterBegin",
+                `<li>${message.chatRoom.id}. ${message.chatRoomName} ${message.content}</li>`
+            );
+    }
 
-<!--    stompClient.connect({}, function (frame) {-->
-<!--        console.log('Connected: ' + frame);-->
+    function subscribeToNewChatRoom(chatRoomId) {
+        // 새 채팅방에 대한 구독을 추가
+        stompClient.subscribe(`/topic/chat/room/${chatRoomId}/messageCreated`, function(newData) {
+            const newJsonData = JSON.parse(newData.body);
+            drawMoreChatMessage(newJsonData.data.message);
+        });
+        console.log(`Subscribed to new chat room: ${chatRoomId}`);
+    }
 
-<!--        stompClient.subscribe(`/topic/chat/room/${roomId}/messageCreated`, function (data) {-->
-<!--            const jsonData = JSON.parse(data.body);-->
-<!--            drawMoreChatMessage(jsonData.data.message);-->
-<!--        });-->
-<!--    });-->
+    function subscribeToRoomCreation(identifier) {
+        stompClient.subscribe(`/topic/chat/room/make/` + identifier + `/messageCreated`, function(data) {
+            const jsonData = JSON.parse(data.body);
+            const newChatRoomId = jsonData.data.message.chatRoom.id;
+            drawMoreChatMessage(jsonData.data.message);
+            subscribeToNewChatRoom(newChatRoomId);
+        });
+    }
 
-<!--</script>-->
+
+    const socket = new SockJS('/ws');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+
+        chatRoomIds.forEach(function(chatRoomId) {
+            subscribeToNewChatRoom(chatRoomId);
+        });
+
+        // email과 memberId를 사용하여 새 채팅방 생성 구독
+        subscribeToRoomCreation(email);
+        subscribeToRoomCreation(memberId);
+
+        // 만든 후에 구독도 추가해야함
+    });
+
+</script>

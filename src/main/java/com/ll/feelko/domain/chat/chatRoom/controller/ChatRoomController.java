@@ -34,7 +34,7 @@ public class ChatRoomController {
             @AuthenticationPrincipal SecurityUser user,
             Model model
     ) {
-        if(!chatRoomService.isIncludeMe(user.getId(),roomId)){
+        if (!chatRoomService.isIncludeMe(user.getId(), roomId)) {
             throw new RuntimeException("참여 권한이 없습니다.");
         }
 
@@ -51,6 +51,11 @@ public class ChatRoomController {
             Model model) {
         List<ChatRoomListDto> chatRooms = chatRoomService.findByMemberId(user.getId());
         model.addAttribute("chatRooms", chatRooms);
+
+        List<Long> chatRoomIds = chatRooms.stream()
+                .map(ChatRoomListDto::getChatRoomId)
+                .toList();
+        model.addAttribute("chatRoomIds",chatRoomIds);
 
         return "domain/chat/chatRoom/list";
     }
@@ -90,20 +95,35 @@ public class ChatRoomController {
     @GetMapping("/make/{theirInfo}")
     public String makeChatRoom(
             @AuthenticationPrincipal SecurityUser user,
-            @PathVariable String theirInfo) {
+            @PathVariable String theirInfo
+    ) {
         ChatRoomMemberInfoDto myInfoDto = new ChatRoomMemberInfoDto(user.getId(), user.getName());
         ChatRoomMemberInfoDto theirInfoDto = null;
 
         if (chatRoomService.isNumeric(theirInfo)) {
+            //숫자라면 experienceId
             theirInfoDto = chatRoomService.createInfoDtoByExperienceId(Long.parseLong(theirInfo));
+            theirInfo = theirInfoDto.getId().toString(); //experienceId를 memberId로 바꾸는 작업
         } else {
+            //숫자가 아니라면 email
             theirInfoDto = chatRoomService.createInfoDtoByEmail(theirInfo);
         }
+
         Long chatRoomId;
         //존재 하는 방일 때 0보다 큰값이 return됨
-        if((chatRoomId = chatRoomService.findChatRoom(user.getId(),theirInfoDto.getId()))<0){
-            chatRoomId = chatRoomService.makeChatRoom(myInfoDto, theirInfoDto); //0보다 작으면 새로운 방 생성
-        }
+//        if((chatRoomId = chatRoomService.findChatRoom(user.getId(),theirInfoDto.getId()))>0){
+//            return "redirect:/chat/room/" + chatRoomId;
+//        }
+//        chatRoomId = chatRoomService.makeChatRoom(myInfoDto, theirInfoDto); //0보다 작으면 새로운 방 생성
+//        아이디 두개로 방여러개 만들어서 리스트 최신화 시험중 나중에 아래에 있는거 지우고 주석 해제하면 됩니다.
+        chatRoomId = chatRoomService.makeChatRoom(myInfoDto, theirInfoDto);
+
+        ChatMessage chatMessage = chatRoomService.write(chatRoomId, user.getName(), "생성", user.getId());
+
+        RsData<WriteResponseBody> writeRs = RsData.of("S-1", "%d번 메시지를 작성하였습니다.".formatted(chatMessage.getId()), new WriteResponseBody(chatMessage));
+
+        messagingTemplate.convertAndSend("/topic/chat/room/make/" + theirInfo + "/messageCreated", writeRs);
+
 
         return "redirect:/chat/room/" + chatRoomId;
 

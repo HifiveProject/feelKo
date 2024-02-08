@@ -42,7 +42,6 @@ public class ChatRoomService {
             ));
         }
         return chatRooms;
-        //return chatRoomMemberRepository.findChatRoomListByMemberId(memberId);
     }
 
 
