@@ -1,14 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>채팅방 목록</title>
+</head>
+<body>
 <h1>채팅방 목록</h1>
 
-<nav>
-    <a href="make">채팅방 생성</a>
-</nav>
-
-<ul>
-    <li th:each="chatRoom : ${chatRooms}">
-        <a th:href="${chatRoom.id}">
-            <span th:text="|${chatRoom.id}.|"></span>
-            <span th:text="${chatRoom.name}"></span>
+<ul class="chat__messages">
+    <li th:each="chatRoomListDto : ${chatRooms}">
+        <a th:href="@{/chat/room/{chatRoomId}(chatRoomId=${chatRoomListDto.getChatRoomId()})}">
+            <span th:text="|${chatRoomListDto.getChatRoomId()}.|">채팅방 id</span>
+            <span th:text="${chatRoomListDto.getName()}">채팅방 이름</span>
         </a>
     </li>
 </ul>
+</body>
+</html>
+
+<!--<script>-->
+<!--    const chatMessagesEl = document.querySelector('.chat__messages');-->
+
+<!--    function drawMoreChatMessage(message) {-->
+<!--        lastChatMessageId = message.id;-->
+
+<!--        chatMessagesEl-->
+<!--            .insertAdjacentHTML(-->
+<!--                "afterBegin",-->
+<!--                `<li>${message.writerName} : ( ${message.id} ) ${message.content}</li>`-->
+<!--            );-->
+<!--    }-->
+
+<!--    const socket = new SockJS('/ws');-->
+<!--    const stompClient = Stomp.over(socket);-->
+
+<!--    stompClient.connect({}, function (frame) {-->
+<!--        console.log('Connected: ' + frame);-->
+
+<!--        stompClient.subscribe(`/topic/chat/room/${roomId}/messageCreated`, function (data) {-->
+<!--            const jsonData = JSON.parse(data.body);-->
+<!--            drawMoreChatMessage(jsonData.data.message);-->
+<!--        });-->
+<!--    });-->
+
+<!--</script>-->

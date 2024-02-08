@@ -1,6 +1,7 @@
 package com.ll.feelko.domain.chat.chatRoom.service;
 
 import com.ll.feelko.domain.chat.chatMessage.entity.ChatMessage;
+import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomListDto;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomMemberInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMember;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -28,20 +30,21 @@ public class ChatRoomService {
     private final MemberRepository memberRepository;
     private final ExperienceRepository experienceRepository;
 
-    @Transactional
-    public ChatRoom make(String name) {
-        ChatRoom chatRoom = ChatRoom.builder()
-                .name(name)
-                .build();
-
-        chatRoomRepository.save(chatRoom);
-
-        return chatRoom;
+    public List<ChatRoomListDto> findByMemberId(Long memberId) {
+        List<Object[]> results = chatRoomRepository.findChatRoomsAndLatestMessageByMemberId(memberId);
+        List<ChatRoomListDto> chatRooms = new ArrayList<>();
+        for (Object[] result : results) {
+            chatRooms.add(new ChatRoomListDto(
+                    (Long) result[0], // chatRoomId
+                    (String) result[1], // name
+                    (Long) result[2], // latestMessageId
+                    (String) result[3] // lastMessage
+            ));
+        }
+        return chatRooms;
+        //return chatRoomMemberRepository.findChatRoomListByMemberId(memberId);
     }
 
-    public List<ChatRoom> findByMemberId(Long memberId) {
-        return chatRoomMemberRepository.findChatRoomListByMemberId(memberId);
-    }
 
     @Transactional
     public ChatMessage write(long roomId, String writerName, String content, long senderId) {
