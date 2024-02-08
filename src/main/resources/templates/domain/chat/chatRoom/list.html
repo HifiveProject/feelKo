@@ -13,7 +13,8 @@
 <ul class="chat__messages">
     <li th:each="chatRoomListDto : ${chatRooms}" th:data-chat-room-id="${chatRoomListDto.getChatRoomId()}">
         <a th:href="@{/chat/room/{chatRoomId}(chatRoomId=${chatRoomListDto.getChatRoomId()})}">
-<!--            <span th:text="|${chatRoomListDto.getChatRoomId()}.|">채팅방 id</span>-->
+            <!--   TODO   ui 작업 후에는 id를 숨겨야함 지금은 헷갈려서 그냥둠        -->
+            <span th:text="|${chatRoomListDto.getChatRoomId()}.|">채팅방 id</span>
             <span th:text="${chatRoomListDto.getName()}">채팅방 이름</span>
             <span th:text="${chatRoomListDto.getLastMessage()}">마지막 메세지</span>
         </a>
@@ -43,26 +44,32 @@
         const chatRoomItemHtml = `
         <li data-chat-room-id="${message.chatRoom.id}">
             <a href="/chat/room/${message.chatRoom.id}">
-<!--                <span>${message.chatRoom.id}. </span>-->
-                <span>${message.chatRoomName} </span>
-                <span>${message.content}</span>
-            </a>
+                      <!--      TODO ui 작업 후에는 id를 숨겨야함          -->
+        <span>${message.chatRoom.id}. </span>
+        <span>${message.chatRoomName} </span>
+        <span>${message.content}</span>
+        </a>
         </li>
-    `;
-        chatMessagesEl.insertAdjacentHTML("afterBegin", chatRoomItemHtml);
-    }
+        `
+    ;
+            chatMessagesEl.insertAdjacentHTML("afterBegin", chatRoomItemHtml);
+        }
 
-    function subscribeToNewChatRoom(chatRoomId) {
-        // 새 채팅방에 대한 구독을 추가
-        stompClient.subscribe(`/topic/chat/room/${chatRoomId}/messageCreated`, function(newData) {
-            const newJsonData = JSON.parse(newData.body);
-            drawMoreChatMessage(newJsonData.data.message);
-        });
-        console.log(`Subscribed to new chat room: ${chatRoomId}`);
+        function subscribeToNewChatRoom(chatRoomId) {
+            // 새 채팅방에 대한 구독을 추가
+            stompClient.subscribe(
+        `/topic/chat/room/${chatRoomId}/messageCreated`, function(newData) {
+        const newJsonData = JSON.parse(newData.body);
+        drawMoreChatMessage(newJsonData.data.message);
+        }
+
+    )
+    ;
+    console.log(`Subscribed to new chat room: ${chatRoomId}`);
     }
 
     function subscribeToRoomCreation(identifier) {
-        stompClient.subscribe(`/topic/chat/room/make/` + identifier + `/messageCreated`, function(data) {
+        stompClient.subscribe(`/topic/chat/room/make/` + identifier + `/messageCreated`, function (data) {
             const jsonData = JSON.parse(data.body);
             const newChatRoomId = jsonData.data.message.chatRoom.id;
             drawMoreChatMessage(jsonData.data.message);
@@ -77,7 +84,7 @@
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
 
-        chatRoomIds.forEach(function(chatRoomId) {
+        chatRoomIds.forEach(function (chatRoomId) {
             subscribeToNewChatRoom(chatRoomId);
         });
 
