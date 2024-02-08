@@ -29,5 +29,15 @@
 
     <input type="submit" value="제출">
 </form>
+
+<script>
+    // 오늘 날짜를 YYYY-MM-DD 형식으로 가져오기
+    const today = new Date().toISOString().split('T')[0];
+
+    // 시작 날짜와 마감 날짜 입력 필드의 min 속성 설정
+    document.getElementById('startDate').setAttribute('min', today);
+    document.getElementById('endDate').setAttribute('min', today);
+</script>
+
 </body>
 </html>
