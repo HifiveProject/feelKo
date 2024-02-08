@@ -51,21 +51,17 @@
         </a>
         </li>
         `
-    ;
-            chatMessagesEl.insertAdjacentHTML("afterBegin", chatRoomItemHtml);
-        }
+        ;
+        chatMessagesEl.insertAdjacentHTML("afterBegin", chatRoomItemHtml);
+    }
 
-        function subscribeToNewChatRoom(chatRoomId) {
+    function subscribeToNewChatRoom(chatRoomId) {
+        console.log(`Subscribed to new chat room: ${chatRoomId}`);
             // 새 채팅방에 대한 구독을 추가
-            stompClient.subscribe(
-        `/topic/chat/room/${chatRoomId}/messageCreated`, function(newData) {
-        const newJsonData = JSON.parse(newData.body);
-        drawMoreChatMessage(newJsonData.data.message);
-        }
-
-    )
-    ;
-    console.log(`Subscribed to new chat room: ${chatRoomId}`);
+        stompClient.subscribe(`/topic/chat/room/${chatRoomId}/messageCreated`, function (newData) {
+                const newJsonData = JSON.parse(newData.body);
+                drawMoreChatMessage(newJsonData.data.message);
+        });
     }
 
     function subscribeToRoomCreation(identifier) {
@@ -91,8 +87,6 @@
         // email과 memberId를 사용하여 새 채팅방 생성 구독
         subscribeToRoomCreation(email);
         subscribeToRoomCreation(memberId);
-
-        // 만든 후에 구독도 추가해야함
     });
 
 </script>

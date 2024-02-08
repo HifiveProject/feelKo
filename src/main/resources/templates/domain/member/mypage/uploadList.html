@@ -116,8 +116,9 @@
             list.className = 'reservation-list'; // 클래스 추가
             reservations.forEach(reservation => {
                 const listItem = document.createElement('li');
-                listItem.className = 'reservation-item'; // 클래스 추가
-                listItem.textContent = `${reservation.name}  ${reservation.phoneNumber} ${reservation.email}`;
+                listItem.className = 'reservation-item'; // 스타일을 위한 클래스 추가
+                listItem.innerHTML = `${reservation.name} ${reservation.phoneNumber} ${reservation.email}
+                     <a href="/chat/room/make/${reservation.email}" class="btn btn-primary">대화하기</a>`; // 이메일로 이동할 수 있는 버튼 추가
                 list.appendChild(listItem);
             });
             reservationList.appendChild(list);
@@ -200,7 +201,8 @@
                             <p th:text="'제목 : ' + ${uploadedPageDto.title}">제목</p>
                             <p th:text="'기간 : ' + ${uploadedPageDto.startDate} + ' ~ ' + ${uploadedPageDto.endDate}">
                                 기간</p>
-                            <p th:text="'가격 : ' + ${#numbers.formatInteger(uploadedPageDto.price, 1, 'COMMA')} + ' 원'">가격</p>
+                            <p th:text="'가격 : ' + ${#numbers.formatInteger(uploadedPageDto.price, 1, 'COMMA')} + ' 원'">
+                                가격</p>
                             <!-- 예약자 정보 버튼 추가 -->
                             <button th:data-id="${uploadedPageDto.id}"
                                     onclick="fetchReservationInfo(event, this.dataset.id)" class="reservation-button">
