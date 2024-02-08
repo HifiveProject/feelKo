@@ -18,10 +18,10 @@ public class MemberRegisterDto {
     private String email;
     @NotBlank
     private String password;
-
+    @NotBlank
     private String name;
-
     private String profile;
+    @NotBlank
     private String phone;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
