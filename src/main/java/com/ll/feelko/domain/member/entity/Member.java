@@ -3,7 +3,6 @@ package com.ll.feelko.domain.member.entity;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMember;
 import com.ll.feelko.domain.wishlist.entity.WishList;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +33,6 @@ public class Member {
     private Long id;
 
     private String name;
-    @Email(message = "유효한 이메일 형식을 입력해주세요.")
     private String email;
     private String password;
     private String profile;
