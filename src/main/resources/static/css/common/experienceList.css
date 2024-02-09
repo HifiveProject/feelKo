@@ -19,18 +19,26 @@
 
 .hotpost {
     margin-bottom: 15px;
-    margin-left: 25px;
+    margin-left: 0px;
     width: fit-content;
     height: fit-content;
     padding: 10px 15px;
-    background-color: #8B89FF;
-    color: white;
-    border-radius: 50px;
-    align-items: center;
-    justify-content: center;
+    background-color: #ffffff;
+    color: black;
+    text-align: left; /* 내용 왼쪽 정렬 */
     font-size: 1.5rem;
+    font-weight: bold; /* 글씨 굵게 */
     position: relative;
-    margin-top: 10px; /* 위쪽 여백 조절 */
+    margin-top: 10px;
+    display: inline-block; /* 블록 요소를 인라인처럼 배치 */
+}
+.hotpost::before {
+    content: '\1F30F'; /* 모래시계 넘어가는 중 유니코드 */
+    font-size: 2rem; /* 아이콘 크기 조절 */
+    position: absolute;
+    left: -35px; /* 아이콘 위치 조정 */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* 다른 인기글 박스들에도 동일한 스타일 적용 */
