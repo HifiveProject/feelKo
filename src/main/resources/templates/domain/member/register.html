@@ -81,7 +81,12 @@
                         <label for="emailInput" class="form-label">
                             사용자(email)    <i class="fa-solid fa-asterisk" style="color: red;"></i>
                         </label>
-                        <input type="email" class="form-control" id="emailInput" name="email">
+                        <input type="email" class="form-control" id="emailInput" name="email" onfocus="showDefaultMessage('email')">
+                        <!-- 기본 안내 메시지 -->
+                        <div id="emailDefault" class="form-text">
+                            예시: yourname@example.com
+                        </div>
+                        <!-- 에러 메시지 -->
                         <div id="emailError" class="form-text" style="color: red; display: none;">
                             올바른 이메일 형식이 아닙니다. 다시 확인해 주세요.
                         </div>
@@ -116,7 +121,12 @@
                         <label for="phoneInput" class="form-label">
                             전화번호    <i class="fa-solid fa-asterisk" style="color: red;"></i>
                         </label>
-                        <input type="tel" class="form-control" id="phoneInput" name="phone">
+                        <input type="tel" class="form-control" id="phoneInput" name="phone" onfocus="showDefaultMessage('phone')">
+                        <!-- 기본 안내 메시지 -->
+                        <div id="phoneDefault" class="form-text">
+                            예시: 010-1234-5678
+                        </div>
+                        <!-- 에러 메시지 -->
                         <div id="phoneError" class="form-text" style="color: red; display: none;">
                             올바른 전화번호 형식이 아닙니다. 예시: 010-1234-5678
                         </div>
@@ -161,27 +171,57 @@
 <script src="/js/common/footer.js"></script>
 
 <script>
+    var phoneValidationFailed = false;
+    var emailValidationFailed = false;
+
+    function showDefaultMessage(field) {
+        // 유효성 검사에 실패한 적이 없으면 기본 메시지 출력
+        if (field === 'phone' && !phoneValidationFailed) {
+            document.getElementById(field + 'Default').style.display = 'block';
+            document.getElementById(field + 'Error').style.display = 'none';
+        } else if (field === 'email' && !emailValidationFailed) {
+            document.getElementById(field + 'Default').style.display = 'block';
+            document.getElementById(field + 'Error').style.display = 'none';
+        }
+    }
+
     function submitLoginForm(event){
-        var isValid = true; // 폼 유효성 기본값 true
+        var isValid = true; // 폼 유효성 기본값
 
         // 이메일 유효성 검사
         var emailInput = document.getElementById('emailInput');
         var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(emailInput.value)) {
+            // 유효성 검사 실패
             document.getElementById('emailError').style.display = 'block';
-            isValid = false; // 유효하지 않다면 false
+            document.getElementById('emailDefault').style.display = 'none'; // 기본 메시지 숨기기
+            emailValidationFailed = true; // 유효성 검사 실패 처리
+            isValid = false;
         } else {
+            // 유효성 검사에 성공하면 기본 메시지를 숨깁니다(이미 에러가 발생했었다면).
             document.getElementById('emailError').style.display = 'none';
+            if (!emailValidationFailed) {
+                // 에러가 한 번도 발생하지 않았다면 기본 메시지를 계속 보여줍니다.
+                document.getElementById('emailDefault').style.display = 'block';
+            }
         }
 
         // 전화번호 유효성 검사
         var phoneInput = document.getElementById('phoneInput');
         var phonePattern = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
         if (!phonePattern.test(phoneInput.value)) {
+            // 유효성 검사 실패
             document.getElementById('phoneError').style.display = 'block';
-            isValid = false; // 유효하지 않다면 false
+            document.getElementById('phoneDefault').style.display = 'none'; // 기본 메시지 숨기기
+            phoneValidationFailed = true; // 유효성 검사 실패 처리
+            isValid = false;
         } else {
+            // 유효성 검사에 성공하면 기본 메시지를 숨깁니다(이미 에러가 발생했었다면).
             document.getElementById('phoneError').style.display = 'none';
+            if (!phoneValidationFailed) {
+                // 에러가 한 번도 발생하지 않았다면 기본 메시지를 계속 보여줍니다.
+                document.getElementById('phoneDefault').style.display = 'block';
+            }
         }
 
         // 이름 필드 공백 검사
