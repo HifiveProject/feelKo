@@ -30,10 +30,10 @@ public class MainController {
             @RequestParam(name = "destination", required = false) String destination,
             @RequestParam(name = "selectDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate selectDate,
             @RequestParam(name = "include_closing", defaultValue = "false") boolean includeClosing,
-            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "page", defaultValue = "1") int page,
             Model model
     ) {
-        Pageable pageable = PageRequest.of(page, 12);
+        Pageable pageable = PageRequest.of(page - 1, 12);
         Page<Experience> experiencePage;
 
         if (StringUtils.isEmpty(destination) || destination.equals("전국")) {
