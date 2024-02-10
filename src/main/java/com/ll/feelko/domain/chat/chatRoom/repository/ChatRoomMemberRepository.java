@@ -4,7 +4,6 @@ import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,5 +23,6 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember,L
 
     boolean existsByChatRoomIdAndMemberId(long roomId, long id);
 
-
+    @Query("SELECT e.id.memberId FROM ChatRoomMember e WHERE e.id.chatRoomId = :chatRoomId")
+    List<Long> findByChatRoom(Long chatRoomId);
 }

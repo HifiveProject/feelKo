@@ -82,7 +82,7 @@
 
         stompClient.subscribe(`/topic/chat/room/${roomId}/messageCreated`, function (data) {
             const jsonData = JSON.parse(data.body);
-            drawMoreChatMessage(jsonData.data.message);
+            drawMoreChatMessage(jsonData.message);
         });
     });
 

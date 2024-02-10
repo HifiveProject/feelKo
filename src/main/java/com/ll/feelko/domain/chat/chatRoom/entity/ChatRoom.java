@@ -53,18 +53,4 @@ public class ChatRoom{
     @JsonIgnore // 무한 재귀 방지
     private List<ChatRoomMember> chatRoomMembers;
 
-    public ChatMessage writeMessage(String writerName, String content, long senderId) {
-        ChatMessage chatMessage = ChatMessage
-                .builder()
-                .chatRoom(this)
-                .writerName(writerName)
-                .content(content)
-                .senderId(senderId)
-                .chatRoomName(this.name)
-                .build();
-
-        chatMessages.add(chatMessage);
-
-        return chatMessage;
-    }
 }

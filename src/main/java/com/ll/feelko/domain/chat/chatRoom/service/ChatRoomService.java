@@ -1,6 +1,5 @@
 package com.ll.feelko.domain.chat.chatRoom.service;
 
-import com.ll.feelko.domain.chat.chatMessage.entity.ChatMessage;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomListDto;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomMemberInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
@@ -42,16 +41,6 @@ public class ChatRoomService {
             ));
         }
         return chatRooms;
-    }
-
-
-    @Transactional
-    public ChatMessage write(long roomId, String writerName, String content, long senderId) {
-        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
-
-        ChatMessage chatMessage = chatRoom.writeMessage(writerName, content, senderId);
-
-        return chatMessage;
     }
 
     public Long findChatRoom(Long myId, Long theirId) {

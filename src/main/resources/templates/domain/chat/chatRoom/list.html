@@ -24,14 +24,9 @@
 </html>
 
 <script th:inline="javascript">
-    // 서버 사이드에서 받은 채팅방 ID 목록을 JavaScript 배열로 변환
-    /*<![CDATA[*/
-    var chatRoomIds = /*[[${chatRoomIds}]]*/ [];
-    /*]]>*/
+    const memberId = /*[[${#authentication.principal.id}]]*/ 0;
 
     const chatMessagesEl = document.querySelector('.chat__messages');
-    var email = /*[[${#authentication.principal.username}]]*/ '';
-    var memberId = /*[[${#authentication.principal.id}]]*/ 0;
 
     function drawMoreChatMessage(message) {
         // 기존의 채팅방 메시지가 있는지 확인하고, 있다면 해당 요소를 삭제합니다.
@@ -50,29 +45,11 @@
         <span>${message.content}</span>
         </a>
         </li>
-        `
-        ;
+        `;
+
         chatMessagesEl.insertAdjacentHTML("afterBegin", chatRoomItemHtml);
-    }
 
-    function subscribeToNewChatRoom(chatRoomId) {
-        console.log(`Subscribed to new chat room: ${chatRoomId}`);
-            // 새 채팅방에 대한 구독을 추가
-        stompClient.subscribe(`/topic/chat/room/${chatRoomId}/messageCreated`, function (newData) {
-                const newJsonData = JSON.parse(newData.body);
-                drawMoreChatMessage(newJsonData.data.message);
-        });
     }
-
-    function subscribeToRoomCreation(identifier) {
-        stompClient.subscribe(`/topic/chat/room/make/` + identifier + `/messageCreated`, function (data) {
-            const jsonData = JSON.parse(data.body);
-            const newChatRoomId = jsonData.data.message.chatRoom.id;
-            drawMoreChatMessage(jsonData.data.message);
-            subscribeToNewChatRoom(newChatRoomId);
-        });
-    }
-
 
     const socket = new SockJS('/ws');
     const stompClient = Stomp.over(socket);
@@ -80,13 +57,10 @@
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
 
-        chatRoomIds.forEach(function (chatRoomId) {
-            subscribeToNewChatRoom(chatRoomId);
+        stompClient.subscribe(`/topic/chat/room/list/` + memberId + `/messageCreated`, function (data) {
+            const jsonData = JSON.parse(data.body);
+            drawMoreChatMessage(jsonData.message);
         });
-
-        // email과 memberId를 사용하여 새 채팅방 생성 구독
-        subscribeToRoomCreation(email);
-        subscribeToRoomCreation(memberId);
     });
 
 </script>
