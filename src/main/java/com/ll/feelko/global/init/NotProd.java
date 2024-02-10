@@ -62,15 +62,15 @@ public class NotProd {
                     .toList();
 
             // 체험 테스트 데이터 생성
-            members.forEach(member -> IntStream.rangeClosed(1, 10).forEach(i -> {
+            members.forEach(member -> IntStream.rangeClosed(1, 20).forEach(i -> {
                 experienceService.createExperience(ExperienceCreateDTO.builder()
                         .memberId(member.getId())
                         .title("title" + i)
                         .startDate(LocalDate.now())
                         .endDate(LocalDate.now())
-                        .price(new BigDecimal(1000))
+                        .price(new BigDecimal(1000000))
                         .imageFiles(null)
-                        .location("장소" + i)
+                        .location("서울")
                         .experienceClose(false)
                         .descriptionText("내용" + i)
                         .headcount(10L)
