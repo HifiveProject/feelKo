@@ -62,6 +62,17 @@ public class MainController {
             }
         }
 
+        // 페이지네이션을 위한 상수 (한 페이지네이션에 표시될 페이지 수)
+        final int PAGE_BLOCK = 5;
+
+        // 현재 페이지 그룹의 시작 페이지 계산 (1, 6, 11, ...)
+        int startBlockPage = ((page - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1;
+
+        // 현재 페이지 그룹의 끝 페이지 계산
+        int endBlockPage = Math.min(startBlockPage + PAGE_BLOCK - 1, experiencePage.getTotalPages());
+
+        model.addAttribute("startBlockPage", startBlockPage);
+        model.addAttribute("endBlockPage", endBlockPage);
         model.addAttribute("experiences", experiencePage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", experiencePage.getTotalPages());

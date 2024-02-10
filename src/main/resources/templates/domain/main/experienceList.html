@@ -135,7 +135,7 @@
                     </li>
 
                     <!-- 페이지 번호를 동적으로 생성 -->
-                    <li th:each="pageNum : ${#numbers.sequence(1, totalPages)}">
+                    <li th:each="pageNum : ${#numbers.sequence(startBlockPage, endBlockPage)}">
                         <a class="btn1" th:href="@{/search(destination=${selectedLocation}, page=${pageNum})}" th:text="${pageNum}" th:classappend="${pageNum == currentPage} ? 'active'"></a>
                     </li>
 
