@@ -146,25 +146,43 @@
 
 .pagination-container {
     display: flex;
-    justify-content: center;
     list-style-type: none;
-    padding: 10px;
+    padding: 0;
 }
+
 .pagination-container li {
     margin: 0 5px;
 }
-.pagination-container a {
-    display: block;
-    padding: 5px 10px;
-    color: black;
+
+.pagination-container li a {
+    color: #007bff;
     text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
-    border: 1px solid black;
+    transition: background-color 0.3s;
 }
-.pagination-container a:hover {
+
+/* 활성 페이지 스타일 */
+.pagination-container li a.active {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+/* 호버 효과 */
+.pagination-container li a:hover {
     background-color: #ddd;
 }
-.pagination-container a.active {
-    background-color: #4CAF50;
-    color: white;
+
+/* 비활성화된 버튼 (처음과 마지막 페이지에 대한 이동을 비활성화 할 때 사용) */
+.pagination-container li.disabled a {
+    color: #cccccc;
+    pointer-events: none;
+}
+
+/* 페이지네이션 컨테이너의 정렬을 위한 추가 스타일 */
+.pagination-container {
+    justify-content: center; /* 페이지네이션을 가운데 정렬 */
+    margin-top: 20px; /* 페이지네이션과 다른 콘텐츠 사이의 간격 */
 }
