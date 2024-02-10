@@ -69,7 +69,8 @@ public class MainController {
         int startBlockPage = ((page - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1;
 
         // 현재 페이지 그룹의 끝 페이지 계산
-        int endBlockPage = Math.min(startBlockPage + PAGE_BLOCK - 1, experiencePage.getTotalPages());
+        int endBlockPage = experiencePage.getTotalPages() > 0 ? Math.min(startBlockPage + PAGE_BLOCK - 1, experiencePage.getTotalPages()) : 1;
+
 
         model.addAttribute("startBlockPage", startBlockPage);
         model.addAttribute("endBlockPage", endBlockPage);
