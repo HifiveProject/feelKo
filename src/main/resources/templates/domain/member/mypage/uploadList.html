@@ -5,7 +5,7 @@
 
     <style>
         .upload-list-container {
-            width: 65%; /* 가로 길이 최대로 설정 */
+            width: 70%; /* 가로 길이 최대로 설정 */
             margin: auto; /* 중앙 정렬 */
             padding-top: 15px;
         }
@@ -200,7 +200,7 @@
                             <p th:text="'제목 : ' + ${uploadedPageDto.title}">제목</p>
                             <p th:text="'기간 : ' + ${uploadedPageDto.startDate} + ' ~ ' + ${uploadedPageDto.endDate}">
                                 기간</p>
-                            <p th:text="'가격 : ' + ${uploadedPageDto.price}">가격</p>
+                            <p th:text="'가격 : ' + ${#numbers.formatInteger(uploadedPageDto.price, 1, 'COMMA')} + ' 원'">가격</p>
                             <!-- 예약자 정보 버튼 추가 -->
                             <button th:data-id="${uploadedPageDto.id}"
                                     onclick="fetchReservationInfo(event, this.dataset.id)" class="reservation-button">
