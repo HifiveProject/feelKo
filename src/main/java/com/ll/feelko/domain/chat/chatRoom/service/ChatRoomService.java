@@ -99,7 +99,6 @@ public class ChatRoomService {
         return new ChatRoomMemberInfoDto(member.getId(),member.getName());
     }
 
-    //리팩토링 필요
     public ChatRoomMemberInfoDto createInfoDtoByEmail(String email){
         Member member = memberRepository.findByEmail(email).get();
 
