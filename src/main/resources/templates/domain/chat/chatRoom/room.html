@@ -7,35 +7,119 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
     <style>
-        .message {
-            padding: 10px;
+        .main-content{
+            max-width: 30%;
+        }
+
+        .message-container {
             margin-bottom: 5px;
-            border-radius: 10px;
-            display: inline-block;
-            max-width: 80%;
+            display: flex;
+            flex-direction: column;
+            max-width: 60%; /* 필요에 따라 너비를 조정할 수 있습니다 */
         }
-        .message-left {
-            background-color: #f0f0f0;
-            margin-left: 10px;
-            text-align: left;
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2px;
         }
-        .message-right {
-            background-color: #a0e0a0;
-            margin-right: 10px;
-            text-align: right;
+
+        .message-header span:first-child {
+            float: left;
+        }
+
+        .message-header span:last-child {
             float: right;
         }
+
+        .message {
+            padding: 10px;
+            border-radius: 20px; /* 메시지 모서리를 더 둥글게 */
+            word-wrap: break-word;
+            border: 1px solid #ccc; /* 메시지에 테두리 적용 */
+            margin: 2px 0; /* 메시지 위아래 여백 조정 */
+        }
+
+        .message-left {
+            background-color: transparent; /* 왼쪽 메시지 배경색 제거 */
+            text-align: left;
+            align-self: flex-start;
+            border: none; /* 왼쪽 메시지 테두리 제거 */
+        }
+
+        .message-left .message {
+            background-color: #f0f0f0; /* 왼쪽 메시지 내용 배경색 적용 */
+        }
+
+        .message-right {
+            background-color: transparent; /* 오른쪽 메시지 배경색 제거 */
+            text-align: right;
+            align-self: flex-end;
+            border: none; /* 오른쪽 메시지 테두리 제거 */
+        }
+
+        .message-right .message {
+            background-color: #a0e0a0; /* 오른쪽 메시지 내용 배경색 적용 */
+        }
+
+        .message-right .message-header {
+            justify-content: flex-end;
+        }
+
         .chat__messages {
             overflow-y: auto;
-            max-height: 400px;
+            max-height: calc(100vh - 200px);
             display: flex;
-            flex-direction: column-reverse; /* 새 메시지가 아래에 추가되도록 */
+            flex-direction: column-reverse;
+            padding: 10px;
         }
+
+        .content {
+            min-height: 800px;
+        }
+
         .clear-float {
             clear: both;
         }
-    </style>
 
+        .chat-box {
+            position: relative; /* 전송 버튼을 위한 상대적 위치 지정 */
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            border-radius: 15px; /* 채팅 박스 모서리 둥글게 */
+            margin-bottom: 20px; /* 페이지 하단과의 간격 */
+            min-height: 155px;
+        }
+
+        .chat-input textarea {
+            outline: none;
+            width: 100%; /* 부모의 전체 너비 사용 */
+            height: 100px; /* 초기 높이 설정 */
+            padding: 10px 50px 40px 10px; /* 오른쪽과 아래쪽 패딩 조정 */
+            border: none;
+            resize: none; /* 크기 조절 비활성화 */
+            line-height: 1.5; /* 줄 간격 */
+            box-sizing: border-box; /* 패딩과 테두리 포함하여 너비 계산 */
+            overflow-y: auto; /* 내용이 많을 경우 스크롤 생성 */
+        }
+
+        .chat-input .send-button {
+            position: absolute; /* 절대 위치 사용 */
+            right: 30px; /* 우측 20px에 위치 */
+            bottom: 15px; /* 하단 15px에 위치 */
+            width: 80px; /* 버튼 너비 */
+            height: 30px; /* 버튼 높이 */
+            border: none; /* 테두리 없음 */
+            background-color: #eee;
+            color: #555555;
+            border-radius: 25px; /* 원형 모양 */
+            text-align: center; /* 글자 중앙 정렬 */
+            line-height: 30px; /* 글자 수직 중앙 정렬 */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* 버튼 그림자 효과 */
+            cursor: pointer; /* 포인터 모양 변경 */
+        }
+    </style>
 </head>
 
 <body class="template--body">
@@ -60,23 +144,21 @@
 
     <section class="main-content">
         <h1 th:text="|${roomId}번 채팅방|"></h1>
-
         <nav>
             <a href="list">채팅방 목록</a>
         </nav>
+        <div class="chat__messages"></div>
 
-        <form onsubmit="submitWriteForm(this); return false;" method="POST">
-            <input autocomplete="off" type="text" name="content" placeholder="내용">
-            <input type="submit" value="작성">
-        </form>
-
-        <div>
-            <ul class="chat__messages">
-
-            </ul>
+        <div class="chat-box">
+            <div class="chat-input">
+                <form onsubmit="submitWriteForm(this); return false;" method="POST">
+                    <textarea name="content" placeholder="내용"></textarea>
+                    <button type="submit" class="send-button">전송</button>
+                </form>
+            </div>
         </div>
-
     </section>
+
 
 </main>
 <!-- Template-main 끝 -->
@@ -98,17 +180,28 @@
 
     function drawChatMessage(message) {
         // 현재 사용자의 메시지인지 판별하여 클래스 적용
-        const messageClass = message.senderId === memberId ? 'message-right' : 'message-left';
-        const messageElement = `<li class="message ${messageClass}">${message.writerName} (${message.id}) : ${message.content}</li><div class="clear-float"></div>`;
+        const directionClass = message.senderId === memberId ? 'message-right' : 'message-left';
+        const messageElement = `
+            <div class="message-container ${directionClass}">
+                <div class="message-header">
+                    <span>(${message.id}) ${message.writerName}</span>
+                </div>
+                <div class="message ${directionClass}">${message.content}</div>
+            </div>`;
 
         chatMessagesEl.insertAdjacentHTML("beforeend", messageElement);
     }
 
     function drawMoreChatMessage(message) {
         lastChatMessageId = message.id;
-        const messageClass = message.senderId === memberId ? 'message-right' : 'message-left';
-        const messageElement = `<li class="message ${messageClass}">${message.writerName} (${message.id}) : ${message.content}</li><div class="clear-float"></div>`;
-
+        const directionClass = message.senderId === memberId ? 'message-right' : 'message-left';
+        const messageElement = `
+        <div class="message-container ${directionClass}">
+            <div class="message-header">
+                <span>(${message.id}) ${message.writerName}</span>
+            </div>
+            <div class="message ${directionClass}">${message.content}</div>
+        </div>`;
 
         chatMessagesEl.insertAdjacentHTML("afterbegin", messageElement);
     }

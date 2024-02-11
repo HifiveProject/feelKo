@@ -44,7 +44,7 @@ public class ChatRoomController {
             @PathVariable final long roomId,
             @AuthenticationPrincipal SecurityUser user){
         Optional<ChatRoom> chatRoomOptional = chatRoomService.findById(roomId);
-
+        //TODO 페이지네이션으로 무한스크롤 구현
         if (chatRoomOptional.isPresent()) {
             ChatRoom chatRoom = chatRoomOptional.get();
             return ResponseEntity.ok(chatRoom.getChatMessages());
