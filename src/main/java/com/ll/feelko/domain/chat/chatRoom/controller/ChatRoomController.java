@@ -6,6 +6,7 @@ import com.ll.feelko.domain.chat.chatRoom.controller.request.ModifyRequestBody;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomListDto;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomMemberInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
+import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMember;
 import com.ll.feelko.domain.chat.chatRoom.service.ChatRoomService;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +31,9 @@ public class ChatRoomController {
             @PathVariable final long roomId,
             @AuthenticationPrincipal SecurityUser user,
             Model model) {
-        if (!chatRoomService.isIncludeMe(user.getId(), roomId)) {
-            throw new RuntimeException("참여 권한이 없습니다.");
-            //return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
-        }
 
+        ChatRoomMember chatRoomMember = chatRoomService.findChatRoomMemberByChatRoomIdAndMemberId(user.getId(),roomId);
+        model.addAttribute("chatRoomName",chatRoomMember.getChatRoomName());
         return "domain/chat/chatRoom/room";
     }
 

@@ -143,7 +143,7 @@
     <div th:replace="~{domain/layout/mypage-leftAside}"></div>
 
     <section class="main-content">
-        <h1 th:text="|${roomId}번 채팅방|"></h1>
+        <h2 th:text="${chatRoomName}"></h2>
         <nav>
             <a href="list">채팅방 목록</a>
         </nav>

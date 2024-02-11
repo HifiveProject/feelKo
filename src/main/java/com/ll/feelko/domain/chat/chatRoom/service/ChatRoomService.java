@@ -126,6 +126,10 @@ public class ChatRoomService {
         return chatRoomMemberRepository.existsByChatRoomIdAndMemberId(roomId, memberId);
     }
 
+    public ChatRoomMember findChatRoomMemberByChatRoomIdAndMemberId(long memberId, long roomId){
+        return chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(memberId,roomId).orElseThrow();
+    }
+
     @Transactional
     public boolean exitChatRoomByMemberIdAndChatRoomId(long memberId, long chatRoomId) {
         //삭제된 chatRoomMember의 개수를 리턴해서 0보다 크다면 삭제되었다고 판단
@@ -144,7 +148,7 @@ public class ChatRoomService {
 
     @Transactional
     public void modifyChatRoomName(long memberId, long chatRoomId, String chatRoomName) {
-        ChatRoomMember chatRoomMember = chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(chatRoomId, memberId);
+        ChatRoomMember chatRoomMember = chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(chatRoomId, memberId).orElseThrow();
         chatRoomMember.setChatRoomName(chatRoomName);
         chatRoomMemberRepository.save(chatRoomMember);
     }
