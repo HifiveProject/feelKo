@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
     <style>
-        .main-content{
+        .main-content {
             max-width: 30%;
         }
 
@@ -77,10 +77,6 @@
 
         .content {
             min-height: 800px;
-        }
-
-        .clear-float {
-            clear: both;
         }
 
         .chat-box {
@@ -180,7 +176,7 @@
     const roomId = /*[[${roomId}]]*/ 0;
     const memberId = /*[[${#authentication.principal.id}]]*/ 0;
 
-    function drawChatMessage(message) {
+    function drawChatMessage(message, direction) {
         // 현재 사용자의 메시지인지 판별하여 클래스 적용
         const directionClass = message.senderId === memberId ? 'message-right' : 'message-left';
         const messageElement = `
@@ -191,29 +187,16 @@
                 <div class="message ${directionClass}">${message.content}</div>
             </div>`;
 
-        chatMessagesEl.insertAdjacentHTML("beforeend", messageElement);
+        chatMessagesEl.insertAdjacentHTML(direction, messageElement);
     }
 
-    function drawMoreChatMessage(message) {
-        lastChatMessageId = message.id;
-        const directionClass = message.senderId === memberId ? 'message-right' : 'message-left';
-        const messageElement = `
-        <div class="message-container ${directionClass}">
-            <div class="message-header">
-                <span>(${message.id}) ${message.writerName}</span>
-            </div>
-            <div class="message ${directionClass}">${message.content}</div>
-        </div>`;
-
-        chatMessagesEl.insertAdjacentHTML("afterbegin", messageElement);
-    }
 
     fetch('/chat/room/' + roomId + '/messages')
         .then(response => response.json())
         .then(messages => {
             console.log(messages)
             messages.forEach(message => {
-                drawChatMessage(message);
+                drawChatMessage(message,"beforeend");
             });
         });
 </script>
@@ -261,7 +244,7 @@
 
         stompClient.subscribe(`/topic/chat/room/${roomId}/message`, function (data) {
             const jsonData = JSON.parse(data.body);
-            drawMoreChatMessage(jsonData.message);
+            drawChatMessage(jsonData.message,"afterbegin");
         });
     });
 

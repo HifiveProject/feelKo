@@ -37,7 +37,8 @@ public class ChatRoomService {
                     (Long) result[0], // chatRoomId
                     (String) result[1], // name
                     (Long) result[2], // latestMessageId
-                    (String) result[3] // lastMessage
+                    (String) result[3], // lastMessage
+                    (String) result[4] //lastWriter
             ));
         }
         return chatRooms;
@@ -126,8 +127,8 @@ public class ChatRoomService {
         return chatRoomMemberRepository.existsByChatRoomIdAndMemberId(roomId, memberId);
     }
 
-    public ChatRoomMember findChatRoomMemberByChatRoomIdAndMemberId(long memberId, long roomId){
-        return chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(memberId,roomId).orElseThrow();
+    public ChatRoomMember findChatRoomMemberByChatRoomIdAndMemberId(long memberId, long roomId) {
+        return chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(memberId, roomId).orElseThrow();
     }
 
     @Transactional
