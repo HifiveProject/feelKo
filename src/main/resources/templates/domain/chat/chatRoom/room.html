@@ -1,10 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>채팅방 목록</title>
+    <title>채팅방</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <style>
+        .message {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            display: inline-block;
+            max-width: 80%;
+        }
+        .message-left {
+            background-color: #f0f0f0;
+            margin-left: 10px;
+            text-align: left;
+        }
+        .message-right {
+            background-color: #a0e0a0;
+            margin-right: 10px;
+            text-align: right;
+            float: right;
+        }
+        .chat__messages {
+            overflow-y: auto;
+            max-height: 400px;
+            display: flex;
+            flex-direction: column-reverse; /* 새 메시지가 아래에 추가되도록 */
+        }
+        .clear-float {
+            clear: both;
+        }
+    </style>
+
 </head>
 
 <body class="template--body">
@@ -41,14 +72,7 @@
 
         <div>
             <ul class="chat__messages">
-                <li th:each="chatMessage : ${room.chatMessages}">
-                    <th:block th:text="${chatMessage.writerName}"></th:block>
-                    :
-                    (
-                    <th:block th:text="${chatMessage.id}"></th:block>
-                    )
-                    <th:block th:text="${chatMessage.content}"></th:block>
-                </li>
+
             </ul>
         </div>
 
@@ -70,7 +94,33 @@
 
 <script th:inline="javascript">
     const roomId = /*[[${roomId}]]*/ 0;
-    let lastChatMessageId = /*[[${room.chatMessages.size > 0 ? room.chatMessages.get(0).id : 0}]]*/ 0;
+    const memberId = /*[[${#authentication.principal.id}]]*/ 0;
+
+    function drawChatMessage(message) {
+        // 현재 사용자의 메시지인지 판별하여 클래스 적용
+        const messageClass = message.senderId === memberId ? 'message-right' : 'message-left';
+        const messageElement = `<li class="message ${messageClass}">${message.writerName} (${message.id}) : ${message.content}</li><div class="clear-float"></div>`;
+
+        chatMessagesEl.insertAdjacentHTML("beforeend", messageElement);
+    }
+
+    function drawMoreChatMessage(message) {
+        lastChatMessageId = message.id;
+        const messageClass = message.senderId === memberId ? 'message-right' : 'message-left';
+        const messageElement = `<li class="message ${messageClass}">${message.writerName} (${message.id}) : ${message.content}</li><div class="clear-float"></div>`;
+
+
+        chatMessagesEl.insertAdjacentHTML("afterbegin", messageElement);
+    }
+
+    fetch('/chat/room/' + roomId + '/messages')
+        .then(response => response.json())
+        .then(messages => {
+            console.log(messages)
+            messages.forEach(message => {
+                drawChatMessage(message);
+            });
+        });
 </script>
 
 <script>
@@ -107,15 +157,6 @@
         form.content.focus();
     }
 
-    function drawMoreChatMessage(message) {
-        lastChatMessageId = message.id;
-
-        chatMessagesEl
-            .insertAdjacentHTML(
-                "afterBegin",
-                `<li>${message.writerName} : ( ${message.id} ) ${message.content}</li>`
-            );
-    }
 
     const socket = new SockJS('/ws');
     const stompClient = Stomp.over(socket);

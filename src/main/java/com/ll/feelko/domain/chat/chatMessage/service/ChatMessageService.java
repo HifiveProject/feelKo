@@ -63,8 +63,6 @@ public class ChatMessageService {
 
     }
 
-
-
     public List<ChatMessage> findByChatRoomIdAndIdAfter(long roomId, long afterId) {
         return chatMessageRepository.findByChatRoomIdAndIdAfter(roomId, afterId);
     }

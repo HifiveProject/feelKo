@@ -7,15 +7,16 @@ import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomListDto;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomMemberInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.feelko.domain.chat.chatRoom.service.ChatRoomService;
-import com.ll.feelko.global.rsData.RsData;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/chat/room")
@@ -28,17 +29,28 @@ public class ChatRoomController {
     public String showRoom(
             @PathVariable final long roomId,
             @AuthenticationPrincipal SecurityUser user,
-            Model model
-    ) {
+            Model model) {
         if (!chatRoomService.isIncludeMe(user.getId(), roomId)) {
             throw new RuntimeException("참여 권한이 없습니다.");
+            //return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
         }
 
-        ChatRoom room = chatRoomService.findById(roomId).get();
-
-        model.addAttribute("room", room);
-
         return "domain/chat/chatRoom/room";
+    }
+
+    @GetMapping("/{roomId}/messages")
+    @ResponseBody
+    public ResponseEntity<?> showMessages(
+            @PathVariable final long roomId,
+            @AuthenticationPrincipal SecurityUser user){
+        Optional<ChatRoom> chatRoomOptional = chatRoomService.findById(roomId);
+
+        if (chatRoomOptional.isPresent()) {
+            ChatRoom chatRoom = chatRoomOptional.get();
+            return ResponseEntity.ok(chatRoom.getChatMessages());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/list")
@@ -53,14 +65,14 @@ public class ChatRoomController {
 
     @PostMapping("/{roomId}/write")
     @ResponseBody
-    public RsData<?> write(
+    public ResponseEntity<?> write(
             @PathVariable final long roomId,
             @AuthenticationPrincipal SecurityUser user,
             @RequestBody final WriteRequestBody requestBody
     ) {
         chatMessageService.writeAndSend(roomId, user.getName(), requestBody.getContent(), "created", user.getId());
 
-        return RsData.of("S-1", "성공");
+        return ResponseEntity.ok("성공");
     }
 
     //직접 상대방에게 신청하는 경우
@@ -98,7 +110,7 @@ public class ChatRoomController {
 
     @GetMapping("/exit/{chatRoomId}")
     @ResponseBody
-    public RsData<?> exitChatRoom(
+    public ResponseEntity<?> exitChatRoom(
             @PathVariable Long chatRoomId,
             @AuthenticationPrincipal SecurityUser user) {
 
@@ -112,12 +124,12 @@ public class ChatRoomController {
             throw new RuntimeException("채팅방을 나가는데 실패했습니다.");
         }
 
-        return RsData.of("S-1","성공");
+        return ResponseEntity.ok("성공");
     }
 
     @PostMapping("/modify/{chatRoomId}")
     @ResponseBody
-    public RsData<?> modifyChatRoomName(
+    public ResponseEntity<?> modifyChatRoomName(
             @PathVariable Long chatRoomId,
             @AuthenticationPrincipal SecurityUser user,
             @RequestBody final ModifyRequestBody modifyBody) {
@@ -128,6 +140,6 @@ public class ChatRoomController {
 
         chatRoomService.modifyChatRoomName(user.getId(), chatRoomId, modifyBody.getChatRoomName());
 
-        return RsData.of("S-1","성공");
+        return ResponseEntity.ok("성공");
     }
 }
