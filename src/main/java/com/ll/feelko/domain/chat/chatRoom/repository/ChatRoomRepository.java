@@ -13,7 +13,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     Optional<ChatRoom> findById(Long memberId);
 
     @Query(value = """
-            SELECT cr.id AS chatRoomId, cr.name, latest_cm.max_id AS latestMessageId, m.content AS lastMessage
+            SELECT cr.id AS chatRoomId, crm.chat_room_name AS name, latest_cm.max_id AS latestMessageId, m.content AS lastMessage
                                              FROM chat_room cr
                                              INNER JOIN chat_room_member crm ON cr.id = crm.chat_room_id
                                              LEFT JOIN (

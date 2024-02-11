@@ -4,6 +4,7 @@ import com.ll.feelko.domain.chat.chatMessage.api.response.WriteResponseBody;
 import com.ll.feelko.domain.chat.chatMessage.entity.ChatMessage;
 import com.ll.feelko.domain.chat.chatMessage.repository.ChatMessageRepository;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
+import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMember;
 import com.ll.feelko.domain.chat.chatRoom.repository.ChatRoomMemberRepository;
 import com.ll.feelko.domain.chat.chatRoom.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +24,11 @@ public class ChatMessageService {
     private final ChatRoomRepository chatRoomRepository;
 
     @Transactional
-    public ChatMessage writeAndSend(long roomId, String writerName, String content, long senderId) {
+    public ChatMessage writeAndSend(long roomId, String writerName, String content, String eventType, long senderId) {
         ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
 
         ChatMessage chatMessage = writeMessage(chatRoom, writerName, content, senderId);
-        sendMessageToRoomAndList(chatRoom, new WriteResponseBody(chatMessage));
+        sendMessageToRoomAndList(chatRoom, new WriteResponseBody(chatMessage, eventType));
 
         return chatMessage;
     }
@@ -40,7 +41,6 @@ public class ChatMessageService {
                 .writerName(writerName)
                 .content(content)
                 .senderId(senderId)
-                .chatRoomName(chatRoom.getName())
                 .build();
 
         chatMessage = chatMessageRepository.save(chatMessage);
@@ -50,13 +50,15 @@ public class ChatMessageService {
 
     public void sendMessageToRoomAndList(ChatRoom chatRoom, WriteResponseBody writeBody){
         //채팅방에 메세지 보내기
-        messagingTemplate.convertAndSend("/topic/chat/room/" + chatRoom.getId() + "/messageCreated", writeBody);
+        messagingTemplate.convertAndSend("/topic/chat/room/" + chatRoom.getId() + "/message", writeBody);
 
-        List<Long> memberIds = chatRoomMemberRepository.findByChatRoom(chatRoom.getId());
+        List<ChatRoomMember> chatRoomMembers = chatRoomMemberRepository.findChatRoomMemberByChatRoomId(chatRoom.getId());
         //채팅 방에 있는 모든 멤버의 list에 메세지 보내기
-        for(Long memberId : memberIds){
-            String destination = "/topic/chat/room/list" + memberId + "/messageCreated";
-            messagingTemplate.convertAndSend("/topic/chat/room/list/" + memberId + "/messageCreated", writeBody);
+        for(ChatRoomMember chatRoomMember : chatRoomMembers){
+            writeBody.setChatRoomName(chatRoomMember.getChatRoomName());
+            messagingTemplate.convertAndSend("/topic/chat/room/list/"
+                                             + chatRoomMember.getId().getMemberId() //memberId
+                                             + "/message", writeBody);
         }
 
     }

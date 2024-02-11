@@ -39,8 +39,6 @@ public class ChatRoom{
     @Getter
     private LocalDateTime modifyDate;
 
-    private String name;
-
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude

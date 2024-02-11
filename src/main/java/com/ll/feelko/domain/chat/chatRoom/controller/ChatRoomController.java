@@ -2,6 +2,7 @@ package com.ll.feelko.domain.chat.chatRoom.controller;
 
 import com.ll.feelko.domain.chat.chatMessage.api.request.WriteRequestBody;
 import com.ll.feelko.domain.chat.chatMessage.service.ChatMessageService;
+import com.ll.feelko.domain.chat.chatRoom.controller.request.ModifyRequestBody;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomListDto;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomMemberInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
@@ -57,7 +58,7 @@ public class ChatRoomController {
             @AuthenticationPrincipal SecurityUser user,
             @RequestBody final WriteRequestBody requestBody
     ) {
-        chatMessageService.writeAndSend(roomId, user.getName(), requestBody.getContent(), user.getId());
+        chatMessageService.writeAndSend(roomId, user.getName(), requestBody.getContent(), "created", user.getId());
 
         return RsData.of("S-1", "성공");
     }
@@ -89,12 +90,44 @@ public class ChatRoomController {
 //        아이디 두개로 방여러개 만들어서 리스트 최신화 시험중 나중에 아래에 있는거 지우고 주석 해제하면 됩니다.
         chatRoomId = chatRoomService.makeChatRoom(myInfoDto, theirInfoDto);
 
-        chatMessageService.writeAndSend(chatRoomId, user.getName(), "생성", user.getId());
+        chatMessageService.writeAndSend(chatRoomId, user.getName(), "생성", "created", user.getId());
 
         return "redirect:/chat/room/" + chatRoomId;
 
     }
 
+    @GetMapping("/exit/{chatRoomId}")
+    @ResponseBody
+    public RsData<?> exitChatRoom(
+            @PathVariable Long chatRoomId,
+            @AuthenticationPrincipal SecurityUser user) {
 
+        if (!chatRoomService.isIncludeMe(user.getId(), chatRoomId)) {
+            throw new RuntimeException("관련 권한이 없습니다.");
+        }
 
+        chatMessageService.writeAndSend(chatRoomId, user.getName(), "퇴장", "deleted", user.getId());
+
+        if (!chatRoomService.exitChatRoomByMemberIdAndChatRoomId(user.getId(),chatRoomId)){
+            throw new RuntimeException("채팅방을 나가는데 실패했습니다.");
+        }
+
+        return RsData.of("S-1","성공");
+    }
+
+    @PostMapping("/modify/{chatRoomId}")
+    @ResponseBody
+    public RsData<?> modifyChatRoomName(
+            @PathVariable Long chatRoomId,
+            @AuthenticationPrincipal SecurityUser user,
+            @RequestBody final ModifyRequestBody modifyBody) {
+
+        if (!chatRoomService.isIncludeMe(user.getId(), chatRoomId)) {
+            throw new RuntimeException("관련 권한이 없습니다.");
+        }
+
+        chatRoomService.modifyChatRoomName(user.getId(), chatRoomId, modifyBody.getChatRoomName());
+
+        return RsData.of("S-1","성공");
+    }
 }

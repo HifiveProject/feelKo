@@ -56,8 +56,7 @@ public class ChatRoomService {
 
     @Transactional
     public Long makeChatRoom(ChatRoomMemberInfoDto myInfoDto, ChatRoomMemberInfoDto theirInfoDto) {
-        //상대 이름으로 방 이름 설정
-        ChatRoom chatRoom = ChatRoom.builder().name(theirInfoDto.getName()+", "+myInfoDto.getName()).build();
+        ChatRoom chatRoom = ChatRoom.builder().build();
 
         Long chatRoomId = chatRoomRepository.save(chatRoom).getId();
         //복합키 생성
@@ -70,12 +69,16 @@ public class ChatRoomService {
                 .chatRoomId(chatRoomId)
                 .memberId(theirInfoDto.getId())
                 .build();
+
         //중간 테이블 데이터 생성
+        String chatRoomName = theirInfoDto.getName() + ", " + myInfoDto.getName();
+
         ChatRoomMember myChatRoomMember = ChatRoomMember.builder()
                 .id(myRoomId)
                 .member(memberRepository.findById(myInfoDto.getId())
                         .orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
                 .chatRoom(chatRoom)
+                .chatRoomName(chatRoomName)
                 .build();
 
         ChatRoomMember theirChatRoomMember = ChatRoomMember.builder()
@@ -83,6 +86,7 @@ public class ChatRoomService {
                 .member(memberRepository.findById(theirInfoDto.getId())
                         .orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
                 .chatRoom(chatRoom)
+                .chatRoomName(chatRoomName)
                 .build();
 
         chatRoomMemberRepository.save(myChatRoomMember);
@@ -92,17 +96,17 @@ public class ChatRoomService {
     }
 
     //리팩토링 필요
-    public ChatRoomMemberInfoDto createInfoDtoByExperienceId(Long experienceId){
+    public ChatRoomMemberInfoDto createInfoDtoByExperienceId(Long experienceId) {
         Experience experience = experienceRepository.findById(experienceId).get();
         Member member = memberRepository.findById(experience.getMemberId()).get();
 
-        return new ChatRoomMemberInfoDto(member.getId(),member.getName());
+        return new ChatRoomMemberInfoDto(member.getId(), member.getName());
     }
 
-    public ChatRoomMemberInfoDto createInfoDtoByEmail(String email){
+    public ChatRoomMemberInfoDto createInfoDtoByEmail(String email) {
         Member member = memberRepository.findByEmail(email).get();
 
-        return new ChatRoomMemberInfoDto(member.getId(),member.getName());
+        return new ChatRoomMemberInfoDto(member.getId(), member.getName());
     }
 
     public Optional<ChatRoom> findById(long roomId) {
@@ -118,7 +122,30 @@ public class ChatRoomService {
         return true;
     }
 
-    public boolean isIncludeMe(long id, long roomId) {
-        return chatRoomMemberRepository.existsByChatRoomIdAndMemberId(roomId, id);
+    public boolean isIncludeMe(long memberId, long roomId) {
+        return chatRoomMemberRepository.existsByChatRoomIdAndMemberId(roomId, memberId);
+    }
+
+    @Transactional
+    public boolean exitChatRoomByMemberIdAndChatRoomId(long memberId, long chatRoomId) {
+        //삭제된 chatRoomMember의 개수를 리턴해서 0보다 크다면 삭제되었다고 판단
+        Long successCode = chatRoomMemberRepository.deleteChatRoomMemberByChatRoomIdAndMemberId(chatRoomId, memberId);
+
+        if (countMemberInChatRoom(chatRoomId) == 0) {
+            chatRoomRepository.deleteById(chatRoomId);
+            //채팅방에 남은 멤버가 없으면 채팅방을 제거
+        }
+        return successCode > 0;
+    }
+
+    public Long countMemberInChatRoom(long chatRoomId) {
+        return chatRoomMemberRepository.countByChatRoomId(chatRoomId);
+    }
+
+    @Transactional
+    public void modifyChatRoomName(long memberId, long chatRoomId, String chatRoomName) {
+        ChatRoomMember chatRoomMember = chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(chatRoomId, memberId);
+        chatRoomMember.setChatRoomName(chatRoomName);
+        chatRoomMemberRepository.save(chatRoomMember);
     }
 }
