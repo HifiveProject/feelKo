@@ -138,17 +138,17 @@
         if (eventType == 'created') {
             // 새 채팅방 메시지를 삽입합니다. 링크 추가 포함
             const chatRoomItemHtml = `
-            <li class="chat-room-item" data-chat-room-id="${message.chatRoom.id}">
+            <li class="chat-room-item" data-chat-room-id="${message.chatRoom.id}" onclick="location.href='/chat/room/${message.chatRoom.id}'">
             <div class="chat-room-info">
                 <span class="chat-room-id">(${message.chatRoom.id})</span>
                 <span class="chat-room-name">${chatRoomName}</span>
             </div>
             <div class="last-message-info">
-                <span class="last-writer">${message.senderName}</span>
+                <span class="last-writer">${message.writerName}</span>
                 <span class="last-message">${message.content}</span>
             </div>
         </li>
-            `;
+        `;
 
             chatMessagesEl.insertAdjacentHTML("afterBegin", chatRoomItemHtml);
         }

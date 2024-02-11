@@ -15,10 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -98,14 +95,14 @@ public class ChatRoomService {
 
     //리팩토링 필요
     public ChatRoomMemberInfoDto createInfoDtoByExperienceId(Long experienceId) {
-        Experience experience = experienceRepository.findById(experienceId).get();
-        Member member = memberRepository.findById(experience.getMemberId()).get();
+        Experience experience = experienceRepository.findById(experienceId).orElseThrow(() -> new NoSuchElementException("체험이 존재하지 않습니다."));
+        Member member = memberRepository.findById(experience.getMemberId()).orElseThrow(() -> new NoSuchElementException("멤버가 존재하지 않습니다."));;
 
         return new ChatRoomMemberInfoDto(member.getId(), member.getName());
     }
 
     public ChatRoomMemberInfoDto createInfoDtoByEmail(String email) {
-        Member member = memberRepository.findByEmail(email).get();
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("email이 존재하지 않습니다."));
 
         return new ChatRoomMemberInfoDto(member.getId(), member.getName());
     }
@@ -128,7 +125,8 @@ public class ChatRoomService {
     }
 
     public ChatRoomMember findChatRoomMemberByChatRoomIdAndMemberId(long memberId, long roomId) {
-        return chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(memberId, roomId).orElseThrow();
+        return chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(roomId, memberId)
+                .orElseThrow(() -> new NoSuchElementException("채팅방 정보가 존재하지 않습니다."));
     }
 
     @Transactional

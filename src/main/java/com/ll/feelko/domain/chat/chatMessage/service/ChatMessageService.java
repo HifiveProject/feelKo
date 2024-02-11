@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class ChatMessageService {
 
     @Transactional
     public ChatMessage writeAndSend(long roomId, String writerName, String content, String eventType, long senderId) {
-        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException("채팅방이 존재하지 않습니다."));;
 
         ChatMessage chatMessage = writeMessage(chatRoom, writerName, content, senderId);
         sendMessageToRoomAndList(chatRoom, new WriteResponseBody(chatMessage, eventType));
