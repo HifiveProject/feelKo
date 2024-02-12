@@ -18,6 +18,24 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- fontAwesome -->
     <script src="https://kit.fontawesome.com/ae1a88d4e2.js" crossorigin="anonymous"></script>
+    <!-- toastr-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link href="https://jhs512.github.io/toastr/toastr.css" rel="stylesheet">
+
+    <!-- js -->
+    <script src="/js/common/header.js"></script>
+
+    <script>
+        //현재 페이지의 url을 저장해서 나중에 redirect할 때 꺼내 쓸 수 있도록 하는 script
+        // 페이지가 언로드될 때 실행
+        window.onbeforeunload = function() {
+            // dontSave 변수가 'undefined'이거나 false인 경우에만 URL을 세션에 저장
+            if (typeof dontSave === 'undefined' || !dontSave) {
+                sessionStorage.setItem('lastVisitedUrl', window.location.href);
+            }
+        };
+    </script>
+
 </head>
 <body class="template--body">
 
@@ -109,7 +127,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous" defer></script>
-<!-- js -->
-<script src="/js/common/header.js"></script>
+
+<script>
+    const urlParams = getUrlParams(location.href);
+    // history.back 에 의해서 돌아온 경우에 자바스크립트가 실행이 안될 수 도 잇다.
+    // $(window).bind("pageshow", function (event) {}); 를 사용하면 해결이 된다.
+    $(window).bind("pageshow", function (event) {
+        if (sessionStorage.getItem("historyBackFailMsg")) {
+            toastWarning(sessionStorage.getItem("historyBackFailMsg"));
+            sessionStorage.removeItem("historyBackFailMsg");
+        }
+        if (sessionStorage.getItem("historyBackMsg")) {
+            toastNotice(sessionStorage.getItem("historyBackMsg"));
+            sessionStorage.removeItem("historyBackMsg");
+        }
+    });
+
+    if (urlParams.msg) {
+        toastNotice(urlParams.msg);
+    }
+
+    if (urlParams.failMsg) {
+        toastWarning(urlParams.failMsg);
+    }
+</script>
+
 </body>
 </html>

@@ -3,7 +3,7 @@ package com.ll.feelko.domain.member.api;
 import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 import com.ll.feelko.domain.member.application.MemberServiceImpl;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
-import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/member")
@@ -47,4 +48,20 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    @GetMapping("/auth-result")
+    @PreAuthorize("isAuthenticated() or isAnonymous()")
+    public String redirectBack(
+            HttpServletRequest request,
+            @RequestParam(required = false) String msg,
+            @RequestParam(required = false) String failMsg) {
+        if (msg != null) request.setAttribute("msg", msg);
+        if (failMsg != null) request.setAttribute("failMsg", failMsg);
+
+        return "global/historyBack";
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return "global/test";
+    }
 }
