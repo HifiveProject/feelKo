@@ -26,4 +26,9 @@ public class ChatRoomMember {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private String chatRoomName; //사용자마다 채팅방 이름을 다르게 설정할 수 있도록
+
+    public void setChatRoomName(String chatRoomName){
+        this.chatRoomName = chatRoomName;
+    }
 }

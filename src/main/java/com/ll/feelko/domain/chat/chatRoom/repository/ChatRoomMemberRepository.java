@@ -4,10 +4,10 @@ import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember,Long> {
     List<ChatRoom> findByMemberId(Long memberId);
@@ -22,7 +22,13 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember,L
 //    @Query("SELECT crm.chatRoom FROM ChatRoomMember crm WHERE crm.member.id = :memberId")
 //    List<ChatRoom> findChatRoomListByMemberId(Long memberId);
 
-    boolean existsByChatRoomIdAndMemberId(long roomId, long id);
+    boolean existsByChatRoomIdAndMemberId(long roomId, long memberId);
 
+    Long deleteChatRoomMemberByChatRoomIdAndMemberId(long roomId, long memberId); //삭제된 수 리턴
 
+    List<ChatRoomMember> findChatRoomMemberByChatRoomId(Long chatRoomId);
+
+    Optional<ChatRoomMember> findChatRoomMemberByChatRoomIdAndMemberId(long chatRoomId, long memberId);
+
+    Long countByChatRoomId(Long chatRoomId);
 }

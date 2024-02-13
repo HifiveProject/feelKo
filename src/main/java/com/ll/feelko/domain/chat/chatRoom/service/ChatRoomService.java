@@ -1,6 +1,5 @@
 package com.ll.feelko.domain.chat.chatRoom.service;
 
-import com.ll.feelko.domain.chat.chatMessage.entity.ChatMessage;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomListDto;
 import com.ll.feelko.domain.chat.chatRoom.dto.ChatRoomMemberInfoDto;
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
@@ -16,10 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,21 +34,11 @@ public class ChatRoomService {
                     (Long) result[0], // chatRoomId
                     (String) result[1], // name
                     (Long) result[2], // latestMessageId
-                    (String) result[3] // lastMessage
+                    (String) result[3], // lastMessage
+                    (String) result[4] //lastWriter
             ));
         }
         return chatRooms;
-        //return chatRoomMemberRepository.findChatRoomListByMemberId(memberId);
-    }
-
-
-    @Transactional
-    public ChatMessage write(long roomId, String writerName, String content, long senderId) {
-        ChatRoom chatRoom = chatRoomRepository.findById(roomId).get();
-
-        ChatMessage chatMessage = chatRoom.writeMessage(writerName, content, senderId);
-
-        return chatMessage;
     }
 
     public Long findChatRoom(Long myId, Long theirId) {
@@ -68,8 +54,7 @@ public class ChatRoomService {
 
     @Transactional
     public Long makeChatRoom(ChatRoomMemberInfoDto myInfoDto, ChatRoomMemberInfoDto theirInfoDto) {
-        //상대 이름으로 방 이름 설정
-        ChatRoom chatRoom = ChatRoom.builder().name(theirInfoDto.getName()+", "+myInfoDto.getName()).build();
+        ChatRoom chatRoom = ChatRoom.builder().build();
 
         Long chatRoomId = chatRoomRepository.save(chatRoom).getId();
         //복합키 생성
@@ -82,12 +67,16 @@ public class ChatRoomService {
                 .chatRoomId(chatRoomId)
                 .memberId(theirInfoDto.getId())
                 .build();
+
         //중간 테이블 데이터 생성
+        String chatRoomName = theirInfoDto.getName() + ", " + myInfoDto.getName();
+
         ChatRoomMember myChatRoomMember = ChatRoomMember.builder()
                 .id(myRoomId)
                 .member(memberRepository.findById(myInfoDto.getId())
                         .orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
                 .chatRoom(chatRoom)
+                .chatRoomName(chatRoomName)
                 .build();
 
         ChatRoomMember theirChatRoomMember = ChatRoomMember.builder()
@@ -95,6 +84,7 @@ public class ChatRoomService {
                 .member(memberRepository.findById(theirInfoDto.getId())
                         .orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
                 .chatRoom(chatRoom)
+                .chatRoomName(chatRoomName)
                 .build();
 
         chatRoomMemberRepository.save(myChatRoomMember);
@@ -104,18 +94,17 @@ public class ChatRoomService {
     }
 
     //리팩토링 필요
-    public ChatRoomMemberInfoDto createInfoDtoByExperienceId(Long experienceId){
-        Experience experience = experienceRepository.findById(experienceId).get();
-        Member member = memberRepository.findById(experience.getMemberId()).get();
+    public ChatRoomMemberInfoDto createInfoDtoByExperienceId(Long experienceId) {
+        Experience experience = experienceRepository.findById(experienceId).orElseThrow(() -> new NoSuchElementException("체험이 존재하지 않습니다."));
+        Member member = memberRepository.findById(experience.getMemberId()).orElseThrow(() -> new NoSuchElementException("멤버가 존재하지 않습니다."));;
 
-        return new ChatRoomMemberInfoDto(member.getId(),member.getName());
+        return new ChatRoomMemberInfoDto(member.getId(), member.getName());
     }
 
-    //리팩토링 필요
-    public ChatRoomMemberInfoDto createInfoDtoByEmail(String email){
-        Member member = memberRepository.findByEmail(email).get();
+    public ChatRoomMemberInfoDto createInfoDtoByEmail(String email) {
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("email이 존재하지 않습니다."));
 
-        return new ChatRoomMemberInfoDto(member.getId(),member.getName());
+        return new ChatRoomMemberInfoDto(member.getId(), member.getName());
     }
 
     public Optional<ChatRoom> findById(long roomId) {
@@ -131,7 +120,35 @@ public class ChatRoomService {
         return true;
     }
 
-    public boolean isIncludeMe(long id, long roomId) {
-        return chatRoomMemberRepository.existsByChatRoomIdAndMemberId(roomId, id);
+    public boolean isIncludeMe(long memberId, long roomId) {
+        return chatRoomMemberRepository.existsByChatRoomIdAndMemberId(roomId, memberId);
+    }
+
+    public ChatRoomMember findChatRoomMemberByChatRoomIdAndMemberId(long memberId, long roomId) {
+        return chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(roomId, memberId)
+                .orElseThrow(() -> new NoSuchElementException("채팅방 정보가 존재하지 않습니다."));
+    }
+
+    @Transactional
+    public boolean exitChatRoomByMemberIdAndChatRoomId(long memberId, long chatRoomId) {
+        //삭제된 chatRoomMember의 개수를 리턴해서 0보다 크다면 삭제되었다고 판단
+        Long successCode = chatRoomMemberRepository.deleteChatRoomMemberByChatRoomIdAndMemberId(chatRoomId, memberId);
+
+        if (countMemberInChatRoom(chatRoomId) == 0) {
+            chatRoomRepository.deleteById(chatRoomId);
+            //채팅방에 남은 멤버가 없으면 채팅방을 제거
+        }
+        return successCode > 0;
+    }
+
+    public Long countMemberInChatRoom(long chatRoomId) {
+        return chatRoomMemberRepository.countByChatRoomId(chatRoomId);
+    }
+
+    @Transactional
+    public void modifyChatRoomName(long memberId, long chatRoomId, String chatRoomName) {
+        ChatRoomMember chatRoomMember = chatRoomMemberRepository.findChatRoomMemberByChatRoomIdAndMemberId(chatRoomId, memberId).orElseThrow();
+        chatRoomMember.setChatRoomName(chatRoomName);
+        chatRoomMemberRepository.save(chatRoomMember);
     }
 }
