@@ -55,7 +55,7 @@ public class NotProd {
                     .mapToObj(i -> {
                         MemberRegisterDto memberRegisterDto = new MemberRegisterDto(
                                 "test", "test", "test", null, "010-1111-1111", null, null);
-                        memberRegisterDto.setEmail("test" + i);
+                        memberRegisterDto.setEmail("test" + i + "@example.com");
 
                         return memberService.register(memberRegisterDto);
                     })
