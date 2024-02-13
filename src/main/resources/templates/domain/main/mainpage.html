@@ -110,7 +110,11 @@
                     <div class="hotpost-img1">
                         <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
                     </div>
-                    <div class="hotpost-name1">
+                    <div class="notime-name1">
+                        <div class="wishcounter">
+                            <img src="/images/찜 이미지.png" alt="찜" style="width:14px">
+                            <span th:text="${experience.wishCounter}" style="font-size: 14px"></span>
+                        </div>
                         <div class="postname">
                             <a th:href="@{'/experiences/'+ ${experience.id}}">
                                 <span th:text="${experience.title}"></span>

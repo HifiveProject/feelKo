@@ -45,8 +45,6 @@
 .hotpost-1 {
     width: 320px;
     height: 400px;
-    background-color: #F3F3F3;
-    border: 1px solid #D9D9D9;
     border-radius: 10px;
     display: grid;
     align-items: center;
@@ -57,6 +55,7 @@
 .hotpost-img12{
     height: 296px;
     width: 305px;
+    border-radius: 10px; /* 이미지 모서리를 둥글게 */
 }
 
 .main-2 {
@@ -72,13 +71,20 @@
 /*}*/
 
 .hotpost-name1 {
+    margin-bottom: 10px;
     display: grid;
     font-size: 15px;
     margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 94%; /* 필요에 따라 조정 */
 }
 
 .postname {
     margin-right: 5px;
+    font-weight: bold;
+    font-size: 17px;
 }
 
 
