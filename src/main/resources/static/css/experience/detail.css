@@ -11,3 +11,26 @@
     display: grid;
     place-items: center;
 }
+
+textarea#content {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+: white    padding: 14px 20;
+    margin: auto ;
+: none;
+    -radius: 4;
+: pointer}
+
+div button {
+    width: 300px;  /* 버튼의 가로 길이를 200px로 설정. 원하는 길이로 조절 가능 */
+    margin-bottom: 15px;  /* 버튼 사이의 간격을 10px로 설정. 원하는 간격으로 조절 가능 */
+}

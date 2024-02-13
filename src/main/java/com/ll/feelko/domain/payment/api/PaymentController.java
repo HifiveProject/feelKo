@@ -70,7 +70,8 @@ public class PaymentController {
         log.info("예약 번호 = {}" , paymentKey);
         log.info("체험 금액 = {}" , amount);
 
-        paymentApiService.payment(user.getName() , headcount , date , paymentKey , amount);
+        //member ID , 체험 정보 아이디.
+        paymentApiService.payment(user , experiencesId , headcount , date , paymentKey , amount);
 
         paymentApiService.decreaseParticipants(experiencesId , headcount);
 
