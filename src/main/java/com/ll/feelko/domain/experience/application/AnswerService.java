@@ -22,7 +22,7 @@ public class AnswerService {
 
         Answer answer = new Answer();
         answer.setContent(content);
-        answer.setExperience(experience); // 체험을 답변에 설정
+        answer.setExperience(experience);
         answer.setCreateDate(LocalDateTime.now());
         this.answerRepository.save(answer);
     }
