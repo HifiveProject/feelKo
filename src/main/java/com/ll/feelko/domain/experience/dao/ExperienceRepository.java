@@ -16,9 +16,6 @@ public interface ExperienceRepository extends JpaRepository<Experience,Long> {
     @Query("SELECT new com.ll.feelko.domain.member.dto.UploadedPageDto(e.id, e.imageUrl, e.title, e.price, e.startDate, e.endDate) FROM Experience e WHERE e.memberId = :memberId ORDER BY e.id DESC")
     Page<UploadedPageDto> findIdTitleByMemberIdOrderByIdDesc(@Param("memberId") long memberId, Pageable pageable);
 
-//    @Query("SELECT e FROM Experience e WHERE e.location = :destination AND (:startDate IS NULL OR e.startDate = :startDate) AND e.experienceClose = false")
-//    Page<Experience> searchExperiences(@Param("destination") String destination, @Param("startDate") LocalDate startDate, Pageable pageable);
-
     @Query("SELECT e FROM Experience e ORDER BY e.startDate DESC")
     Page<Experience> searchExperiencesAll(Pageable pageable);
 
@@ -38,4 +35,5 @@ public interface ExperienceRepository extends JpaRepository<Experience,Long> {
     @Query("SELECT e FROM Experience e WHERE e.location = :destination AND e.experienceClose = false")
     Page<Experience> findByLocation(@Param("destination") String destination, Pageable pageable);
 
+    Page<Experience> findByExperienceCloseFalse(Pageable pageable);
 }

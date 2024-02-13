@@ -90,8 +90,15 @@ public class ExperienceService {
         return closingSoonExperiences;
     }
 
-    public Page<Experience> searchAllExperiencesIncludingClosing(Pageable pageable) {
-        return experienceRepository.searchAllExperiencesIncludingClosing(pageable);
+    public Page<Experience> searchAllExperiencesIncludingClosing(boolean includeClosing, Pageable pageable) {
+        if(includeClosing) {
+            // 마감 임박한 체험을 포함하여 모든 체험 검색
+            return experienceRepository.searchAllExperiencesIncludingClosing(pageable);
+        } else {
+            // 마감 임박한 체험을 제외하고 검색
+            // 이 메소드는 마감되지 않은 체험만 검색하는 쿼리를 구현해야 합니다.
+            return experienceRepository.findByExperienceCloseFalse(pageable);
+        }
     }
 
     public Page<Experience> searchExperiencesIncludingClosing(String destination, LocalDate selectDate, Pageable pageable) {
