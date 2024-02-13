@@ -110,33 +110,33 @@
                     <!-- 처음 페이지로 이동 -->
                     <li th:class="${currentPage == 1} ? 'disabled' : ''">
                         <a class="btn1 laquo"
-                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, page=1)}">처음</a>
+                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, include_closing=${includeClosing},page=1)}">처음</a>
                     </li>
 
                     <!-- 이전 페이지로 이동 -->
                     <li th:class="${currentPage == 1} ? 'disabled' : ''">
                         <a class="btn1"
-                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, page=${currentPage - 1})}">&#60;</a>
+                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, include_closing=${includeClosing}, page=${currentPage - 1})}">&#60;</a>
                     </li>
 
                     <!-- 페이지 번호를 동적으로 생성 -->
                     <li th:each="pageNum : ${#numbers.sequence(startBlockPage, endBlockPage)}"
                         th:class="${pageNum == currentPage ? 'active' : ''}">
                         <a class="btn1"
-                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, page=${pageNum})}"
+                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, include_closing=${includeClosing}, page=${pageNum})}"
                            th:text="${pageNum}"></a>
                     </li>
 
                     <!-- 다음 페이지로 이동 -->
                     <li th:class="${currentPage < totalPages ? '' : 'disabled'}">
                         <a class="btn1"
-                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, page=${currentPage + 1})}">&#62;</a>
+                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, include_closing=${includeClosing}, page=${currentPage + 1})}">&#62;</a>
                     </li>
 
                     <!-- 마지막 페이지로 이동 -->
                     <li th:class="${currentPage < totalPages ? '' : 'disabled'}">
                         <a class="btn1"
-                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, page=${totalPages})}">마지막</a>
+                           th:href="@{/search(destination=${selectedLocation}, selectDate=${selectDate != null ? selectDate.format(T(java.time.format.DateTimeFormatter).ISO_LOCAL_DATE) : ''}, include_closing=${includeClosing}, page=${totalPages})}">마지막</a>
                     </li>
                 </ul>
             </div>
