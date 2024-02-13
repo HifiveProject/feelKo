@@ -38,12 +38,7 @@ public class MainController {
         Page<Experience> experiencePage;
 
         if (StringUtils.isEmpty(destination) || destination.equals("전국")) {
-            // 전국이 선택된 경우 또는 destination이 빈 문자열인 경우 전체 지역 검색
-            if (includeClosing) {
-                experiencePage = experienceService.searchAllExperiencesIncludingClosing(pageable);
-            } else {
-                experiencePage = experienceService.searchAllExperiences(pageable);
-            }
+            experiencePage = experienceService.searchAllExperiencesIncludingClosing(includeClosing, pageable);
         } else {
             // 특정 지역이 선택된 경우 해당 지역의 경험 검색
             if (selectDate == null) {
