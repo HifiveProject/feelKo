@@ -58,25 +58,27 @@
             </header>
             <ul class="nav justify-content-around" id="common--boardList">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/experienceList">자유게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/html/board/boardQuestion.html">질문게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.naver.com" style="color:grey;">예비게시판실험</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.naver.com" style="color:grey;">예비게시판실험</a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/experienceList">자유게시판</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/html/board/boardQuestion.html">질문게시판</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="https://www.naver.com" style="color:grey;">예비게시판실험</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="https://www.naver.com" style="color:grey;">예비게시판실험</a>-->
+<!--                </li>-->
                 <!-- 로그인/프로필 버튼과 드롭다운 메뉴를 포함하는 리스트 아이템 -->
                 <li class="nav-item dropdown">
                     <div class="icon-container">
                         <!-- 버튼 형태로 변경, 햄버거 메뉴 아이콘과 프로필 아이콘을 포함 -->
                         <button class="btn" id="moreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="/images/menu-icon.svg" alt="메뉴 아이콘" class="hamburger-icon"> <!-- 햄버거 아이콘 -->
-                            <img th:src="${#authorization.expression('isAuthenticated()') ? #authentication.principal.profileImage : '/images/로그인 이미지.png'}" alt="사용자 아이콘" class="user-icon" onerror="this.onerror=null; this.src='/images/기본 프로필.JPG';">
+                            <img th:src="${#authorization.expression('isAuthenticated()') ? #authentication.principal.profileImage : '/images/로그인 이미지.png'}"
+                                 alt="사용자 아이콘" class="user-icon"
+                                 onerror="this.onerror=null; this.src='/images/기본 프로필.JPG';">
                         </button>
 
                         <!-- 드롭다운 메뉴 -->

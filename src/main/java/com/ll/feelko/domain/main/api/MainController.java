@@ -30,10 +30,10 @@ public class MainController {
             @RequestParam(name = "destination", required = false) String destination,
             @RequestParam(name = "selectDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate selectDate,
             @RequestParam(name = "include_closing", defaultValue = "false") boolean includeClosing,
-            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "page", defaultValue = "1") int page,
             Model model
     ) {
-        Pageable pageable = PageRequest.of(page, 12);
+        Pageable pageable = PageRequest.of(page - 1, 12);
         Page<Experience> experiencePage;
 
         if (StringUtils.isEmpty(destination) || destination.equals("전국")) {
@@ -62,6 +62,18 @@ public class MainController {
             }
         }
 
+        // 페이지네이션을 위한 상수 (한 페이지네이션에 표시될 페이지 수)
+        final int PAGE_BLOCK = 5;
+
+        // 현재 페이지 그룹의 시작 페이지 계산 (1, 6, 11, ...)
+        int startBlockPage = ((page - 1) / PAGE_BLOCK) * PAGE_BLOCK + 1;
+
+        // 현재 페이지 그룹의 끝 페이지 계산
+        int endBlockPage = experiencePage.getTotalPages() > 0 ? Math.min(startBlockPage + PAGE_BLOCK - 1, experiencePage.getTotalPages()) : 1;
+
+
+        model.addAttribute("startBlockPage", startBlockPage);
+        model.addAttribute("endBlockPage", endBlockPage);
         model.addAttribute("experiences", experiencePage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", experiencePage.getTotalPages());

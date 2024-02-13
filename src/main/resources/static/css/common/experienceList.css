@@ -19,18 +19,26 @@
 
 .hotpost {
     margin-bottom: 15px;
-    margin-left: 25px;
+    margin-left: 0px;
     width: fit-content;
     height: fit-content;
     padding: 10px 15px;
-    background-color: #8B89FF;
-    color: white;
-    border-radius: 50px;
-    align-items: center;
-    justify-content: center;
+    background-color: #ffffff;
+    color: black;
+    text-align: left; /* 내용 왼쪽 정렬 */
     font-size: 1.5rem;
+    font-weight: bold; /* 글씨 굵게 */
     position: relative;
-    margin-top: 10px; /* 위쪽 여백 조절 */
+    margin-top: 10px;
+    display: inline-block; /* 블록 요소를 인라인처럼 배치 */
+}
+.hotpost::before {
+    content: '\1F30F'; /* 모래시계 넘어가는 중 유니코드 */
+    font-size: 2rem; /* 아이콘 크기 조절 */
+    position: absolute;
+    left: -35px; /* 아이콘 위치 조정 */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* 다른 인기글 박스들에도 동일한 스타일 적용 */
@@ -54,14 +62,14 @@
 .main-2 {
     display: flex;
     justify-content: space-evenly;
-    margin-top: 20px;
+    /*margin-top: px;*/
 }
 
-.btn1 {
-    width: 150px;
-    height: 40px;
+/*.btn1 {*/
+/*    width: 150px;*/
+/*    height: 40px;*/
 
-}
+/*}*/
 
 .hotpost-name1 {
     display: grid;
@@ -75,29 +83,29 @@
 
 
 /* 이전, 다음 버튼 css*/
-.btn1 {
-    background-color: #008CBA; /* 배경색 설정 */
-    color: white; /* 버튼 내 텍스트 색상을 흰색으로 설정 */
-    padding: 12px 24px; /* 상하 12px, 좌우 24px의 패딩을 추가 */
-    border: none; /* 테두리 제거 */
-    border-radius: 4px; /* 버튼 모서리 둥글게 */
-    font-size: 16px; /* 글자 크기 설정 */
-    font-weight: bold; /* 글자 굵기 */
-    margin: 5px; /* 주변 여백 설정 */
-    cursor: pointer; /* 마우스 오버 시 커서 변경 */
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; /* 부드러운 색상 & 그림자 변환 효과 */
-    box-shadow: 2px 2px 4px #999; /* 그림자 효과 */
+/*.btn1 {*/
+/*    background-color: #008CBA; !* 배경색 설정 *!*/
+/*    color: white; !* 버튼 내 텍스트 색상을 흰색으로 설정 *!*/
+/*    padding: 12px 24px; !* 상하 12px, 좌우 24px의 패딩을 추가 *!*/
+/*    border: none; !* 테두리 제거 *!*/
+/*    border-radius: 4px; !* 버튼 모서리 둥글게 *!*/
+/*    font-size: 16px; !* 글자 크기 설정 *!*/
+/*    font-weight: bold; !* 글자 굵기 *!*/
+/*    margin: 5px; !* 주변 여백 설정 *!*/
+/*    cursor: pointer; !* 마우스 오버 시 커서 변경 *!*/
+/*    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; !* 부드러운 색상 & 그림자 변환 효과 *!*/
+/*    box-shadow: 2px 2px 4px #999; !* 그림자 효과 *!*/
 
-    text-align: center; /* 텍스트를 버튼 내 가운데로 정렬 */
-    line-height: 5px; /* 버튼의 높이에 맞춰 세로 정렬 (버튼의 높이에 따라 조절) */
-    /* 이 line-height는 버튼의 높이와 동일하거나, 버튼 내 텍스트가 수직 중앙에 오도록 조정해야 함 */
-}
+/*    text-align: center; !* 텍스트를 버튼 내 가운데로 정렬 *!*/
+/*    line-height: 5px; !* 버튼의 높이에 맞춰 세로 정렬 (버튼의 높이에 따라 조절) *!*/
+/*    !* 이 line-height는 버튼의 높이와 동일하거나, 버튼 내 텍스트가 수직 중앙에 오도록 조정해야 함 *!*/
+/*}*/
 
-.btn1:hover {
-    background-color: #00688B; /* 호버 시 배경색 변경 */
-    color: #ff0; /* 호버 시 텍스트 색상 변경 */
-    box-shadow: 0 0 8px #fff; /* 호버 시 그림자 효과 변경 */
-}
+/*.btn1:hover {*/
+/*    background-color: #00688B; !* 호버 시 배경색 변경 *!*/
+/*    color: #ff0; !* 호버 시 텍스트 색상 변경 *!*/
+/*    box-shadow: 0 0 8px #fff; !* 호버 시 그림자 효과 변경 *!*/
+/*}*/
 
 .template--pageTitleContainer2 {
     background-color: #f9f9f9; /* 배경색 변경 */
@@ -134,4 +142,47 @@
 #search-button:hover {
     background-color: #FF0E83; /* 호버 시 색상 변경 */
     box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 약간 강화 (안쪽) */
+}
+
+.pagination-container {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+}
+
+.pagination-container li {
+    margin: 0 5px;
+}
+
+.pagination-container li a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+/* 활성 페이지 스타일 */
+.pagination-container li.active a {
+    background-color: #007bff; /* 활성 페이지 배경색 */
+    color: white; /* 활성 페이지 텍스트 색상 */
+    border: 1px solid #007bff; /* 활성 페이지 테두리 */
+}
+
+/* 호버 효과 */
+.pagination-container li.a:hover {
+    background-color: #ddd;
+}
+
+/* 비활성화된 버튼 (처음과 마지막 페이지에 대한 이동을 비활성화 할 때 사용) */
+.pagination-container li.disabled a {
+    color: #cccccc;
+    pointer-events: none;
+}
+
+/* 페이지네이션 컨테이너의 정렬을 위한 추가 스타일 */
+.pagination-container {
+    justify-content: center; /* 페이지네이션을 가운데 정렬 */
+    margin-top: 20px; /* 페이지네이션과 다른 콘텐츠 사이의 간격 */
 }

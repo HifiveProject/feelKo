@@ -13,54 +13,66 @@
 .main-1 {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* 아이템을 왼쪽으로 정렬 */
+    justify-content: flex-start; /* 컨테이너를 왼쪽에 붙임 */
     /*background-color: antiquewhite;*/
 }
 .main-2{
     display: flex;
     flex-direction: column;
-    align-items: center; /* 세로 정렬과 가운데 정렬을 위한 스타일 */
+    align-items: flex-start; /* 아이템을 왼쪽으로 정렬 */
+    justify-content: flex-start; /* 컨테이너를 왼쪽에 붙임 */
     /*background-color: blueviolet;*/
 }
 
 .hotpost {
     margin-bottom: 15px;
-    margin-left: 25px;
+    margin-left: 35px;
     width: fit-content;
     height: fit-content;
     padding: 10px 15px;
-    background-color: #8B89FF;
-    color: white;
-    border-radius: 50px;
-    align-items: center;
-    justify-content: center;
+    background-color: #ffffff;
+    color: black;
+    text-align: left; /* 내용 왼쪽 정렬 */
     font-size: 1.5rem;
+    font-weight: bold; /* 글씨 굵게 */
     position: relative;
-    margin-top: 10px; /* 위쪽 여백 조절 */
+    margin-top: 10px;
+    display: inline-block; /* 블록 요소를 인라인처럼 배치 */
 }
 .notime {
     margin-bottom: 15px;
-    margin-left: 25px;
+    margin-left: 35px;
     width: fit-content;
     height: fit-content;
     padding: 10px 15px;
-    background-color: greenyellow;
-    color: white;
-    border-radius: 50px;
-    align-items: center;
-    justify-content: center;
+    background-color: #ffffff;
+    color: black;
+    text-align: left; /* 내용 왼쪽 정렬 */
     font-size: 1.5rem;
+    font-weight: bold; /* 글씨 굵게 */
     position: relative;
-    margin-top: 10px; /* 위쪽 여백 조절 */
+    margin-top: 10px;
+    display: inline-block; /* 블록 요소를 인라인처럼 배치 */
 }
 
 .hotpost::before {
-    font-size: 1rem; /* 전경 텍스트 크기 조절 */
-    position: absolute; /* 절대 위치 지정 */
-    top: -20px; /* 위쪽으로 이동하여 겹치지 않게 함 */
-    left: 50%; /* 가운데 정렬을 위해 왼쪽으로 이동 */
-    transform: translateX(-50%); /* 가운데 정렬을 위해 X축으로 이동 */
-    font-weight: bold; /* 글자 굵게 표시 */
+    content: '\26A1'; /* 번개 모양 유니코드 */
+    color: #FFC107; /* 아이콘 색상 */
+    font-size: 2rem; /* 아이콘 크기 */
+    position: absolute;
+    left: -35px; /* 아이콘 위치 조정 */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.notime::before {
+    content: '\1F525'; /* 모래시계 넘어가는 중 유니코드 */
+    font-size: 2rem; /* 아이콘 크기 조절 */
+    position: absolute;
+    left: -35px; /* 아이콘 위치 조정 */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 /* 다른 인기글 박스들에도 동일한 스타일 적용 */
