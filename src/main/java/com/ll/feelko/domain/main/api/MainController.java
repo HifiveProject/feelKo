@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -71,7 +72,10 @@ public class MainController {
         // 현재 페이지 그룹의 끝 페이지 계산
         int endBlockPage = experiencePage.getTotalPages() > 0 ? Math.min(startBlockPage + PAGE_BLOCK - 1, experiencePage.getTotalPages()) : 1;
 
+        List<String> allDestinations = Arrays.asList("전국", "서울", "인천", "대전", "대구", "경기", "부산", "울산", "광주", "강원", "충북", "충남", "경북", "경남", "전북", "전남", "제주", "세종");
 
+        model.addAttribute("includeClosing", includeClosing);
+        model.addAttribute("allDestinations", allDestinations);
         model.addAttribute("startBlockPage", startBlockPage);
         model.addAttribute("endBlockPage", endBlockPage);
         model.addAttribute("experiences", experiencePage.getContent());
