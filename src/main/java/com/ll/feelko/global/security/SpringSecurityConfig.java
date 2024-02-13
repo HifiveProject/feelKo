@@ -58,7 +58,8 @@ public class SpringSecurityConfig {
                 .oauth2Login(
                         oauth2Login -> oauth2Login
                                 .loginPage("/member/login")
-                                .defaultSuccessUrl("/member/auth-result?msg=" + URLEncoder.encode("환영합니다.", StandardCharsets.UTF_8))
+                                .defaultSuccessUrl("/member/oauth2-result?msg=" + URLEncoder.encode("환영합니다.", StandardCharsets.UTF_8))
+                                .failureUrl("/member/login?failMsg=" + URLEncoder.encode("로그인에 실패했습니다.", StandardCharsets.UTF_8))
                 )
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))

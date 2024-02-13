@@ -15,6 +15,7 @@ public class MemberProfileDto {
     private String name;
     private String profile;
     private String phone;
+    private String status;
     @DateTimeFormat
     private LocalDate birthday;
 }

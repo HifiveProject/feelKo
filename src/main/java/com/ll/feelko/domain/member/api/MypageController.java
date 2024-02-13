@@ -44,6 +44,9 @@ public class MypageController {
     @PostMapping("/profile/update")
     public String updateProfile(MemberProfileUpdateRequest profileUpdateRequest, @AuthenticationPrincipal SecurityUser user){
         MemberProfileUpdateDto profileUpdateDto = new MemberProfileUpdateDto(
+                profileUpdateRequest.getEmail(),
+                profileUpdateRequest.getBirthday(),
+                profileUpdateRequest.getPhone(),
                 profileUpdateRequest.getProfile()
         );
         mypageService.updateProfile(user.getId(), profileUpdateDto);
@@ -52,10 +55,10 @@ public class MypageController {
 
     @GetMapping("/upload-list")
     public String showUploadedPageList(@AuthenticationPrincipal SecurityUser user,
-                                       @RequestParam(name = "page", defaultValue = "1") int page,
+                                       @RequestParam(name = "page", defaultValue = "0") int page,
                                        @RequestParam(name = "size", defaultValue = "9") int size,
                                        Model model) {
-        Page<UploadedPageDto> uploads = mypageService.getUploadedPageList(user.getId(), page-1, size);
+        Page<UploadedPageDto> uploads = mypageService.getUploadedPageList(user.getId(), page, size);
         model.addAttribute("uploads",uploads);
         return "domain/member/mypage/uploadList";
     }
@@ -78,10 +81,10 @@ public class MypageController {
 
     @GetMapping("/reservation-list")
     public String showReservationList(@AuthenticationPrincipal SecurityUser user,
-                                      @RequestParam(name = "page", defaultValue = "1") int page,
+                                      @RequestParam(name = "page", defaultValue = "0") int page,
                                       @RequestParam(name = "size", defaultValue = "9") int size,
                                       Model model) {
-        Page<ReservationDto> reservations = mypageService.getReservationListByMemberId(user.getId(), page-1, size);
+        Page<ReservationDto> reservations = mypageService.getReservationListByMemberId(user.getId(), page, size);
         model.addAttribute("reservations",reservations);
         return "domain/member/mypage/reservation-list";
     }
