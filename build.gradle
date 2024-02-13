@@ -103,12 +103,10 @@ tasks.withType(JavaCompile).configureEach {
 jib {
     from {
         image = "openjdk:17"
-        platform = "linux/amd64"
     }
     to {
         image = 'hwangjungseok/jib-feelko' // 이미지를 푸시할 Docker Hub 레지스트리의 URL을 지정합니다.
         tags = ['1.0'] // 이미지에 지정할 태그 이름을 지정합니다.
-        platform = "linux/amd64"
     }
     container {
         entrypoint = ['java', '-Dspring.profiles.active=test', '-jar', 'test-docker-spring-boot-0.0.1-SNAPSHOT.jar'] // 컨테이너가 시작될 때 실행할 명령을 지정합니다.
