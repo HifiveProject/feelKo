@@ -186,3 +186,12 @@
     justify-content: center; /* 페이지네이션을 가운데 정렬 */
     margin-top: 20px; /* 페이지네이션과 다른 콘텐츠 사이의 간격 */
 }
+
+.hotpost-1 {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.hotpost-1:hover {
+    transform: scale(1.05);
+}

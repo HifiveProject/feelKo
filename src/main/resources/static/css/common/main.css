@@ -94,6 +94,7 @@
 }
 
 .hotpost-name1{
+    margin-bottom: 10px;
     display: grid;
     font-size: 15px;
     margin-left: 10px;
@@ -101,6 +102,10 @@
 }
 .postname{
     margin-right: 5px;
+    font-weight: bold;
+    font-size: 17px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .template--pageTitleContainer2 {
@@ -138,4 +143,13 @@
 #search-button:hover {
     background-color: #FF0E83; /* 호버 시 색상 변경 */
     box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 약간 강화 (안쪽) */
+}
+
+.hotpost-1 {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.hotpost-1:hover {
+    transform: scale(1.05);
 }
