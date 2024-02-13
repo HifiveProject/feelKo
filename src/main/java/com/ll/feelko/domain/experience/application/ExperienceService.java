@@ -27,6 +27,10 @@ public class ExperienceService {
 
         Member member = memberService.findByIdElseThrow(dto.getMemberId());
 
+        if(dto.getStartDate().isBefore(LocalDate.now()) || dto.getEndDate().isBefore(dto.getStartDate())){
+            throw new IllegalArgumentException("시작 날짜는 오늘 이전 날짜를 선택할 수 없으며, 마감 날짜는 시작 날짜 이전 날짜를 선택하라 수 없습니다.");
+        }
+
         //리팩토링
         Experience experience = Experience.builder()
                 .memberId(member.getId())

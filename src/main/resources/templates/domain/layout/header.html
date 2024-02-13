@@ -11,13 +11,8 @@
 
     <title>Feelko-template3</title>
 
-    <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <!-- fontAwesome -->
-    <script src="https://kit.fontawesome.com/ae1a88d4e2.js" crossorigin="anonymous"></script>
 </head>
 <body class="template--body">
 
@@ -40,25 +35,27 @@
             </header>
             <ul class="nav justify-content-around" id="common--boardList">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/experienceList">자유게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/html/board/boardQuestion.html">질문게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.naver.com" style="color:grey;">예비게시판실험</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.naver.com" style="color:grey;">예비게시판실험</a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/experienceList">자유게시판</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/html/board/boardQuestion.html">질문게시판</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="https://www.naver.com" style="color:grey;">예비게시판실험</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="https://www.naver.com" style="color:grey;">예비게시판실험</a>-->
+<!--                </li>-->
                 <!-- 로그인/프로필 버튼과 드롭다운 메뉴를 포함하는 리스트 아이템 -->
                 <li class="nav-item dropdown">
                     <div class="icon-container">
                         <!-- 버튼 형태로 변경, 햄버거 메뉴 아이콘과 프로필 아이콘을 포함 -->
                         <button class="btn" id="moreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="/images/menu-icon.svg" alt="메뉴 아이콘" class="hamburger-icon"> <!-- 햄버거 아이콘 -->
-                            <img th:src="${#authorization.expression('isAuthenticated()') ? #authentication.principal.profileImage : '/images/로그인 이미지.png'}" alt="사용자 아이콘" class="user-icon">
+                            <img th:src="${#authorization.expression('isAuthenticated()') ? #authentication.principal.profileImage : '/images/로그인 이미지.png'}"
+                                 alt="사용자 아이콘" class="user-icon"
+                                 onerror="this.onerror=null; this.src='/images/기본 프로필.JPG';">
                         </button>
 
                         <!-- 드롭다운 메뉴 -->
@@ -78,9 +75,6 @@
                                 <a class="dropdown-item" href="/member/mypage">마이페이지</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a class="dropdown-item" href="/member/mypage/profile">개인정보</a>
-                            </li>
-                            <li th:if="${#authorization.expression('isAuthenticated()')}">gg
                                 <a class="dropdown-item" href="/member/mypage/reservation-list">결제&예약 정보</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">
@@ -93,7 +87,7 @@
                                 <a class="dropdown-item" href="/member/mypage/wishlist">찜, 위시 리스트</a>
                             </li>
                             <li th:if="${#authorization.expression('isAuthenticated()')}">
-                                <a class="dropdown-item" href="#">메시지</a>
+                                <a class="dropdown-item" href="/chat/room/list">메시지</a>
                             </li>
                         </ul>
                     </div>
@@ -108,10 +102,6 @@
 </header>
 <!-- Template-header 끝 -->
 
-<!-- bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous" defer></script>
 <!-- js -->
 <script src="/js/common/header.js"></script>
 </body>
