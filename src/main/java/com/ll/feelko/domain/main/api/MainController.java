@@ -47,11 +47,9 @@ public class MainController {
         } else {
             // 특정 지역이 선택된 경우 해당 지역의 경험 검색
             if (selectDate == null) {
-                if(includeClosing)
-                {
+                if (includeClosing) {
                     experiencePage = experienceService.searchExperiencesIncludingClosing(destination, selectDate, pageable);
-                }
-                else {
+                } else {
                     experiencePage = experienceService.searchExperiencesByLocation(destination, pageable);
                 }
             } else {
@@ -88,15 +86,23 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String popularExperiences(Model model) {
+    public String mainPage(@RequestParam(name = "destination", required = false) String destination,
+                                     @RequestParam(name = "selectDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate selectDate,
+                                     @RequestParam(name = "include_closing", defaultValue = "false") boolean includeClosing,
+                                     Model model) {
         Pageable pageable = PageRequest.of(0, 8); // 최대 6개의 결과를 가져오도록 설정
         List<Experience> popularExperiences = experienceService.findPopularExperiences(pageable);
-
         // 마감 임박 체험 리스트 가져오기
         List<Experience> closingSoonExperiences = experienceService.findClosingSoonExperiences();
 
+        List<String> allDestinations = Arrays.asList("전국", "서울", "인천", "대전", "대구", "경기", "부산", "울산", "광주", "강원", "충북", "충남", "경북", "경남", "전북", "전남", "제주", "세종");
+
+        model.addAttribute("includeClosing", includeClosing);
+        model.addAttribute("allDestinations", allDestinations);
         model.addAttribute("popularExperiences", popularExperiences);
         model.addAttribute("closingSoonExperiences", closingSoonExperiences);
+        model.addAttribute("selectedLocation", destination);
+        model.addAttribute("selectDate", selectDate);
         return "domain/main/mainpage";
     }
 }
