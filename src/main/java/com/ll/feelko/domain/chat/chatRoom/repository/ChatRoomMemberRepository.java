@@ -24,7 +24,7 @@ public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember,L
 
     boolean existsByChatRoomIdAndMemberId(long roomId, long memberId);
 
-    Long deleteChatRoomMemberByChatRoomIdAndMemberId(long roomId, long memberId);
+    Long deleteChatRoomMemberByChatRoomIdAndMemberId(long roomId, long memberId); //삭제된 수 리턴
 
     List<ChatRoomMember> findChatRoomMemberByChatRoomId(Long chatRoomId);
 

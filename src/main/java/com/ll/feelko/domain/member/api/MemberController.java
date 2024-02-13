@@ -59,9 +59,4 @@ public class MemberController {
 
         return "global/historyBack";
     }
-
-    @GetMapping("/test")
-    public String test(){
-        return "global/test";
-    }
 }

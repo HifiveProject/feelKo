@@ -56,7 +56,6 @@ public class NotProd {
                         MemberRegisterDto memberRegisterDto = new MemberRegisterDto(
                                 "test", "test", "test", null, "010-1111-1111", null, null);
                         memberRegisterDto.setEmail("test" + i);
-
                         return memberService.register(memberRegisterDto);
                     })
                     .toList();
