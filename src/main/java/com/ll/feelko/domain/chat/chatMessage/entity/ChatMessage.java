@@ -1,14 +1,12 @@
 package com.ll.feelko.domain.chat.chatMessage.entity;
 
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoom;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +20,7 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @SuperBuilder
 @ToString(callSuper = true)
+@EntityListeners(AuditingEntityListener.class)
 public class ChatMessage {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -44,6 +43,4 @@ public class ChatMessage {
     private String content;
 
     private Long senderId;
-
-    private String chatRoomName;
 }

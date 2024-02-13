@@ -29,8 +29,8 @@ public class SpringSecurityConfig {
                 )
                 .sessionManagement(session -> session
                         .sessionFixation().migrateSession() // 세션 고정 공격 방지
-                        .invalidSessionUrl("/member/login?error=invalidSession") // 유효하지 않은 세션 접근 시 리다이렉트
-                        .maximumSessions(1).expiredUrl("/member/login?error=expiredSession") // 동시 세션 제어
+                        .invalidSessionUrl("/member/auth-result")
+                        .maximumSessions(1).expiredUrl("/member/auth-result?failMsg="+URLEncoder.encode("비정상적인 접근입니다.", StandardCharsets.UTF_8))
                 )
                 .csrf(
                         csrf ->
@@ -52,11 +52,13 @@ public class SpringSecurityConfig {
                                         .usernameParameter("email") // email 필드 이름을 지정
                                         .passwordParameter("password") // password 필드 이름을 지정
                                         .loginPage("/member/login")
-                                        .defaultSuccessUrl("/?msg=" + URLEncoder.encode("환영합니다.", StandardCharsets.UTF_8))
-                                        .failureUrl("/member/login?error=true")
+                                        .defaultSuccessUrl("/member/auth-result?msg=" + URLEncoder.encode("환영합니다.", StandardCharsets.UTF_8))
+                                        .failureUrl("/member/login?failMsg=" + URLEncoder.encode("아이디 또는 비밀번호가 일치하지 않습니다.", StandardCharsets.UTF_8))
                 )
                 .oauth2Login(
-                        oauth2Login -> oauth2Login.loginPage("/member/login")
+                        oauth2Login -> oauth2Login
+                                .loginPage("/member/login")
+                                .defaultSuccessUrl("/member/auth-result?msg=" + URLEncoder.encode("환영합니다.", StandardCharsets.UTF_8))
                 )
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))

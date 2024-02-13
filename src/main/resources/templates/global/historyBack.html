@@ -1,0 +1,14 @@
+<script th:inline="javascript">
+    const failMsg = /*[[${failMsg}]]*/ null;
+    const msg = /*[[${msg}]]*/ null;
+
+    //model이나 response에 attribute로 "failMsg"라는 이름에 메세지를 담으면
+    //뒤로가기된 페이지에서 "historyBackFailMsg"라는 이름으로 메세지를 보여줄 수 있다.
+    // 세션에서 lastVisitedUrl을 가져옴
+    const lastVisitedUrl = sessionStorage.getItem('lastVisitedUrl') || '/';
+
+    if (failMsg !== null) sessionStorage.setItem("historyBackFailMsg", failMsg);
+    if (msg !== null) sessionStorage.setItem("historyBackMsg", msg);
+
+    window.location.href = lastVisitedUrl;
+</script>

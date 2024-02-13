@@ -8,12 +8,14 @@
 }
 
 .content {
-    flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
     display: flex; /* 내부 요소를 flex로 정렬 */
+    flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
+    justify-content: center;
+    gap: 20px;
 }
 
 .main-content {
-    flex-grow: 1; /* 남은 공간을 모두 차지하도록 설정 */
+
     padding: 20px; /* 콘텐츠에 패딩 추가 */
     width: 80%;
 }
