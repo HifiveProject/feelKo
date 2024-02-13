@@ -20,6 +20,7 @@
 }
 .common--header__container > a > img {
     height: 80px;
+    margin-left:-150px;
 }
 /* input 태그 outline 없애기 */
 input:focus {
@@ -42,7 +43,7 @@ input:focus {
     display: flex; /* 수평 정렬을 위해 추가한 부분 */
     justify-content: center; /* 가운데 정렬을 위해 추가한 부분 */
     align-items: center; /* 가운데 정렬을 위해 추가한 부분 */
-    width: 100%; /* 가로 전체에 걸쳐 정렬되도록 추가한 부분 */
+    width: 10%; /* 가로 전체에 걸쳐 정렬되도록 추가한 부분 */
 }
 
 #common--boardList li {

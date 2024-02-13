@@ -13,6 +13,11 @@
 
     <title>Feelko-template3</title>
 
+    <script>
+        // 이 페이지에서는 URL을 세션에 저장하지 않음
+        var dontSave = true;
+    </script>
+
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -76,30 +81,60 @@
         <!-- 콘텐츠 시작 -->
         <div class="login-container">
             <div class="login-box">
-                <form method="POST" onsubmit="submitLoginForm(this);" class="form-container">
+                <form method="POST" onsubmit="return submitLoginForm(event);" class="form-container">
                     <div class="mb-3">
-                        <label for="emailInput" class="form-label">사용자 email</label>
-                        <input type="text" class="form-control" id="emailInput" name="email">
+                        <label for="emailInput" class="form-label">
+                            사용자(email)    <i class="fa-solid fa-asterisk" style="color: red;"></i>
+                        </label>
+                        <input type="email" class="form-control" id="emailInput" name="email" onfocus="showDefaultMessage('email')">
+                        <!-- 기본 안내 메시지 -->
+                        <div id="emailDefault" class="form-text">
+                            예시: yourname@example.com
+                        </div>
+                        <!-- 에러 메시지 -->
+                        <div id="emailError" class="form-text" style="color: red; display: none;">
+                            올바른 이메일 형식이 아닙니다. 다시 확인해 주세요.
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="passwordInput" class="form-label">비밀번호</label>
+                        <label for="passwordInput" class="form-label">
+                            비밀번호    <i class="fa-solid fa-asterisk" style="color: red;"></i>
+                        </label>
                         <input type="password" class="form-control" id="passwordInput" name="password">
+                        <div id="passwordError" class="form-text" style="color: red; display: none;">
+                            비밀번호를 입력해 주세요.
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="nameInput" class="form-label">이름</label>
+                        <label for="nameInput" class="form-label">
+                            이름    <i class="fa-solid fa-asterisk" style="color: red;"></i>
+                        </label>
                         <input type="text" class="form-control" id="nameInput" name="name">
+                        <div id="nameError" class="form-text" style="color: red; display: none;">
+                            이름을 입력해 주세요.
+                        </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="profileInput" class="form-label">프로필</label>
+                        <label for="profileInput" class="form-label">프로필(URL)</label>
                         <input type="text" class="form-control" id="profileInput" name="profile">
                     </div>
 
                     <div class="mb-3">
-                        <label for="phoneInput" class="form-label">전화번호</label>
-                        <input type="text" class="form-control" id="phoneInput" name="phone">
+                        <label for="phoneInput" class="form-label">
+                            전화번호    <i class="fa-solid fa-asterisk" style="color: red;"></i>
+                        </label>
+                        <input type="tel" class="form-control" id="phoneInput" name="phone" onfocus="showDefaultMessage('phone')">
+                        <!-- 기본 안내 메시지 -->
+                        <div id="phoneDefault" class="form-text">
+                            예시: 010-1234-5678
+                        </div>
+                        <!-- 에러 메시지 -->
+                        <div id="phoneError" class="form-text" style="color: red; display: none;">
+                            올바른 전화번호 형식이 아닙니다. 예시: 010-1234-5678
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -139,5 +174,89 @@
 <script src="/js/common/header.js"></script>
 <script src="/js/common/main.js"></script>
 <script src="/js/common/footer.js"></script>
+
+<script>
+    var phoneValidationFailed = false;
+    var emailValidationFailed = false;
+
+    function showDefaultMessage(field) {
+        // 유효성 검사에 실패한 적이 없으면 기본 메시지 출력
+        if (field === 'phone' && !phoneValidationFailed) {
+            document.getElementById(field + 'Default').style.display = 'block';
+            document.getElementById(field + 'Error').style.display = 'none';
+        } else if (field === 'email' && !emailValidationFailed) {
+            document.getElementById(field + 'Default').style.display = 'block';
+            document.getElementById(field + 'Error').style.display = 'none';
+        }
+    }
+
+    function submitLoginForm(event){
+        var isValid = true; // 폼 유효성 기본값
+
+        // 이메일 유효성 검사
+        var emailInput = document.getElementById('emailInput');
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailInput.value)) {
+            // 유효성 검사 실패
+            document.getElementById('emailError').style.display = 'block';
+            document.getElementById('emailDefault').style.display = 'none'; // 기본 메시지 숨기기
+            emailValidationFailed = true; // 유효성 검사 실패 처리
+            isValid = false;
+        } else {
+            // 유효성 검사에 성공하면 기본 메시지를 숨깁니다(이미 에러가 발생했었다면).
+            document.getElementById('emailError').style.display = 'none';
+            if (!emailValidationFailed) {
+                // 에러가 한 번도 발생하지 않았다면 기본 메시지를 계속 보여줍니다.
+                document.getElementById('emailDefault').style.display = 'block';
+            }
+        }
+
+        // 전화번호 유효성 검사
+        var phoneInput = document.getElementById('phoneInput');
+        var phonePattern = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
+        if (!phonePattern.test(phoneInput.value)) {
+            // 유효성 검사 실패
+            document.getElementById('phoneError').style.display = 'block';
+            document.getElementById('phoneDefault').style.display = 'none'; // 기본 메시지 숨기기
+            phoneValidationFailed = true; // 유효성 검사 실패 처리
+            isValid = false;
+        } else {
+            // 유효성 검사에 성공하면 기본 메시지를 숨깁니다(이미 에러가 발생했었다면).
+            document.getElementById('phoneError').style.display = 'none';
+            if (!phoneValidationFailed) {
+                // 에러가 한 번도 발생하지 않았다면 기본 메시지를 계속 보여줍니다.
+                document.getElementById('phoneDefault').style.display = 'block';
+            }
+        }
+
+        // 이름 필드 공백 검사
+        var nameInput = document.getElementById('nameInput');
+        if (!nameInput.value.trim()) {
+            document.getElementById('nameError').style.display = 'block';
+            isValid = false; // 유효하지 않다면 false
+        } else {
+            document.getElementById('nameError').style.display = 'none';
+        }
+
+        // 비밀번호 필드 공백 검사
+        var passwordInput = document.getElementById('passwordInput');
+        if (!passwordInput.value.trim()) {
+            document.getElementById('passwordError').style.display = 'block';
+            isValid = false; // 유효하지 않다면 false
+        } else {
+            document.getElementById('passwordError').style.display = 'none';
+        }
+
+        // 유효하지 않은 입력이 있으면 폼 제출 방지
+        if (!isValid) {
+            event.preventDefault(); // 폼 제출 방지
+            alert('입력 형식을 확인해 주세요.');
+            return false; // onsubmit return false 반환
+        }
+        return true;
+    }
+</script>
+
+
 </body>
 </html>
