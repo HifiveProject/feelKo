@@ -14,7 +14,7 @@ public interface WishListRepository extends JpaRepository<WishList, Long> {
 
     Optional<WishList> findByMemberIdAndExperienceId(Long memberId, Long experienceId);
 
-    @Query("SELECT new com.ll.feelko.domain.wishlist.dto.WishListPageDto(w.experience.id, w.experience.imageUrl, w.experience.title, w.experience.price, w.experience.startDate, w.experience.endDate) FROM WishList w WHERE w.member.id = :memberId ORDER BY w.id DESC")
+    @Query("SELECT new com.ll.feelko.domain.wishlist.dto.WishListPageDto(w.experience.id, w.experience.imageUrl, w.experience.title, w.experience.price, w.experience.startDate, w.experience.endDate) FROM WishList w WHERE w.member.id = :memberId AND w.experience.experienceClose = false ORDER BY w.id DESC")
     Page<WishListPageDto> findIdTitleByMemberIdOrderByIdDesc(@Param("memberId") long memberId, Pageable pageable);
 
 
