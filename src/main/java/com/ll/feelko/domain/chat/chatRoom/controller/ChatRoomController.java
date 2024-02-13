@@ -80,7 +80,7 @@ public class ChatRoomController {
             @AuthenticationPrincipal SecurityUser user,
             @PathVariable String theirInfo
     ) {
-        ChatRoomMemberInfoDto myInfoDto = new ChatRoomMemberInfoDto(user.getId(), user.getName());
+        ChatRoomMemberInfoDto myInfoDto = new ChatRoomMemberInfoDto(user.getId(), user.getName(), user.getProfileImage());
         ChatRoomMemberInfoDto theirInfoDto = null;
 
         if (chatRoomService.isNumeric(theirInfo)) {

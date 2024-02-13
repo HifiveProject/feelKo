@@ -10,4 +10,5 @@ import lombok.Setter;
 public class ChatRoomMemberInfoDto {
     Long id;
     String name;
+    String imageUrl;
 }

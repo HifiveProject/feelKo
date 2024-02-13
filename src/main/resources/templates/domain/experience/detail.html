@@ -18,7 +18,7 @@
 <body class="template--body">
 
 <!-- Template-header 시작 -->
-<th:block th:replace="domain/layout/header"> </th:block>
+<th:block th:replace="~{domain/layout/header}"> </th:block>
 <!-- Template-header 끝 -->
 
 <!-- Template-main 시작 -->
@@ -38,7 +38,7 @@
                         <p th:text="'설명: ' + ${experience.descriptionText}"></p>
                         <p th:text="'시작 날짜: ' + ${experience.startDate}"></p>
                         <p th:text="'종료 날짜: ' + ${experience.endDate}"></p>
-                        <p th:text="${experience.experienceClose} ? '상태: 마감' : '상태: 운영중'"></p>
+                        <p th:text="${experience.experienceClose} ? '상태: 예약불가(마감)' : '상태: 예약가능'"></p>
                         <p th:text="'남은 인원수: ' + ${experience.headcount}"></p>
                         <p th:text="'가격 : ' + ${#numbers.formatInteger(experience.price, 1, 'COMMA')} + ' 원'"></p>
                         <div th:if="${isLogined}">
@@ -116,7 +116,7 @@
 <!-- Template-main 끝 -->
 
 <!-- Template-footer 시작 -->
-<th:block th:replace="domain/layout/footer"> </th:block>
+<th:block th:replace="~{domain/layout/footer}"> </th:block>
 <!-- Template-footer 끝 -->
 
 <script th:inline="javascript" type="text/javascript">
@@ -139,9 +139,7 @@
 </script>
 
 <!-- js -->
-<script src="/js/common/header.js"></script>
 <script src="/js/common/main.js"></script>
-<script src="/js/common/footer.js"></script>
 
 <!-- 찜 관련 script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
