@@ -78,6 +78,21 @@ public class NotProd {
                         .build());
             }));
 
+            members.forEach(member -> IntStream.rangeClosed(1, 10).forEach(i -> {
+                experienceService.createExperience(ExperienceCreateDTO.builder()
+                        .memberId(member.getId())
+                        .title("title" + i)
+                        .startDate(LocalDate.now())
+                        .endDate(LocalDate.now())
+                        .price(new BigDecimal(1000000))
+                        .imageFiles(null)
+                        .location("인천")
+                        .experienceClose(true)
+                        .descriptionText("내용" + i)
+                        .headcount(10L)
+                        .build());
+            }));
+
             //테스트 결제 정보 데이터 생성
             Experience experience = experienceService.findByIdElseThrow(10L);
             Member member = memberService.findByIdElseThrow(3L);
