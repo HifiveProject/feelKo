@@ -42,6 +42,7 @@ public class MemberServiceImpl implements MemberService{
                 .birthday(registerDto.getBirthday())
                 .providerId(registerDto.getProviderId())
                 .roles("USER") // 그냥 string으로 할지 Grantedauthority로 할지
+                .status(registerDto.getStatus())
                 .build();
         memberRepository.save(member);
 
@@ -82,7 +83,8 @@ public class MemberServiceImpl implements MemberService{
                 socialLoginDto.getProfileImageUrl(),
                 null,
                 null,
-                socialLoginDto.getProviderId()
+                socialLoginDto.getProviderId(),
+                "incomplete"
         );
 
         return register(registerDto);

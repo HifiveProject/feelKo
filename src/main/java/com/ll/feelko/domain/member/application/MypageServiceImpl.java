@@ -51,6 +51,7 @@ public class MypageServiceImpl implements MypageService{
                 member.getName(),
                 member.getProfile(),
                 member.getPhone(),
+                member.getStatus(),
                 member.getBirthday()
         );
 
@@ -60,7 +61,7 @@ public class MypageServiceImpl implements MypageService{
     @Transactional
     public void updateProfile(Long id, MemberProfileUpdateDto profileUpdateDto) {
         Member member = memberRepository.findById(id).get();
-        member.updateProfile(profileUpdateDto.getProfile());
+        member.updateProfile(profileUpdateDto);
     }
 
     @Override

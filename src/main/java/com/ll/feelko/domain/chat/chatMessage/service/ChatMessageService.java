@@ -57,6 +57,7 @@ public class ChatMessageService {
         //채팅 방에 있는 모든 멤버의 list에 메세지 보내기
         for(ChatRoomMember chatRoomMember : chatRoomMembers){
             writeBody.setChatRoomName(chatRoomMember.getChatRoomName());
+            writeBody.setImageUrl(chatRoomMember.getImageUrl());
             messagingTemplate.convertAndSend("/topic/chat/room/list/"
                                              + chatRoomMember.getId().getMemberId() //memberId
                                              + "/message", writeBody);

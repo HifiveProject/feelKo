@@ -13,4 +13,5 @@ public class ChatRoomListDto {
     private Long latestMessageId;
     private String lastMessage;
     private String lastWriter;
+    private String imageUrl;
 }

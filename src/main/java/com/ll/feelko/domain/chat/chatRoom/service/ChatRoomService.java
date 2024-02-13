@@ -35,7 +35,8 @@ public class ChatRoomService {
                     (String) result[1], // name
                     (Long) result[2], // latestMessageId
                     (String) result[3], // lastMessage
-                    (String) result[4] //lastWriter
+                    (String) result[4], //lastWriter
+                    (String) result[5] //imageUrl
             ));
         }
         return chatRooms;
@@ -77,6 +78,7 @@ public class ChatRoomService {
                         .orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
                 .chatRoom(chatRoom)
                 .chatRoomName(chatRoomName)
+                .imageUrl(theirInfoDto.getImageUrl())
                 .build();
 
         ChatRoomMember theirChatRoomMember = ChatRoomMember.builder()
@@ -85,6 +87,7 @@ public class ChatRoomService {
                         .orElseThrow(() -> new RuntimeException("Member not found"))) // 멤버 엔티티 참조 설정
                 .chatRoom(chatRoom)
                 .chatRoomName(chatRoomName)
+                .imageUrl(myInfoDto.getImageUrl())
                 .build();
 
         chatRoomMemberRepository.save(myChatRoomMember);
@@ -96,15 +99,16 @@ public class ChatRoomService {
     //리팩토링 필요
     public ChatRoomMemberInfoDto createInfoDtoByExperienceId(Long experienceId) {
         Experience experience = experienceRepository.findById(experienceId).orElseThrow(() -> new NoSuchElementException("체험이 존재하지 않습니다."));
-        Member member = memberRepository.findById(experience.getMemberId()).orElseThrow(() -> new NoSuchElementException("멤버가 존재하지 않습니다."));;
+        Member member = memberRepository.findById(experience.getMemberId()).orElseThrow(() -> new NoSuchElementException("멤버가 존재하지 않습니다."));
+        ;
 
-        return new ChatRoomMemberInfoDto(member.getId(), member.getName());
+        return new ChatRoomMemberInfoDto(member.getId(), member.getName(), member.getProfile());
     }
 
     public ChatRoomMemberInfoDto createInfoDtoByEmail(String email) {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new NoSuchElementException("email이 존재하지 않습니다."));
 
-        return new ChatRoomMemberInfoDto(member.getId(), member.getName());
+        return new ChatRoomMemberInfoDto(member.getId(), member.getName(), member.getProfile());
     }
 
     public Optional<ChatRoom> findById(long roomId) {

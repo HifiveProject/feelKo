@@ -32,6 +32,7 @@
         }
 
         .chat-room-name {
+            font-weight: bold;
             margin-left: 5px;
         }
 
@@ -39,6 +40,10 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
+        }
+
+        .last-writer{
+            color: #555555;
         }
 
         .last-message {
@@ -58,6 +63,14 @@
         .chat-room-item:hover {
             background-color: #f2f2f2;
             cursor: pointer;
+        }
+
+        .chat-room-image {
+            width: 50px; /* 이미지의 폭 */
+            height: 50px; /* 이미지의 높이 */
+            border-radius: 50%; /* 원형으로 만들기 */
+            margin-right: 10px; /* 이미지와 텍스트 사이 간격 */
+            object-fit: cover; /* 이미지 비율 유지하며 채우기 */
         }
     </style>
 </head>
@@ -84,16 +97,21 @@
 
     <!-- 채팅방 목록 -->
     <section class="main-content">
+        <!-- 채팅방 목록 위 또는 아래에 메시지를 추가할 공간 -->
+        <h6 id="noChatRoomMessage" style="display: none; text-align: center; margin-top: 50px;">
+            생성된 채팅방이 없습니다.
+        </h6>
         <ul class="chat__messages">
             <li class="chat-room-item" th:each="chatRoomListDto : ${chatRooms}"
                 th:data-chat-room-id="${chatRoomListDto.getChatRoomId()}"
                 th:onclick="'window.location.href=\'/chat/room/' + ${chatRoomListDto.getChatRoomId()} + '\''">
+                <img src="" alt="채팅방 이미지" class="chat-room-image" th:src="${chatRoomListDto.getImageUrl()}">
                 <div class="chat-room-info">
                     <span class="chat-room-id" th:text="|(${chatRoomListDto.getChatRoomId()})|">채팅방 id</span>
                     <span class="chat-room-name" th:text="${chatRoomListDto.getName()}">채팅방 이름</span>
                 </div>
                 <div class="last-message-info">
-                    <span th:text="${chatRoomListDto.getLastWriter()}">마지막작성자</span>
+                    <span class="last-writer" th:text="${chatRoomListDto.getLastWriter()}">마지막작성자</span>
                     <span class="last-message" th:text="${chatRoomListDto.getLastMessage()}">마지막 메세지</span>
                 </div>
             </li>
@@ -128,7 +146,7 @@
 
     const chatMessagesEl = document.querySelector('.chat__messages');
 
-    function drawMoreChatMessage(message, eventType, chatRoomName) {
+    function drawMoreChatMessage(message, eventType, chatRoomName, imageUrl) {
         // 기존의 채팅방 메시지가 있는지 확인하고, 있다면 해당 요소를 삭제합니다.
         const existingChatRoomElement = chatMessagesEl.querySelector(`li[data-chat-room-id="${message.chatRoom.id}"]`);
         if (existingChatRoomElement) {
@@ -139,6 +157,7 @@
             // 새 채팅방 메시지를 삽입합니다. 링크 추가 포함
             const chatRoomItemHtml = `
             <li class="chat-room-item" data-chat-room-id="${message.chatRoom.id}" onclick="location.href='/chat/room/${message.chatRoom.id}'">
+            <img src="${imageUrl}" alt="채팅방 이미지" class="chat-room-image">
             <div class="chat-room-info">
                 <span class="chat-room-id">(${message.chatRoom.id})</span>
                 <span class="chat-room-name">${chatRoomName}</span>
@@ -149,10 +168,9 @@
             </div>
         </li>
         `;
-
             chatMessagesEl.insertAdjacentHTML("afterBegin", chatRoomItemHtml);
         }
-
+        updateNoChatRoomMessageDisplay();
     }
 
     const socket = new SockJS('/ws');
@@ -162,12 +180,14 @@
         console.log('Connected: ' + frame);
         stompClient.subscribe(`/topic/chat/room/list/` + memberId + `/message`, function (data) {
             const jsonData = JSON.parse(data.body);
-            drawMoreChatMessage(jsonData.message, jsonData.eventType, jsonData.chatRoomName);
+            drawMoreChatMessage(jsonData.message, jsonData.eventType, jsonData.chatRoomName, jsonData.imageUrl);
         });
     });
 
     //우클릭 드롭박스 이벤트리스너
     document.addEventListener('DOMContentLoaded', (event) => {
+        updateNoChatRoomMessageDisplay();
+
         const chatMessagesEl = document.querySelector('.chat__messages');
         const customContextMenu = document.getElementById('customContextMenu');
 
@@ -237,6 +257,16 @@
             };
         });
     });
+
+    function updateNoChatRoomMessageDisplay() {
+        const chatRooms = document.querySelectorAll('.chat-room-item').length;
+        const noChatRoomMessageEl = document.getElementById('noChatRoomMessage');
+        if (chatRooms === 0) {
+            noChatRoomMessageEl.style.display = 'block'; // 메시지 표시
+        } else {
+            noChatRoomMessageEl.style.display = 'none'; // 메시지 숨기기
+        }
+    }
 
     // 채팅방 목록 아이템 클릭 이벤트 추가
     document.querySelectorAll('.chat-room-item').forEach(item => {

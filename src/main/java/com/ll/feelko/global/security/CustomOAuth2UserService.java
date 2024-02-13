@@ -47,8 +47,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         Member member = memberService.whenSocialLogin(socialLoginDto);
 
-        return new SecurityUser(member.getId(), member.getName(), member.getEmail(), member.getPassword(), member.getProfile(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + member.getRoles())));
+        return new SecurityUser(
+                member.getId(),
+                member.getName(),
+                member.getEmail(),
+                member.getPassword(),
+                member.getProfile(),
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + member.getRoles())),
+                member.getStatus()
+                );
     }
 
     //구글 데이터 추출
@@ -85,7 +92,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String nickname = (String) attributesProperties.get("nickname");
         String profileImageUrl = (String) attributesProperties.get("profile_image");
         String providerId = providerTypeCode + "__" + oauthId;
-        String email = nickname + "@" + providerTypeCode;
+        String email = nickname + "@" + providerTypeCode + (int) (Math.random()*100000);
 
         return new SocialLoginDto(providerTypeCode, email, profileImageUrl, providerId, nickname);
     }

@@ -28,6 +28,8 @@ public class ChatRoomMember {
 
     private String chatRoomName; //사용자마다 채팅방 이름을 다르게 설정할 수 있도록
 
+    private String imageUrl;
+
     public void setChatRoomName(String chatRoomName){
         this.chatRoomName = chatRoomName;
     }
