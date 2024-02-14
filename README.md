@@ -18,11 +18,11 @@
 ## ERD
 ![img.png](img.png)
 
-## 패키지 구조 파일 포함
+## 패키지 구조
 <details>
-<summary> 패키지</summary>
+<summary> FeelKo</summary>
 <pre><code>
-📦feelko
+📦feelKo
  ┣ 📂domain
  ┃ ┣ 📂chat
  ┃ ┃ ┣ 📂chatMessage
