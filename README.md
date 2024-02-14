@@ -21,8 +21,7 @@
 ## 패키지 구조 파일 포함
 <details>
 <summary> 패키지</summary>
-<pre><code>
-📦feelko
+```bash
 📦feelko
  ┣ 📂domain
  ┃ ┣ 📂chat
@@ -79,5 +78,5 @@
  ┃ ┣ 📂init
  ┃ ┣ 📂security
  ┃ ┗ 📂websocket
-</code></pre>
+```
 </details>
