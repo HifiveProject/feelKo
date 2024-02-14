@@ -65,7 +65,7 @@
                         <label for="emailInput" class="form-label">
                             사용자(email)    <i class="fa-solid fa-asterisk" style="color: red;"></i>
                         </label>
-                        <input type="email" class="form-control" id="emailInput" name="email" th:field="*{profileDto.email}" th:disabled="${profileDto.status == 'complete'}" onfocus="showDefaultMessage('email')">
+                        <input type="email" class="form-control" id="emailInput" name="email" th:field="*{profileDto.email}" th:disabled="${profileDto.prvider!='KAKAO' || rofileDto.status == 'complete'}" onfocus="showDefaultMessage('email')">
                         <!-- 기본 안내 메시지 -->
                         <div id="emailDefault" class="form-text">
                             예시: yourname@example.com

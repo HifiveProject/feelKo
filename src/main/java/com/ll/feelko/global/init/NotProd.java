@@ -55,7 +55,7 @@ public class NotProd {
             List<Member> members = IntStream.rangeClosed(1, 5)
                     .mapToObj(i -> {
                         MemberRegisterDto memberRegisterDto = new MemberRegisterDto(
-                                "test", "test", "test", null, "010-1111-1111", null, null, "complete");
+                                "test", "test", "test", null, "010-1111-1111", null, null, "complete",null);
                         memberRegisterDto.setEmail("test" + i + "@example.com");
 
                         return memberService.register(memberRegisterDto);

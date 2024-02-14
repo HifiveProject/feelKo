@@ -39,4 +39,6 @@ public class MemberRegisterDto {
     private String providerId;
 
     private String status;
+
+    private String provider;
 }

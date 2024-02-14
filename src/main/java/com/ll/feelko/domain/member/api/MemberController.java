@@ -4,6 +4,7 @@ import com.ll.feelko.domain.member.api.Request.MemberRegisterRequest;
 import com.ll.feelko.domain.member.application.MemberServiceImpl;
 import com.ll.feelko.domain.member.dto.MemberProfileDto;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
+import com.ll.feelko.domain.member.entity.Member;
 import com.ll.feelko.global.security.SecurityUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -46,7 +47,8 @@ public class MemberController {
                 registerRequest.getPhone(),
                 registerRequest.getBirthday(),
                 null,
-                "complete"
+                "complete",
+                null
         );
 
         memberService.register(registerDto);
@@ -77,15 +79,21 @@ public class MemberController {
         if (msg != null) request.setAttribute("msg", msg);
         if (failMsg != null) request.setAttribute("failMsg", failMsg);
 
+
+
         if(user.getStatus().equals("incomplete")) {
+            Member member = memberService.findById(user.getId()).get();
             MemberProfileDto profileDto = new MemberProfileDto(
-                    user.getUsername(),
-                    user.getName(),
-                    user.getProfileImage(),
-                    null,
-                    user.getStatus(),
-                    null
+                    member.getEmail(),
+                    member.getName(),
+                    member.getProfile(),
+                    member.getPhone(),
+                    member.getStatus(),
+                    member.getBirthday(),
+                    member.getProvider()
             );
+            if (member.getProvider().equals("KAKAO")) profileDto.setEmail(null);
+
             model.addAttribute("profileDto",profileDto);
             return "domain/member/mypage/profile-update";
         }

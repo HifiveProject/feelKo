@@ -84,7 +84,8 @@ public class MemberServiceImpl implements MemberService{
                 null,
                 null,
                 socialLoginDto.getProviderId(),
-                "incomplete"
+                "incomplete",
+                socialLoginDto.getProviderTypeCode()
         );
 
         return register(registerDto);
