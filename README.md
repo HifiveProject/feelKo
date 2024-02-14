@@ -14,3 +14,6 @@
 ![Backend_stack](src/main/resources/static/images/readme/Backend_stack.png)
 
 ### Infra
+
+## ERD
+![img.png](img.png)
