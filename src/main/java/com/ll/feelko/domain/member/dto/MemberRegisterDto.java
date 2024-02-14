@@ -2,6 +2,7 @@ package com.ll.feelko.domain.member.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class MemberRegisterDto {
     @Pattern(regexp = "^\\d{3}-\\d{4}-\\d{4}$", message = "유효한 전화번호 형식을 입력해주세요.")
     private String phone;
 
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 

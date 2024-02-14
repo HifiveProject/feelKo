@@ -16,6 +16,6 @@ public class MemberProfileDto {
     private String profile;
     private String phone;
     private String status;
-    @DateTimeFormat
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 }
