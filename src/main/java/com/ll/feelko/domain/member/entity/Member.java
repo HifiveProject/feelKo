@@ -1,6 +1,7 @@
 package com.ll.feelko.domain.member.entity;
 
 import com.ll.feelko.domain.chat.chatRoom.entity.ChatRoomMember;
+import com.ll.feelko.domain.member.dto.MemberProfileUpdateDto;
 import com.ll.feelko.domain.wishlist.entity.WishList;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,7 @@ public class Member {
     private String phone;
     private LocalDate birthday;
     private String roles;
+    private String status;
 
     @CreatedDate
     private LocalDateTime created_at;
@@ -65,32 +67,19 @@ public class Member {
         return List.of("admin").contains(roles);
     }
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "member_id")
-//    private List<Payment> payments;
-//
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "member_id")
-//    private List<Experience> experiences;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "member")
     private List<WishList> wishLists;
 
-    //보류
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "member_id")
-//    private List<PaymentDetail> paymentDetails;
 
     // 회원정보 수정 메소드
-    public void updateProfile(String profile) {
-        this.profile = profile;
-    }
-
-    public void profileUpdate(String name, String profile, String phone, LocalDate birthday) {
-        this.name = name;
-        this.profile = profile;
-        this.phone = phone;
-        this.birthday = birthday;
+    public void updateProfile(MemberProfileUpdateDto updateDto) {
+        if(this.status.equals("incomplete")){
+            this.email = updateDto.getEmail();
+            this.phone = updateDto.getPhone();
+            this.birthday = updateDto.getBirthday();
+            this.status = "complete";
+        }
+        this.profile = updateDto.getProfile();
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)

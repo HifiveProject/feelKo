@@ -8,6 +8,7 @@ public class WriteResponseBody {
     private ChatMessage message;
     private String chatRoomName;
     private String eventType;
+    private String imageUrl;
 
     public WriteResponseBody(ChatMessage chatMessage,String eventType){
         this.message = chatMessage;
@@ -16,5 +17,8 @@ public class WriteResponseBody {
 
     public void setChatRoomName(String chatRoomName){
         this.chatRoomName = chatRoomName;
+    }
+    public void setImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
     }
 }

@@ -19,15 +19,24 @@ public class MemberRegisterDto {
     @NotBlank
     @Email(regexp = ".+@.+\\..+", message = "유효한 이메일 형식을 입력해주세요.")
     private String email;
+
     @NotBlank
     private String password;
+
     @NotBlank
     private String name;
+
     private String profile;
+
     @NotBlank
     @Pattern(regexp = "^\\d{3}-\\d{4}-\\d{4}$", message = "유효한 전화번호 형식을 입력해주세요.")
     private String phone;
+
+    @NotBlank
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
+
     private String providerId;
+
+    private String status;
 }
