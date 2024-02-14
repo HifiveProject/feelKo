@@ -1,23 +1,27 @@
 package com.ll.feelko.domain.experience.api;
 
 import com.ll.feelko.domain.experience.application.ExperienceService;
+import com.ll.feelko.domain.experience.dao.ExperienceImageJPQLRepository;
 import com.ll.feelko.domain.experience.dto.ExperienceCreateDTO;
 import com.ll.feelko.domain.experience.entity.Experience;
+import com.ll.feelko.domain.experience.entity.ExperienceImage;
 import com.ll.feelko.domain.experience.form.ExperienceCreateForm;
 import com.ll.feelko.domain.wishlist.application.WishListService;
 import com.ll.feelko.domain.wishlist.dto.WishListDto;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.MalformedURLException;
 import java.util.Optional;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/experiences")
@@ -25,9 +29,15 @@ public class ExperienceController {
 
     private final ExperienceService experienceService;
     private final WishListService wishListService;
+    private final ExperienceImageJPQLRepository jpqlRepository;
 
     @GetMapping("/{experienceId}")
     public String detail(@PathVariable(name = "experienceId") Long experienceId, Model model, @AuthenticationPrincipal SecurityUser user) {
+        ExperienceImage images = jpqlRepository.getImages(experienceId);
+
+        log.info("images = {} ", images);
+
+        model.addAttribute("image", images);
         model.addAttribute("experience", experienceService.detail(experienceId));
         Optional<WishListDto> createWishListDto = wishListService.createWishListDtoIfLogined(user, experienceId);
         if (!createWishListDto.isEmpty()) {
@@ -64,6 +74,17 @@ public class ExperienceController {
                 .answer(form.getAnswer())
                 .build());
 
+        experienceService.upload(form, experience);
+
         return "redirect:/experiences/" + experience.getId();
+    }
+
+
+    @ResponseBody
+    @GetMapping("/list/{filename}")
+    public Resource download(@PathVariable(name = "filename") String filename) throws MalformedURLException {
+        String fullPath = experienceService.getFullPath(filename);
+
+        return new UrlResource("file:" + fullPath);
     }
 }

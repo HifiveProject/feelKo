@@ -22,11 +22,9 @@ public class ExperienceImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fileName;
-
     @Type(JsonType.class)
     @Column(name = "image", columnDefinition ="json")
-    private List<MultipartFile> image;
+    private List<String> image;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "experience_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))

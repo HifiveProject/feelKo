@@ -22,7 +22,7 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     List<UploadReservationDto> findByExperienceIdWithMemberInfo(@Param("experienceId") Long experienceId);
 
     @Query("""
-            SELECT new com.ll.feelko.domain.member.dto.ReservationDto(e.imageUrl, e.title, e.id, p.id, p.paymentKey, p.price, p.reservationDate)
+            SELECT new com.ll.feelko.domain.member.dto.ReservationDto(e.title, e.id, p.id, p.paymentKey, p.price, p.reservationDate)
             FROM Payment p
             LEFT JOIN p.experience e
             WHERE p.member.id = :memberId AND p.deletedAt IS NULL
