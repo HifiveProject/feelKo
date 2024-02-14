@@ -47,7 +47,6 @@ public class NotProd {
                     .email("admin")
                     .password(passwordEncoder.encode("admin"))
                     .roles("ADMIN")
-                    .status("complete")
                     .build();
             memberRepository.save(admin);
 

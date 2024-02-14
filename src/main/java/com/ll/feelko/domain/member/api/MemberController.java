@@ -9,14 +9,17 @@ import com.ll.feelko.global.security.SecurityUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
@@ -32,7 +35,7 @@ public class MemberController {
     }
 
     @GetMapping("/register")
-    public String showRegister() {
+    public String showRegister(Model model) {
         return "domain/member/register";
     }
 
@@ -48,9 +51,8 @@ public class MemberController {
                 registerRequest.getBirthday(),
                 null,
                 "complete",
-                null
+                "FEELKO"
         );
-
         memberService.register(registerDto);
         return "redirect:/member/login";
     }
@@ -79,8 +81,6 @@ public class MemberController {
         if (msg != null) request.setAttribute("msg", msg);
         if (failMsg != null) request.setAttribute("failMsg", failMsg);
 
-
-
         if(user.getStatus().equals("incomplete")) {
             Member member = memberService.findById(user.getId()).get();
             MemberProfileDto profileDto = new MemberProfileDto(
@@ -99,5 +99,25 @@ public class MemberController {
         }
 
         return "global/historyBack";
+    }
+
+    // 이메일 중복 검사
+    @GetMapping("/email/verification")
+    @PreAuthorize("isAuthenticated() or isAnonymous()")
+    @ResponseBody
+    public ResponseEntity<?> verifyEmail(@RequestParam("email") String email,
+                                         @RequestParam("provider") String provider,
+                                         @RequestParam("status") String status){
+        Map<String, Object> response = new HashMap<>();
+
+        if(status.equals("incomplete") && memberService.emailIsExist(email) && List.of("KAKAO","NONE").contains(provider)){
+            response.put("success", false);
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(response);
+        }
+        response.put("success", true);
+        response.put("message", "사용 가능한 이메일입니다.");
+        return ResponseEntity.ok(response);
     }
 }
