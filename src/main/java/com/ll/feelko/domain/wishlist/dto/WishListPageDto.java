@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class WishListPageDto {
     private long id;
-    private String imageUrl;
+    
     private String title;
     private BigDecimal price;
     private LocalDate startDate;
