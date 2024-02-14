@@ -159,14 +159,7 @@
 <script th:inline="javascript">
     document.addEventListener('DOMContentLoaded', function () {
 
-        function handleBeforeUnload(event) {
-            // 변경사항이 저장되지 않았을 때만 경고 메시지를 표시
-            if (status === 'incomplete') {
-                var confirmationMessage = '변경사항이 저장되지 않았습니다. 페이지를 벗어나시겠습니까?';
-                event.returnValue = confirmationMessage; // 일부 브라우저에서는 이 메시지를 사용자에게 표시
-                return confirmationMessage; // 웹 표준을 따르는 브라우저에서는 이 메시지를 사용자에게 표시
-            }
-        }
+
 
         // "회원 수정" 버튼 클릭 시 변경사항이 저장되었다고 가정하고 beforeunload 이벤트 리스너 제거
         document.querySelector('button[type="submit"]').addEventListener('click', function() {
