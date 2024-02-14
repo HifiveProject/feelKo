@@ -6,13 +6,14 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 public class UploadedPageDto {
     private long id;
-    private String imageUrl;
+    private List<String> imageUrl;
     private String title;
     private BigDecimal price;
     private LocalDate startDate;
