@@ -18,145 +18,11 @@
 ## ERD
 ![img.png](img.png)
 
-## 패키지 구조 파일포함
-```bash
+## 패키지 구조 파일 포함
+<details>
+<summary> 패키지</summary>
+<pre><code>
 📦feelko
- ┣ 📂domain
- ┃ ┣ 📂chat
- ┃ ┃ ┣ 📂chatMessage
- ┃ ┃ ┃ ┣ 📂api
- ┃ ┃ ┃ ┃ ┣ 📂request
- ┃ ┃ ┃ ┃ ┃ ┗ 📜WriteRequestBody.java
- ┃ ┃ ┃ ┃ ┗ 📂response
- ┃ ┃ ┃ ┃ ┃ ┗ 📜WriteResponseBody.java
- ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┗ 📜ChatMessage.java
- ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┗ 📜ChatMessageRepository.java
- ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┗ 📜ChatMessageService.java
- ┃ ┃ ┗ 📂chatRoom
- ┃ ┃ ┃ ┣ 📂controller
- ┃ ┃ ┃ ┃ ┣ 📂request
- ┃ ┃ ┃ ┃ ┃ ┗ 📜ModifyRequestBody.java
- ┃ ┃ ┃ ┃ ┗ 📜ChatRoomController.java
- ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┣ 📜ChatRoomListDto.java
- ┃ ┃ ┃ ┃ ┗ 📜ChatRoomMemberInfoDto.java
- ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┣ 📜ChatRoom.java
- ┃ ┃ ┃ ┃ ┣ 📜ChatRoomMember.java
- ┃ ┃ ┃ ┃ ┗ 📜ChatRoomMemberId.java
- ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┣ 📜ChatRoomMemberRepository.java
- ┃ ┃ ┃ ┃ ┗ 📜ChatRoomRepository.java
- ┃ ┃ ┃ ┗ 📂service
- ┃ ┃ ┃ ┃ ┗ 📜ChatRoomService.java
- ┃ ┣ 📂comment
- ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┗ 📜Recommendation.java
- ┃ ┣ 📂experience
- ┃ ┃ ┣ 📂api
- ┃ ┃ ┃ ┣ 📜AnswerController.java
- ┃ ┃ ┃ ┗ 📜ExperienceController.java
- ┃ ┃ ┣ 📂application
- ┃ ┃ ┃ ┣ 📜AnswerService.java
- ┃ ┃ ┃ ┗ 📜ExperienceService.java
- ┃ ┃ ┣ 📂dao
- ┃ ┃ ┃ ┣ 📜AnswerRepository.java
- ┃ ┃ ┃ ┗ 📜ExperienceRepository.java
- ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┗ 📜ExperienceCreateDTO.java
- ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┣ 📜Answer.java
- ┃ ┃ ┃ ┣ 📜Experience.java
- ┃ ┃ ┃ ┗ 📜ExperienceImage.java
- ┃ ┃ ┗ 📂form
- ┃ ┃ ┃ ┗ 📜ExperienceCreateForm.java
- ┃ ┣ 📂main
- ┃ ┃ ┣ 📂api
- ┃ ┃ ┃ ┗ 📜MainController.java
- ┃ ┃ ┗ 📂application
- ┃ ┃ ┃ ┣ 📜MainService.java
- ┃ ┃ ┃ ┗ 📜MainServiceImpl.java
- ┃ ┣ 📂member
- ┃ ┃ ┣ 📂api
- ┃ ┃ ┃ ┣ 📂Request
- ┃ ┃ ┃ ┃ ┣ 📜MemberProfileUpdateRequest.java
- ┃ ┃ ┃ ┃ ┗ 📜MemberRegisterRequest.java
- ┃ ┃ ┃ ┣ 📜MemberController.java
- ┃ ┃ ┃ ┗ 📜MypageController.java
- ┃ ┃ ┣ 📂application
- ┃ ┃ ┃ ┣ 📜MemberService.java
- ┃ ┃ ┃ ┣ 📜MemberServiceImpl.java
- ┃ ┃ ┃ ┣ 📜MypageService.java
- ┃ ┃ ┃ ┗ 📜MypageServiceImpl.java
- ┃ ┃ ┣ 📂dao
- ┃ ┃ ┃ ┗ 📜MemberRepository.java
- ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┣ 📜MemberLoginDto.java
- ┃ ┃ ┃ ┣ 📜MemberProfileDto.java
- ┃ ┃ ┃ ┣ 📜MemberProfileUpdateDto.java
- ┃ ┃ ┃ ┣ 📜MemberRegisterDto.java
- ┃ ┃ ┃ ┣ 📜ReservationDto.java
- ┃ ┃ ┃ ┣ 📜SocialLoginDto.java
- ┃ ┃ ┃ ┣ 📜UploadedPageDto.java
- ┃ ┃ ┃ ┗ 📜UploadReservationDto.java
- ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┣ 📜Member.java
- ┃ ┃ ┃ ┗ 📜VirtualAccount.java
- ┃ ┣ 📂payment
- ┃ ┃ ┣ 📂api
- ┃ ┃ ┃ ┣ 📂response
- ┃ ┃ ┃ ┃ ┗ 📜TossPaymentResponse.java
- ┃ ┃ ┃ ┣ 📂reuqest
- ┃ ┃ ┃ ┃ ┗ 📜TossPaymentRequest.java
- ┃ ┃ ┃ ┗ 📜PaymentController.java
- ┃ ┃ ┣ 📂application
- ┃ ┃ ┃ ┣ 📜PaymentApiService.java
- ┃ ┃ ┃ ┗ 📜PaymentApiServiceImpl.java
- ┃ ┃ ┣ 📂dao
- ┃ ┃ ┃ ┣ 📜PaymentDetailsRepository.java
- ┃ ┃ ┃ ┗ 📜PaymentRepository.java
- ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┗ 📜PaymentDetailDto.java
- ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┣ 📜Payment.java
- ┃ ┃ ┃ ┗ 📜PaymentProduct.java
- ┃ ┗ 📂wishlist
- ┃ ┃ ┣ 📂api
- ┃ ┃ ┃ ┗ 📜WishListController.java
- ┃ ┃ ┣ 📂application
- ┃ ┃ ┃ ┣ 📜WishListService.java
- ┃ ┃ ┃ ┗ 📜WishListServiceImpl.java
- ┃ ┃ ┣ 📂dao
- ┃ ┃ ┃ ┗ 📜WishListRepository.java
- ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┣ 📜WishListDto.java
- ┃ ┃ ┃ ┣ 📜WishListPageDto.java
- ┃ ┃ ┃ ┗ 📜WishListSaveDto.java
- ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┗ 📜WishList.java
- ┣ 📂global
- ┃ ┣ 📂common
- ┃ ┃ ┗ 📂entity
- ┃ ┃ ┃ ┣ 📜BaseEntity.java
- ┃ ┃ ┃ ┗ 📜PaymentStatus.java
- ┃ ┣ 📂init
- ┃ ┃ ┣ 📜AppConfig.java
- ┃ ┃ ┗ 📜NotProd.java
- ┃ ┣ 📂security
- ┃ ┃ ┣ 📜CustomOAuth2UserService.java
- ┃ ┃ ┣ 📜CustomUserDetailsService.java
- ┃ ┃ ┣ 📜SecurityUser.java
- ┃ ┃ ┗ 📜SpringSecurityConfig.java
- ┃ ┗ 📂websocket
- ┃ ┃ ┗ 📜WebSocketConfig.java
- ┗ 📜FeelKoApplication.java
-```
-
-### 패키지 구조 폴더만
-```bash
 📦feelko
  ┣ 📂domain
  ┃ ┣ 📂chat
@@ -213,4 +79,5 @@
  ┃ ┣ 📂init
  ┃ ┣ 📂security
  ┃ ┗ 📂websocket
-```
+</code></pre>
+</details>
