@@ -9,6 +9,7 @@
 ## 기술스택
 ### Frontend
 ![Frontend_stack](src/main/resources/static/images/readme/Frontend_stack.png)
+
 ### Backend
 ![Backend_stack](src/main/resources/static/images/readme/Backend_stack.png)
 
