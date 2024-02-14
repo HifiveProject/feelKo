@@ -50,6 +50,8 @@
 
         .reservation-info-label, .reservation-detail {
             margin-left: 20px; /* 왼쪽 마진을 추가하여 오른쪽으로 밀어냅니다. */
+            /*text-overflow: ellipsis;*/
+            /*max-width: 94%;*/
         }
 
         /* 버튼 컨테이너의 스타일을 정의합니다. */
@@ -160,7 +162,7 @@
                     <!-- 페이지 번호 -->
                     <li th:each="pageNum : ${#numbers.sequence(0, reservations.totalPages - 1)}"
                         th:classappend="${pageNum == reservations.number} ? 'active' : ''" class="page-item">
-                        <a class="page-link" th:href="@{reservation-list(page=${pageNum})}"
+                        <a class="page-link" th:href="@{reservation-list(page=${pageNum + 1})}"
                            th:text="${pageNum + 1}"></a>
                     </li>
 

@@ -4,6 +4,12 @@
 
     <title>Feelko-template3</title>
 
+    <script>
+        // 이 페이지에서는 URL을 세션에 저장하지 않음
+        var dontSave = true;
+        sessionStorage.setItem('lastVisitedUrl', '/member/mypage');
+    </script>
+
     <style>
         /* 로그인 컨테이너 스타일 */
         .login-container {
