@@ -84,7 +84,7 @@ public class NotProd {
 
                 ExperienceImage experienceImage = ExperienceImage.builder()
                                 .experience(experience)
-                        .image(List.of("0b438bc5-1dc8-49b1-a2db-2518a64c277d.png"))
+                        .image(List.of("test.jpg"))
                         .build();
 
                 jpaImageRepository.save(experienceImage);

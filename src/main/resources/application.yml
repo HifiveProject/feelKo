@@ -57,8 +57,5 @@ custom:
     name: feelko
     baseUrl: "http://localhost:${server.port}"
 
-
 image:
-  dir: C:/Users/xogns/springProject/mission_follow/feelKo/src/main/resources/static/file/
-
-  #spring.web.resources.static-locations=file:/Users/hwangjungseog/Work_Space/Photograph/file/
+  dir: "file/"
