@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="/css/experience/detail.css">
     <link rel="stylesheet" th:href="@{/css/experience/style.css}" type="text/css">
 
+    <!-- Flatpickr 스타일시트 포함 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+
 
     <title>Feelko-template3</title>
 
@@ -83,22 +87,21 @@
                             <a>
                                 <form action="/search" method="get">
                                     <label for="destination">인원수 :</label>
-                                    <select id="destination" name="destination" required onchange="getSelectedDestination()">
-                                        <option value="" disabled selected hidden>인원수를 선택하세요</option>
-                                        <option name="count">1</option>
-                                        <option name="count">2</option>
-                                        <option name="count">3</option>
-                                        <option name="count">4</option>
-                                        <option name="count">5</option>
-                                        <option name="count">6</option>
-                                        <option name="count">7</option>
-                                        <option name="count">8</option>
-                                        <option name="count">9</option>
-                                        <option name="count">10</option>
-                                        <option></option>
+                                    <select id="destination" name="destination" required onchange="getSelectedDestination()" th:disabled="${experience.headcount == 0}">
+                                        <!-- 인원수가 0일 경우 -->
+                                        <th:block th:if="${experience.headcount == 0}">
+                                            <option value="" disabled>예약 가능 인원 없음</option>
+                                        </th:block>
+                                        <!-- 인원수가 1 이상일 경우, 선택하세요 메시지 표시 -->
+                                        <th:block th:if="${experience.headcount > 0}">
+                                            <option value="" disabled selected hidden>인원수를 선택하세요</option>
+                                            <th:block th:each="count : ${#numbers.sequence(1, experience.headcount)}">
+                                                <option th:value="${count}" th:text="${count}"></option>
+                                            </th:block>
+                                        </th:block>
                                     </select>
                                     <label for="start_date">날짜 :</label>
-                                    <input type="date" id="start_date" name="start_date">
+                                    <input type="text" id="start_date" name="start_date" placeholder="날짜를 선택하세요.">
                                 </form>
 
                             </a>
@@ -119,7 +122,51 @@
 <th:block th:replace="~{domain/layout/footer}"> </th:block>
 <!-- Template-footer 끝 -->
 
+<!-- Flatpickr 스크립트 포함 -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
 <script th:inline="javascript" type="text/javascript">
+    var startDate = /*[[${experience.startDate}]]*/ null;
+    var endDate = /*[[${experience.endDate}]]*/ null;
+
+    // DOM이 로드된 후 Flatpickr 인스턴스를 초기화
+    document.addEventListener('DOMContentLoaded', function() {
+        // Flatpickr 초기화
+        var flatpickrInstance = flatpickr("#start_date", {
+            enable: [
+                {
+                    from: startDate,
+                    to: endDate
+                }
+            ],
+            dateFormat: "Y-m-d", // 날짜 형식 지정
+        });
+
+        // 인원수 선택 드롭다운 요소
+        var destinationSelect = document.getElementById('destination');
+        // 날짜 입력 필드 요소
+        var startDateInput = document.getElementById('start_date');
+
+        // 인원수 선택 상태에 따라 날짜 선택기 활성화/비활성화 처리
+        function toggleDateInput() {
+            if(destinationSelect.value === "" || destinationSelect.disabled) {
+                // 인원수가 선택되지 않았거나 드롭다운이 비활성화된 경우, 날짜 입력 필드 비활성화
+                startDateInput.disabled = true;
+                flatpickrInstance.clear(); // 선택된 날짜를 지움
+            } else {
+                // 인원수가 선택된 경우, 날짜 입력 필드 활성화
+                startDateInput.disabled = false;
+            }
+        }
+
+        // 인원수 선택 드롭다운의 변경 사항에 대한 이벤트 리스너 등록
+        destinationSelect.addEventListener('change', toggleDateInput);
+
+        // 페이지 로드 시 초기 상태 설정
+        toggleDateInput();
+    });
+
     const deleteProduct = (id) => {
         // 여행지 선택 값 가져오기
         var destinationSelect = document.getElementById('destination');
