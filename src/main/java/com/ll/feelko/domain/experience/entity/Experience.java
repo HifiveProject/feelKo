@@ -20,9 +20,6 @@ public class Experience {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-//    private Member member;
     private Long memberId; //업로드한 사용자 Fk
 
     private String title; //제목
@@ -75,6 +72,7 @@ public class Experience {
         }
         if (this.headcount - decrease != this.headcount) {
             this.headcount = this.headcount - decrease;
+            experienceClose = headcount==0 ? true : false;
         }
     }
 

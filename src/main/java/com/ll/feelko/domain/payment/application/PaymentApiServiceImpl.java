@@ -37,20 +37,28 @@ public class PaymentApiServiceImpl implements PaymentApiService {
     @Override
     @Transactional
     public void payment(
-                SecurityUser member,
-                Long experience,
-                Long headcount,
-                LocalDate reservationDate,
-                String paymentKey,
-                BigDecimal amount) {
+            SecurityUser member,
+            Long experienceId,
+            Long headcount,
+            LocalDate reservationDate,
+            String paymentKey,
+            BigDecimal amount) {
         Member memberInformation = getMemberInformation(member.getId());
 
-        Experience experienceId = decreaseParticipants(experience, headcount);
+        //Experience experienceId = decreaseParticipants(experience, headcount);
+        Experience experience = experienceRepository.findById(experienceId).orElseThrow(() -> new RuntimeException("체험 찾을수 없어 익셉션"));
+        if (experience.getHeadcount() < headcount) {
+            throw new RuntimeException("인원 너무 많아 익셉션");
+        }
 
+        LocalDate start = experience.getStartDate();
+        LocalDate end = experience.getEndDate();
+
+        if (start.isAfter(reservationDate) || reservationDate.isAfter(end)) throw new RuntimeException("날짜 확인해 익셉션");
 
         Payment payment = Payment.builder()
                 .member(memberInformation)
-                .experience(experienceId)
+                .experience(experience)
                 .email(memberInformation.getEmail())
                 .status(COMPLETE_PAYMENT)
                 .headCount(headcount)
