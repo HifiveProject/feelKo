@@ -23,26 +23,6 @@ public class PaymentDetailsRepository {
     private final JPQLQueryFactory query;
 
     @Transactional(readOnly = true)
-    public List<TossPaymentResponse> getAllReservations(Long memberId) {
-
-        List<TossPaymentResponse> fetch = query.select(Projections.fields(TossPaymentResponse.class,
-                        payment.email,
-                        payment.status,
-                        payment.experience,
-                        payment.reservationDate,
-                        payment.headCount,
-                        payment.paymentKey,
-                        payment.price))
-                .from(payment)
-                .join(payment.member, member)
-                .join(payment.experience, experience)
-                .where(member.id.eq(memberId))
-                .fetch();
-
-        return fetch;
-    }
-
-    @Transactional(readOnly = true)
     public PaymentDetailDto getPaymentDetail(Long paymentId) {
 
         PaymentDetailDto fetch = query.select(Projections.fields(PaymentDetailDto.class,

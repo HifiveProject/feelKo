@@ -76,6 +76,8 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 
+    //smtp
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 }
 

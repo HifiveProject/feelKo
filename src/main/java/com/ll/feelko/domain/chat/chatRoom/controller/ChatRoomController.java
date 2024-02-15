@@ -93,12 +93,10 @@ public class ChatRoomController {
         }
 
         Long chatRoomId;
-//        //존재 하는 방일 때 0보다 큰값이 return됨
-//        if((chatRoomId = chatRoomService.findChatRoom(user.getId(),theirInfoDto.getId()))>0){
-//            return "redirect:/chat/room/" + chatRoomId;
-//        }
-//        chatRoomId = chatRoomService.makeChatRoom(myInfoDto, theirInfoDto); //0보다 작으면 새로운 방 생성
-//        //아이디 두개로 방여러개 만들어서 리스트 최신화 시험중 나중에 아래에 있는거 지우고 주석 해제하면 됩니다.
+        //이미 존재 하는 방일 때 0보다 큰값이 return됨
+        if((chatRoomId = chatRoomService.findChatRoom(user.getId(),theirInfoDto.getId()))>0){
+            return "redirect:/chat/room/" + chatRoomId;
+        }
         chatRoomId = chatRoomService.makeChatRoom(myInfoDto, theirInfoDto);
 
         chatMessageService.writeAndSend(chatRoomId, user.getName(), "생성", "created", user.getId());

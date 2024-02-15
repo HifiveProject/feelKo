@@ -13,4 +13,5 @@ public class SocialLoginDto {
     private String profileImageUrl;
     private String providerId;
     private String nickname;
+    private String provider;
 }

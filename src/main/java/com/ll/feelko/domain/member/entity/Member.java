@@ -49,6 +49,7 @@ public class Member {
 
     private LocalDateTime deleted_at;
 
+    private String provider;
     private String providerId;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
