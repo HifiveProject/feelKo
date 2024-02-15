@@ -35,7 +35,7 @@ public class ExperienceController {
     public String detail(@PathVariable(name = "experienceId") Long experienceId, Model model, @AuthenticationPrincipal SecurityUser user) {
         ExperienceImage images = jpqlRepository.getImages(experienceId);
 
-        log.info("images = {} ", images);
+//        log.info("images = {} ", images);
 
         model.addAttribute("image", images);
         model.addAttribute("experience", experienceService.detail(experienceId));

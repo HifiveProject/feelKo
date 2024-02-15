@@ -1,22 +1,31 @@
 package com.ll.feelko.domain.member.dto;
 
-import lombok.AllArgsConstructor;
+import com.ll.feelko.domain.experience.entity.ExperienceImage;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class UploadedPageDto {
     private long id;
-    private List<String> imageUrl;
     private String title;
     private BigDecimal price;
     private LocalDate startDate;
     private LocalDate endDate;
     //이미지
+    private String imageUrl;
+
+    public UploadedPageDto(long id, String title, ExperienceImage images, BigDecimal price, LocalDate startDate, LocalDate endDate) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.imageUrl = images.getImage().get(0);
+
+    }
+
 }

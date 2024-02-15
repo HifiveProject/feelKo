@@ -145,7 +145,17 @@
 
     window.onload = function() {
         const today = new Date().toISOString().split('T')[0];
-        document.getElementById('startDate').min = today;
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+
+        // 시작 날짜의 최소값을 오늘 날짜로 설정
+        startDateInput.min = today;
+
+        // 페이지 로드 시 시작 날짜가 이미 선택되어 있는 경우 마감 날짜 활성화
+        if (startDateInput.value) {
+            endDateInput.disabled = false; // 마감 날짜 입력 활성화
+            endDateInput.min = startDateInput.value; // 마감 날짜의 최소값을 시작 날짜로 설정
+        }
     }
 
 </script>

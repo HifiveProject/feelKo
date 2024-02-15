@@ -57,13 +57,13 @@ public class MypageController {
 
     @GetMapping("/upload-list")
     public String showUploadedPageList(@AuthenticationPrincipal SecurityUser user,
-                                       @RequestParam(name = "page", defaultValue = "0") int page,
+                                       @RequestParam(name = "page", defaultValue = "1") int page,
                                        @RequestParam(name = "size", defaultValue = "9") int size,
                                        Model model) {
-        Page<UploadedPageDto> uploads = mypageService.getUploadedPageList(user.getId(), page, size);
-        for (UploadedPageDto upload : uploads) {
-            log.info("사용자_이미지_정보 = {}" , upload.getImageUrl());
-        }
+        Page<UploadedPageDto> uploads = mypageService.getUploadedPageList(user.getId(), page-1, size);
+//        for (UploadedPageDto upload : uploads) {
+//            log.info("사용자_이미지_정보 = {}" , upload.getImageUrl());
+//        }
         model.addAttribute("uploads",uploads);
         return "domain/member/mypage/uploadList";
     }
@@ -86,10 +86,10 @@ public class MypageController {
 
     @GetMapping("/reservation-list")
     public String showReservationList(@AuthenticationPrincipal SecurityUser user,
-                                      @RequestParam(name = "page", defaultValue = "0") int page,
+                                      @RequestParam(name = "page", defaultValue = "1") int page,
                                       @RequestParam(name = "size", defaultValue = "9") int size,
                                       Model model) {
-        Page<ReservationDto> reservations = mypageService.getReservationListByMemberId(user.getId(), page, size);
+        Page<ReservationDto> reservations = mypageService.getReservationListByMemberId(user.getId(), page-1, size);
         model.addAttribute("reservations",reservations);
         return "domain/member/mypage/reservation-list";
     }

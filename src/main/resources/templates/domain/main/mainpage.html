@@ -67,7 +67,7 @@
                 <div th:each="experience : ${popularExperiences}" class="hotpost-1">
                     <div class="hotpost-img1">
                         <a th:href="@{'/experiences/'+ ${experience.id}}">
-                            <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
+                            <img th:src="@{/list/{filename}(filename=${experience.images[0].image[0]})}" alt="Experience Image" class="hotpost-img12">
                         </a>
                     </div>
                     <div class="hotpost-name1">
@@ -108,7 +108,7 @@
                     <!-- 마감 임박 표시 -->
 
                     <div class="hotpost-img1">
-                        <img th:src="${experience.imageUrl}" alt="Experience Image" class="hotpost-img12">
+                        <img th:src="@{/list/{filename}(filename=${experience.images[0].image[0]})}" alt="Experience Image" class="hotpost-img12">
                     </div>
                     <div class="notime-name1">
                         <div class="wishcounter">

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,7 +32,8 @@ public class ExperienceService {
     private String fileDir;
 
     public String getFullPath(String filename) {
-        return fileDir + filename;
+        String basePath = System.getProperty("user.dir");
+        return Paths.get(basePath, fileDir, filename).toString();
     }
 
     private final MemberService memberService;
@@ -90,11 +92,6 @@ public class ExperienceService {
                 .build();
         imageRepository.save(imageBuilder);
     }
-
-    public ExperienceImage getImages(Long id) {
-        return imageRepository.findById(id).orElseThrow();
-    }
-
 
     public BigDecimal sumPrice(BigDecimal price, Long people) {
 
@@ -160,4 +157,5 @@ public class ExperienceService {
     //    public Page<Experience> searchExperiences(String destination, LocalDate startDate, Pageable pageable) {
 //        return experienceRepository.searchExperiences(destination, startDate, pageable);
 //    }
+
 }

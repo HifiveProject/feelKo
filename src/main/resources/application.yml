@@ -3,9 +3,9 @@ spring:
     active: dev
     include: secret
   servlet:
+    multipart.max-file-size: 100MB
     multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
+      max-request-size: 128MB
   threads:
     virtual:
       enabled: true
@@ -56,3 +56,6 @@ custom:
   site:
     name: feelko
     baseUrl: "http://localhost:${server.port}"
+
+image:
+  dir: "file/"

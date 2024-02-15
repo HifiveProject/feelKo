@@ -52,7 +52,8 @@ public class MypageServiceImpl implements MypageService{
                 member.getProfile(),
                 member.getPhone(),
                 member.getStatus(),
-                member.getBirthday()
+                member.getBirthday(),
+                member.getProvider()
         );
 
     }

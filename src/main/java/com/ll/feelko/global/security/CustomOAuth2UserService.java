@@ -68,7 +68,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String nickname = (String) attributes.get("name");
         String providerId = providerTypeCode + "__%s".formatted(oauthId); // 비밀번호로 설정
 
-        return new SocialLoginDto(providerTypeCode, email, profileImageUrl, providerId, nickname);
+        return new SocialLoginDto(providerTypeCode, email, profileImageUrl, providerId, nickname, providerTypeCode);
     }
     //깃허브 데이터 추출
     public SocialLoginDto extractGitHubData(String providerTypeCode, OAuth2User oAuth2User) {
@@ -81,7 +81,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String email = (String) attributes.get("email");
         if(email == null) email = nickname + "@" + providerTypeCode;
 
-        return new SocialLoginDto(providerTypeCode, email, profileImageUrl, providerId, nickname);
+        return new SocialLoginDto(providerTypeCode, email, profileImageUrl, providerId, nickname, providerTypeCode);
     }
     //카카오 데이터 추출
     public SocialLoginDto extractKakaoData(String providerTypeCode, OAuth2User oAuth2User) {
@@ -94,7 +94,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String providerId = providerTypeCode + "__" + oauthId;
         String email = nickname + "@" + providerTypeCode + (int) (Math.random()*100000);
 
-        return new SocialLoginDto(providerTypeCode, email, profileImageUrl, providerId, nickname);
+        return new SocialLoginDto(providerTypeCode, email, profileImageUrl, providerId, nickname, providerTypeCode);
     }
 }
 
