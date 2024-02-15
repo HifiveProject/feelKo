@@ -37,7 +37,6 @@ public class ExperienceService {
     private final MemberService memberService;
     private final JpaImageRepository imageRepository;
     private final ExperienceRepository experienceRepository;
-    private List<String> files = new ArrayList<>();
 
     public Experience createExperience(ExperienceCreateDTO dto) {
 
@@ -69,33 +68,27 @@ public class ExperienceService {
     }
 
     public void upload(ExperienceCreateForm multipartFile, Experience experience) {
+        // 메소드 내부에 지역 변수로 선언하여 각 호출마다 새로운 리스트를 사용하도록 변경
+        List<String> files = new ArrayList<>();
 
         multipartFile.getFile().forEach(f -> {
             try {
                 String originalFilename = f.getOriginalFilename();
-
                 final int index = Objects.requireNonNull(originalFilename).lastIndexOf(".");
-
                 final String substring = originalFilename.substring(index + 1);
-
                 final String result = UUID.randomUUID() + "." + substring;
                 f.transferTo(new File(getFullPath(result)));
-
-
                 files.add(result);
-
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
 
-        ExperienceImage imageBuilder = ExperienceImage
-                .builder()
+        ExperienceImage imageBuilder = ExperienceImage.builder()
                 .image(files)
                 .experience(experience)
                 .build();
         imageRepository.save(imageBuilder);
-
     }
 
     public ExperienceImage getImages(Long id) {
