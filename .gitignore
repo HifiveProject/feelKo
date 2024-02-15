@@ -42,3 +42,6 @@ feelko_dev.trace.db
 
 ### secret ###
 application-secret.yml
+
+### file ###
+/src/main/resources/static/file/
