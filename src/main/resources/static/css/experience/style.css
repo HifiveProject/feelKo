@@ -2,7 +2,6 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
-    padding: 20px;
 }
 
 .card {
@@ -24,8 +23,8 @@ body {
 }
 
 .card .container img {
-    width: 35%;
-    height: auto;
+    height: 314px;
+    width: 314px;
     border-radius: 10px;
 }
 

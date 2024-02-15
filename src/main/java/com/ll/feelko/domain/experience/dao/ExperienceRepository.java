@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface ExperienceRepository extends JpaRepository<Experience,Long> {
 
-    @Query("SELECT new com.ll.feelko.domain.member.dto.UploadedPageDto(e.id, e.imageUrl, e.title, e.price, e.startDate, e.endDate) FROM Experience e WHERE e.memberId = :memberId ORDER BY e.id DESC")
+    @Query("SELECT new com.ll.feelko.domain.member.dto.UploadedPageDto(e.id, e.title, e.images , e.price, e.startDate, e.endDate) FROM Experience e WHERE e.memberId = :memberId ORDER BY e.id DESC")
     Page<UploadedPageDto> findIdTitleByMemberIdOrderByIdDesc(@Param("memberId") long memberId, Pageable pageable);
 
     @Query("SELECT e FROM Experience e ORDER BY e.startDate DESC")

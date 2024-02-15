@@ -104,6 +104,12 @@
             background-color: #6c757d; /* 닫기 버튼 배경색 조정 */
         }
 
+        .hotpost-1 {
+            height: 150px;
+            width: 180px;
+            border-radius: 10px; /* 이미지 모서리를 둥글게 */
+        }
+
     </style>
 
 </head>
@@ -124,7 +130,7 @@
     <section class="main-content">
         <div class="reservation-list-container">
             <div th:if="!${reservations.isEmpty()}" th:each="reservationDto : ${reservations}" class="reservation-item">
-                <img th:src="${reservationDto.imageUrl}" alt="체험 이미지" class="reservation-image">
+                <img th:src="@{/list/{filename}(filename=${reservationDto.imageUrl})}" alt="체험 이미지" class="hotpost-1">
                 <div class="reservation-info">
                     <div class="reservation-info-label">체험 제목</div>
                     <div th:text="${reservationDto.title}" class="reservation-detail">Title</div>

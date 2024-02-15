@@ -3,9 +3,9 @@ spring:
     active: dev
     include: secret
   servlet:
+    multipart.max-file-size: 100MB
     multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
+      max-request-size: 128MB
   threads:
     virtual:
       enabled: true
@@ -56,3 +56,9 @@ custom:
   site:
     name: feelko
     baseUrl: "http://localhost:${server.port}"
+
+
+image:
+  dir: C:/Users/xogns/springProject/mission_follow/feelKo/src/main/resources/static/file/
+
+  #spring.web.resources.static-locations=file:/Users/hwangjungseog/Work_Space/Photograph/file/

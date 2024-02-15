@@ -33,7 +33,6 @@
         }
 
         .upload-item img {
-            height: auto;
             border-radius: 4px;
             margin-bottom: 10px;
         }
@@ -112,6 +111,11 @@
             background: #555; /* 스크롤바 썸(핸들) 호버 시 색상 */
         }
 
+        .hotpost-1 {
+            height: 220px;
+            width: 300px;
+            border-radius: 10px;
+        }
     </style>
 
 
@@ -248,8 +252,8 @@
                     <!-- 각 업로드 아이템 클릭 시 체험 상세 페이지로 이동 -->
                     <div th:data-id="${uploadedPageDto.id}" class="upload-item"
                          onclick="location.href='/experiences/' + this.dataset.id">
-                        <img th:if="${uploadedPageDto.imageUrl}" th:src="${uploadedPageDto.imageUrl}"
-                             alt="Uploaded Image" class="img-fluid">
+                        <img th:if="${uploadedPageDto.imageUrl}" th:src="@{/list/{filename}(filename=${uploadedPageDto.imageUrl})}"
+                             alt="Uploaded Image" class="hotpost-1">
                         <div class="upload-item-content">
                             <p th:text="'제목 : ' + ${uploadedPageDto.title}">제목</p>
                             <p th:text="'기간 : ' + ${uploadedPageDto.startDate} + ' ~ ' + ${uploadedPageDto.endDate}">

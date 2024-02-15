@@ -49,11 +49,15 @@
                 <!-- 두 번째 HTML 코드 삽입 -->
                 <div class="card">
                     <div class="container">
-                        <form th:action th:object="${experience}" method="post">
+                        <form enctype="multipart/form-data" th:action th:object="${experience}" method="post">
                             <div class="form-field">
                                 <label for="title">제목</label>
                                 <input type="text" th:field="*{title}" id="title"/>
                             </div>
+
+                            <label for="item_file">이미지를 선택하세요:</label>
+                            <input type="file" multiple="multiple" name="file" id="item_file" accept="image/*">
+
 
                             <div class="form-field">
                                 <label for="location">위치</label>
@@ -157,6 +161,48 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function (event) {
+            if (!validateForm()) {
+                event.preventDefault(); // 폼 제출 방지
+                // 여기에 오류 메시지를 표시하는 등의 추가 작업을 수행할 수 있습니다.
+            }
+        });
+
+        function validateForm() {
+            if (!validateField('title', '제목을 입력하세요.')) return false;
+            if (!validateField('location', '위치를 선택하세요.')) return false;
+            if (!validateField('description', '내용을 입력하세요.')) return false;
+            if (!validateField('price', '가격을 입력하세요.')) return false;
+            if (!validateField('startDate', '시작날짜를 선택하세요.')) return false;
+            if (!validateField('endDate', '마감날짜를 선택하세요.')) return false;
+            if (!validateField('headcount', '마감인원을 입력하세요.')) return false;
+
+            // 필요한 경우 날짜 유효성 검사 및 다른 추가 검사를 수행할 수 있습니다.
+
+            return true; // 모든 필수 항목이 입력되었으면 true 반환
+        }
+
+        function validateField(fieldName, errorMessage) {
+            const field = document.getElementById(fieldName);
+            const fieldValue = field.value.trim();
+
+            if (!fieldValue) {
+                alert(errorMessage); // 빈 값이면 오류 메시지 표시
+                field.focus(); // 필드에 포커스 주기
+                event.preventDefault(); // 여기에 폼 제출 방지 코드 추가
+                return false;
+            }
+
+            return true; // 값이 존재하면 true 반환
+        }
+    });
+</script>
+
 </body>
 </html>

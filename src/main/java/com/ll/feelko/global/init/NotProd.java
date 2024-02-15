@@ -1,8 +1,10 @@
 package com.ll.feelko.global.init;
 
 import com.ll.feelko.domain.experience.application.ExperienceService;
+import com.ll.feelko.domain.experience.dao.JpaImageRepository;
 import com.ll.feelko.domain.experience.dto.ExperienceCreateDTO;
 import com.ll.feelko.domain.experience.entity.Experience;
+import com.ll.feelko.domain.experience.entity.ExperienceImage;
 import com.ll.feelko.domain.member.application.MemberService;
 import com.ll.feelko.domain.member.dao.MemberRepository;
 import com.ll.feelko.domain.member.dto.MemberRegisterDto;
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -32,8 +35,10 @@ public class NotProd {
     private final ExperienceService experienceService;
     private final PasswordEncoder passwordEncoder;
     private final PaymentRepository paymentRepository;
+    private final JpaImageRepository jpaImageRepository;
 
     @Bean
+    @Transactional
     public ApplicationRunner initNotProd() {
         return args -> {
 
@@ -61,9 +66,10 @@ public class NotProd {
                     })
                     .toList();
 
+
             // 체험 테스트 데이터 생성
             members.forEach(member -> IntStream.rangeClosed(1, 20).forEach(i -> {
-                experienceService.createExperience(ExperienceCreateDTO.builder()
+                Experience experience = experienceService.createExperience(ExperienceCreateDTO.builder()
                         .memberId(member.getId())
                         .title("title" + i)
                         .startDate(LocalDate.now())
@@ -75,10 +81,17 @@ public class NotProd {
                         .descriptionText("내용" + i)
                         .headcount(10L)
                         .build());
+
+                ExperienceImage experienceImage = ExperienceImage.builder()
+                                .experience(experience)
+                        .image(List.of("0b438bc5-1dc8-49b1-a2db-2518a64c277d.png"))
+                        .build();
+
+                jpaImageRepository.save(experienceImage);
             }));
 
             members.forEach(member -> IntStream.rangeClosed(1, 10).forEach(i -> {
-                experienceService.createExperience(ExperienceCreateDTO.builder()
+                Experience experience = experienceService.createExperience(ExperienceCreateDTO.builder()
                         .memberId(member.getId())
                         .title("title" + i)
                         .startDate(LocalDate.now())
@@ -90,6 +103,12 @@ public class NotProd {
                         .descriptionText("내용" + i)
                         .headcount(10L)
                         .build());
+
+                ExperienceImage experienceImage = ExperienceImage.builder()
+                        .experience(experience)
+                        .image(List.of("0b438bc5-1dc8-49b1-a2db-2518a64c277d.png"))
+                        .build();
+                jpaImageRepository.save(experienceImage);
             }));
 
             //테스트 결제 정보 데이터 생성

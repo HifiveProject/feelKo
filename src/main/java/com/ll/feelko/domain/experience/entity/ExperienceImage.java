@@ -4,7 +4,6 @@ import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Type;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,13 +21,15 @@ public class ExperienceImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fileName;
-
     @Type(JsonType.class)
     @Column(name = "image", columnDefinition ="json")
-    private List<MultipartFile> image;
+    private List<String> image;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne//(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "experience_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Experience experience;
+
+    public void setExperience(Experience experience) {
+        this.experience = experience;
+    }
 }

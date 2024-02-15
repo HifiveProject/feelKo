@@ -5,6 +5,7 @@ import com.ll.feelko.domain.member.application.MypageService;
 import com.ll.feelko.domain.member.dto.*;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.TreeMap;
 
+@Slf4j
 @Controller
 @RequestMapping("/member/mypage")
 @RequiredArgsConstructor
@@ -59,6 +61,9 @@ public class MypageController {
                                        @RequestParam(name = "size", defaultValue = "9") int size,
                                        Model model) {
         Page<UploadedPageDto> uploads = mypageService.getUploadedPageList(user.getId(), page-1, size);
+//        for (UploadedPageDto upload : uploads) {
+//            log.info("사용자_이미지_정보 = {}" , upload.getImageUrl());
+//        }
         model.addAttribute("uploads",uploads);
         return "domain/member/mypage/uploadList";
     }
