@@ -25,8 +25,10 @@ public class VirtualAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "account_number")
     private Long accountNumber;
 
+    @Column(name = "account_name")
     private String accountName;
 
     private LocalDate duration;

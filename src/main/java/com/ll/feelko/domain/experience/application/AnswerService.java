@@ -21,7 +21,7 @@ public class AnswerService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 체험을 찾을 수 없습니다."));
 
         Answer answer = new Answer();
-        answer.setContent(content);
+        answer.setComments(content);
         answer.setExperience(experience);
         answer.setCreateDate(LocalDateTime.now());
         this.answerRepository.save(answer);

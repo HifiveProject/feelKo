@@ -15,8 +15,9 @@ public class Answer {
     private Integer id;
 
     @Column(columnDefinition = "TEXT")
-    private String content;
+    private String comments;
 
+    @Column(name = "create_date")
     private LocalDateTime createDate;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -18,20 +18,30 @@ import java.util.List;
 public class ExperienceCreateDTO {
 
     private Long memberId;
+
     private String title;
+
     private List<MultipartFile> imageFiles;
+
     private String location;
+
     public String descriptionText;
+
     private BigDecimal price;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
+
     private Long headcount;
+
     private Long wishCounter;
+
     @Builder.Default
     private Boolean experienceClose = false;
 
     private String answer;
-    //private boolean end_priod;
+
 }
