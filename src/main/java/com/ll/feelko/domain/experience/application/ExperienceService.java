@@ -150,5 +150,9 @@ public class ExperienceService {
         return experienceRepository.findByLocation(destination, pageable);
     }
 
-
+    // ExperienceService.java
+// ExperienceService.java
+    public Page<Experience> searchExperiencesForAllLocationsOnDateWithClosing(LocalDate selectDate, boolean includeClosing, Pageable pageable) {
+        return experienceRepository.findByAllLocationsOnDateWithClosing(selectDate, includeClosing, pageable);
+    }
 }
