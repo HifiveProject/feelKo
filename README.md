@@ -36,6 +36,7 @@
 | remove         | 파일 삭제                                    | `remove: 사용하지 않는 컴포넌트 파일 삭제`     |
 
 ## ERD
+https://www.erdcloud.com/d/QCbavqZ6oD95NLgzm
 ![img.png](img.png)
 
 ## 패키지 구조
