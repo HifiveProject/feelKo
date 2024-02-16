@@ -3,6 +3,7 @@ package com.ll.feelko.domain.experience.entity;
 import com.ll.feelko.domain.wishlist.entity.WishList;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Comment;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,27 +22,41 @@ public class Experience {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long memberId; //업로드한 사용자 Fk
+    private Long memberId;
 
-    private String title; //제목
+    private String title;
 
-    private BigDecimal price; //가격
+    @Comment("금액")
+    @Column(name = "price")
+    private BigDecimal price;
 
-    private LocalDate startDate;//시작 날짜
+    @Comment("시작 날짜")
+    @Column(name = "start_date")
+    private LocalDate startDate;
 
-    private LocalDate endDate;//종료 날짜
+    @Comment("종료 날짜")
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
-    private Long headcount; //인원수
+    @Comment("인원수")
+    @Column(name = "headcount")
+    private Long headcount;
 
     @Builder.Default
-    private Long wishCounter = 0L;//좋아요
+    @Comment("좋아요")
+    @Column(name = "wish_counter")
+    private Long wishCounter = 0L;
 
     private String descriptionText;
 
-    private Long originalHeadcount; // 초기 마감 인원수
+    @Comment("초기 마감 인원수")
+    @Column(name = "original_headcount")
+    private Long originalHeadcount;
 
-    private String location;//장소
+    private String location;
 
+    @Comment("체험 마감")
+    @Column(name = "experience_close")
     private Boolean experienceClose;
 
     private String answer;
