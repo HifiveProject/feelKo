@@ -13,7 +13,8 @@
 ### Backend
 ![Backend_stack](src/main/resources/static/images/readme/Backend_stack.png)
 
-### Infra
+### Tool
+![Tool](src/main/resources/static/images/readme/Tool.png)
 
 ## Commit Convention
 | 타입            | 설명                                          | 예시 커밋 메시지                        |
