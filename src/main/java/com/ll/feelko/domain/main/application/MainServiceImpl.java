@@ -10,7 +10,6 @@ public class MainServiceImpl implements MainService{
 
     private final MemberService memberService;
 
-    // MainServiceImpl에서 MemberService를 주입
     public MainServiceImpl(MemberService memberService) {
         this.memberService = memberService;
     }

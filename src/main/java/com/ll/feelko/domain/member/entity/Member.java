@@ -40,7 +40,12 @@ public class Member {
     private String phone;
     private LocalDate birthday;
     private String roles;
+
     private String status;
+
+    private String provider;
+
+    private String providerId;
 
     @CreatedDate
     private LocalDateTime created_at;
@@ -48,9 +53,6 @@ public class Member {
     private LocalDateTime modified_at;
 
     private LocalDateTime deleted_at;
-
-    private String provider;
-    private String providerId;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

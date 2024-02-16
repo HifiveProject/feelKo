@@ -22,7 +22,7 @@ public class ExperienceImage {
     private Long id;
 
     @Type(JsonType.class)
-    @Column(name = "image", columnDefinition ="json")
+    @Column(name = "image_url", columnDefinition ="json")
     private List<String> image;
 
     @ManyToOne//(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

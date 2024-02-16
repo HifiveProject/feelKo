@@ -60,7 +60,7 @@ public class ExperienceService {
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
                 .headcount(dto.getHeadcount())
-                .originalHeadcount(dto.getHeadcount()) // 초기 마감 인원수 설정
+                .originalHeadcount(dto.getHeadcount())
                 .experienceClose(dto.getExperienceClose())
                 .answer(dto.getAnswer())
                 .build();
@@ -70,7 +70,6 @@ public class ExperienceService {
     }
 
     public void upload(ExperienceCreateForm multipartFile, Experience experience) {
-        // 메소드 내부에 지역 변수로 선언하여 각 호출마다 새로운 리스트를 사용하도록 변경
         List<String> files = new ArrayList<>();
 
         multipartFile.getFile().forEach(f -> {
@@ -125,7 +124,7 @@ public class ExperienceService {
         List<Experience> closingSoonExperiences = experienceRepository.findByExperienceCloseFalse().stream()
                 .filter(experience -> experience.getHeadcount() != null && experience.isClosingSoon())
                 .sorted(Comparator.comparingLong(Experience::getHeadcount))
-                .limit(4) // 최대 3개까지만 리스트에 추가
+                .limit(4)
                 .collect(Collectors.toList());
 
         return closingSoonExperiences;
@@ -133,11 +132,8 @@ public class ExperienceService {
 
     public Page<Experience> searchAllExperiencesIncludingClosing(boolean includeClosing, Pageable pageable) {
         if (includeClosing) {
-            // 마감 임박한 체험을 포함하여 모든 체험 검색
             return experienceRepository.searchAllExperiencesIncludingClosing(pageable);
         } else {
-            // 마감 임박한 체험을 제외하고 검색
-            // 이 메소드는 마감되지 않은 체험만 검색하는 쿼리를 구현해야 합니다.
             return experienceRepository.findByExperienceCloseFalse(pageable);
         }
     }
@@ -154,8 +150,5 @@ public class ExperienceService {
         return experienceRepository.findByLocation(destination, pageable);
     }
 
-    //    public Page<Experience> searchExperiences(String destination, LocalDate startDate, Pageable pageable) {
-//        return experienceRepository.searchExperiences(destination, startDate, pageable);
-//    }
 
 }

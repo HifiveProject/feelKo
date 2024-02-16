@@ -63,14 +63,6 @@ public class PaymentController {
             @AuthenticationPrincipal SecurityUser user,
             Model model
     ) {
-        log.info("참자가 인원수 = {}" , headcount);
-        log.info("날짜 = {}" , date);
-        log.info("체험 정보 페이지 = {}" , experiencesId);
-        log.info("예약자 이메일= {}" , user.getName());
-        log.info("예약 번호 = {}" , paymentKey);
-        log.info("체험 금액 = {}" , amount);
-
-        //member ID , 체험 정보 아이디.
         paymentApiService.payment(user , experiencesId , headcount , date , paymentKey , amount);
 
         paymentApiService.decreaseParticipants(experiencesId , headcount);

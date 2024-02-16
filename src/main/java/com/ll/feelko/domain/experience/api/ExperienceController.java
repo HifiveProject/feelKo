@@ -10,7 +10,6 @@ import com.ll.feelko.domain.wishlist.application.WishListService;
 import com.ll.feelko.domain.wishlist.dto.WishListDto;
 import com.ll.feelko.global.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.MalformedURLException;
 import java.util.Optional;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/experiences")
@@ -34,9 +32,6 @@ public class ExperienceController {
     @GetMapping("/{experienceId}")
     public String detail(@PathVariable(name = "experienceId") Long experienceId, Model model, @AuthenticationPrincipal SecurityUser user) {
         ExperienceImage images = jpqlRepository.getImages(experienceId);
-
-//        log.info("images = {} ", images);
-
         model.addAttribute("image", images);
         model.addAttribute("experience", experienceService.detail(experienceId));
         Optional<WishListDto> createWishListDto = wishListService.createWishListDtoIfLogined(user, experienceId);
@@ -87,4 +82,5 @@ public class ExperienceController {
 
         return new UrlResource("file:" + fullPath);
     }
+
 }
