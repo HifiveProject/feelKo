@@ -38,7 +38,13 @@ public class MainController {
         Page<Experience> experiencePage;
 
         if (StringUtils.isEmpty(destination) || destination.equals("전국")) {
-            experiencePage = experienceService.searchAllExperiencesIncludingClosing(includeClosing, pageable);
+            if (selectDate != null) {
+                // "전국" 선택되고 특정 날짜가 선택된 경우, 마감 체크 옵션 고려
+                experiencePage = experienceService.searchExperiencesForAllLocationsOnDateWithClosing(selectDate, includeClosing, pageable);
+            } else {
+                // "전국" 선택되고 날짜가 선택되지 않은 경우, 마감 체크 옵션 고려
+                experiencePage = experienceService.searchAllExperiencesIncludingClosing(includeClosing, pageable);
+            }
         } else {
             // 특정 지역이 선택된 경우 해당 지역의 경험 검색
             if (selectDate == null) {

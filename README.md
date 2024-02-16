@@ -13,7 +13,8 @@
 ### Backend
 ![Backend_stack](src/main/resources/static/images/readme/Backend_stack.png)
 
-### Infra
+### Tool
+![Tool](src/main/resources/static/images/readme/Tool.png)
 
 ## Commit Convention
 | 타입            | 설명                                          | 예시 커밋 메시지                        |
@@ -36,7 +37,7 @@
 | remove         | 파일 삭제                                    | `remove: 사용하지 않는 컴포넌트 파일 삭제`     |
 
 ## ERD
-![img.png](img.png)
+[![ERD](src/main/resources/static/images/readme/ERD.png)](https://www.erdcloud.com/d/QCbavqZ6oD95NLgzm)
 
 ## 패키지 구조
 <details>
